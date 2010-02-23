@@ -1,0 +1,14 @@
+Smoke test
+==========
+
+
+Smoke test: just import everything and see if smoke comes out:
+
+    >>> import lizard_base
+    >>> import lizard_base.admin
+    >>> import lizard_base.dummydatabaseconnector
+    >>> import lizard_base.eidatabaseconnector
+    >>> import lizard_base.jdbctest
+    >>> import lizard_base.models
+    >>> import lizard_base.urls
+    >>> import lizard_base.views
