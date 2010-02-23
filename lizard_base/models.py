@@ -1,13 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Models for lizard.base
-"""
-
 from django.db import models
 from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
-from lizard.base.eidatabaseconnector import ConnectDatabase2EiServer
-from lizard.base.dummydatabaseconnector import DummyDatabaseConnector
+from lizard_base.eidatabaseconnector import ConnectDatabase2EiServer
+from lizard_base.dummydatabaseconnector import DummyDatabaseConnector
 
 
 class Configuration(models.Model):

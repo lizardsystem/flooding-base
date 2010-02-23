@@ -9,7 +9,7 @@ requirements:
 
 import threading
 
-from lizard.base.eidatabaseconnector import ConnectDatabase2EiServer
+from lizard_base.eidatabaseconnector import ConnectDatabase2EiServer
 
 
 class Thread (threading.Thread):

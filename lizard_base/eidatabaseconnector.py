@@ -2,7 +2,7 @@
 import logging
 import xmlrpclib
 
-from lizard.base import iso8601  # TODO: proper pypi dependency
+import iso8601
 
 log = logging.getLogger('nens.eidatabaseconnector')
 

@@ -20,18 +20,18 @@ from django.template import Context, loader
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import cache_control
+import iso8601
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.dates import DateFormatter
 from matplotlib.figure import Figure
 
-from lizard.base import iso8601  # TODO: grab real iso8601 from pypi
-from lizard.base.models import Configuration
-from lizard.base.models import GroupConfigurationPermission
-from lizard.base.models import SubApplication
-from lizard.base.models import Setting
-from lizard.base.models import Map
-from lizard.base.models import Site
-from lizard.base.models import Application
+from lizard_base.models import Configuration
+from lizard_base.models import GroupConfigurationPermission
+from lizard_base.models import SubApplication
+from lizard_base.models import Setting
+from lizard_base.models import Map
+from lizard_base.models import Site
+from lizard_base.models import Application
 
 
 log = logging.getLogger('nens.base.views')
