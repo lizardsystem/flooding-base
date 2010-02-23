@@ -13,6 +13,7 @@ long_description = '\n\n'.join([
 
 install_requires = [
     'Django',
+    'iso8601',
     ],
 
 tests_require = [
