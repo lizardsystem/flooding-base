@@ -8,6 +8,14 @@ Usage, etc.
 More details in src/lizard_base/USAGE.txt .
 
 
+Requirements
+------------
+
+PIL needs to be installed.  (On ubuntu: "apt-get install python-imaging").
+
+Matplotlib also ("python-matplotlib").
+
+
 Development installation
 ------------------------
 
