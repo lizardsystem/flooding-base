@@ -1,0 +1,60 @@
+{% extends "lizard/base.html" %}
+{% load i18n %}
+{% comment %}
+ir. B.Roos 18102009
+
+Displays user configuration
+{% endcomment %}
+
+{% block title %}
+Lizard {% trans 'user settings' %}
+{% endblock %}
+
+{% block content %}
+<h1>Lizard {% trans 'user settings' %}</h1>
+
+		<table class="timeseriesWrapper"><tr><td>
+			<table class="timeseries" summary="timeseries">
+				<thead class="headerTitle">
+					<td width="150"><b>{% trans "Part" %}</b></td>
+					<td width="150"><b>{% trans "Setting" %}</b></td>
+					<td width="150"><b>{% trans "Remarks" %}</b></td>
+				</thead>
+				<tbody>
+					    <tr class="cellDark">
+				    		<td><a href="{% url password_change_url %}?next={% url root_url %}" onclick="popupwindow=window.open(\'{% url password_change_url %}?next={% url root_url %}\', \'popupwindow\',\'height=600,width=800,top=10,left=10,resizable\');return false;">{% trans "Change password" %}</a></td>			    		
+							<td></td>
+							<td></td>
+				    	</tr>	
+				    	<tr class="cell">
+				    		<td>{% trans "Language" %}</td>			    		
+							<td>
+
+<table><tr>
+{% for lang in LANGUAGES %}
+<td>
+<div class="language_form">
+<form action="{% url root_url %}language/{{ lang.0 }}/" method="post">
+<input type="image" src="{% url root_url %}static_media/images/language_{{ lang.0 }}.gif" value="{{ lang.1 }}" />
+</form>
+</div>
+</td>
+{% endfor %}
+</tr></table>					
+
+							</td>
+							<td>{% trans 'reload pages to get new language settings' %}</td>
+				    	</tr>
+
+			    </tbody>   
+			</table>
+		</table>
+
+
+
+{% endblock %}
+
+
+
+
+
