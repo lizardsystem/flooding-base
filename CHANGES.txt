@@ -2,7 +2,7 @@ Changelog of lizard-base
 ===================================================
 
 
-0.1 (unreleased)
+1.0 (2010-02-24)
 ----------------
 
 - Initial library skeleton created by thaskel.  [your name]
