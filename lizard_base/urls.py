@@ -35,7 +35,7 @@ urlpatterns = patterns(
 
 
 if settings.DEBUG:
-    # Add this also to the projects that use lizard-ui
+    # Add this also to the projects that use this application.
     urlpatterns += patterns('',
         (r'', include('staticfiles.urls')),
     )

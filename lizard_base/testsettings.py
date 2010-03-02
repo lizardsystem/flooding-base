@@ -12,16 +12,4 @@ INSTALLED_APPS = [
     'staticfiles',
     'lizard_base']
 ROOT_URLCONF = ['lizard_base.urls']
-
-# Copy this into settings files where you use lizard-base.
-TEMPLATE_CONTEXT_PROCESSORS = (
-    # Django default ones:
-    "django.core.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    # Extra one to handle static files:
-    'staticfiles.context_processors.static_url',
-    )
-# URL that handles the files served by django-staticfiles
-STATIC_URL = '/site-media/'
+MEDIA_URL = '/static_media/'
