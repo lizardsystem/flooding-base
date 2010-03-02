@@ -9,6 +9,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'staticfiles',
     'lizard_base']
 ROOT_URLCONF = ['lizard_base.urls']
 
