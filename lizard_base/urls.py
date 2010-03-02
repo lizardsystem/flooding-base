@@ -31,3 +31,10 @@ urlpatterns = patterns(
         'lizard_base.views.service_get_timeseries',
         name='base_service_get_timeseries'),
     )
+
+
+if settings.DEBUG:
+    # Add this also to the projects that use lizard-ui
+    urlpatterns += patterns('',
+        (r'', include('staticfiles.urls')),
+    )
