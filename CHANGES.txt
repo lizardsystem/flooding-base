@@ -2,7 +2,7 @@ Changelog of lizard-base
 ===================================================
 
 
-1.1 (unreleased)
+1.1 (2010-03-03)
 ----------------
 
 - Copied as much as possible of the old lizard.base.
