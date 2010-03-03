@@ -5,7 +5,16 @@ Changelog of lizard-base
 1.1 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Copied as much as possible of the old lizard.base.
+
+- Added doc_root (old lizard had instructions on how to add that to apache,
+  lizard-base now includes it as a media/ dir that's automatically handled by
+  django-staticfiles).
+
+- Copied templates from the old lizard root to our own template dir.
+
+- Old lizard.base urls are now prefixed with /service.  Most old lizard root
+  urls are now directly in our urls.
 
 
 1.0 (2010-02-24)
