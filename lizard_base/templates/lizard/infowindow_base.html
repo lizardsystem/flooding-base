@@ -1,0 +1,13 @@
+{# Base template for infowindows #}
+{% load i18n %}
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="{% url root_url %}static_media/style/style.css"/>    
+  </head>
+  
+  <body>
+  <h2>{% block header %} {% endblock %}</h2> 
+    {% block content %}{% endblock %}
+  </body>
+</html>
