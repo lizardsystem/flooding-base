@@ -8,28 +8,28 @@
     }
   },
   {
-    "pk": 1, 
-    "model": "auth.user", 
+    "pk": 1,
+    "model": "auth.user",
     "fields": {
-      "username": "admin", 
-      "first_name": "", 
-      "last_name": "", 
-      "is_active": true, 
-      "is_superuser": true, 
-      "is_staff": true, 
-      "last_login": "2010-02-17 09:30:36", 
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2010-02-17 09:30:36",
       "groups": [
         1
-      ], 
-      "user_permissions": [], 
-      "password": "sha1$caae3$40d9dbd02e3cd303b185ebb4aa1458ea89b3fd9b", 
-      "email": "lizardweb@nelen-schuurmans.nl", 
+      ],
+      "user_permissions": [],
+      "password": "sha1$caae3$40d9dbd02e3cd303b185ebb4aa1458ea89b3fd9b",
+      "email": "lizardweb@nelen-schuurmans.nl",
       "date_joined": "2010-02-17 09:30:36"
     }
   },
   {
     "pk": 1,
-    "model": "base.configuration",
+    "model": "lizard_base.configuration",
     "fields": {
       "coords_s": 50.765000000000001,
       "coords_w": 3.2890000000000001,
@@ -42,7 +42,7 @@
   },
   {
     "pk": 2,
-    "model": "base.configuration",
+    "model": "lizard_base.configuration",
     "fields": {
       "coords_s": 50.765000000000001,
       "coords_w": 3.2890000000000001,
@@ -55,7 +55,7 @@
   },
   {
     "pk": 3,
-    "model": "base.configuration",
+    "model": "lizard_base.configuration",
     "fields": {
       "coords_s": 50.765000000000001,
       "coords_w": 3.2890000000000001,
@@ -68,7 +68,7 @@
   },
   {
     "pk": 4,
-    "model": "base.configuration",
+    "model": "lizard_base.configuration",
     "fields": {
       "coords_s": 50.765000000000001,
       "coords_w": 3.2890000000000001,
@@ -81,7 +81,7 @@
   },
   {
     "pk": 5,
-    "model": "base.configuration",
+    "model": "lizard_base.configuration",
     "fields": {
       "coords_s": 50.765000000000001,
       "coords_w": 3.2890000000000001,
@@ -94,7 +94,7 @@
   },
   {
     "pk": 7,
-    "model": "base.configuration",
+    "model": "lizard_base.configuration",
     "fields": {
       "coords_s": 50.765000000000001,
       "coords_w": 3.2890000000000001,
@@ -107,7 +107,7 @@
   },
   {
     "pk": 5,
-    "model": "base.datasourceei",
+    "model": "lizard_base.datasourceei",
     "fields": {
       "usecustomfilterresponse": false,
       "databaseurltagname": "url_wze_dev",
@@ -119,7 +119,7 @@
   },
   {
     "pk": 4,
-    "model": "base.datasourceei",
+    "model": "lizard_base.datasourceei",
     "fields": {
       "usecustomfilterresponse": false,
       "databaseurltagname": "url_assn_dev",
@@ -131,7 +131,7 @@
   },
   {
     "pk": 3,
-    "model": "base.datasourceei",
+    "model": "lizard_base.datasourceei",
     "fields": {
       "usecustomfilterresponse": false,
       "databaseurltagname": "url_purm_dev",
@@ -143,7 +143,7 @@
   },
   {
     "pk": 2,
-    "model": "base.datasourceei",
+    "model": "lizard_base.datasourceei",
     "fields": {
       "usecustomfilterresponse": false,
       "databaseurltagname": "url_almr_dev",
@@ -155,7 +155,7 @@
   },
   {
     "pk": 1,
-    "model": "base.datasourceei",
+    "model": "lizard_base.datasourceei",
     "fields": {
       "usecustomfilterresponse": false,
       "databaseurltagname": "url_hhnk_dev",
@@ -167,7 +167,7 @@
   },
   {
     "pk": 6,
-    "model": "base.datasourceei",
+    "model": "lizard_base.datasourceei",
     "fields": {
       "usecustomfilterresponse": false,
       "databaseurltagname": "url_wro_dev",
@@ -179,7 +179,7 @@
   },
   {
     "pk": 1,
-    "model": "base.application",
+    "model": "lizard_base.application",
     "fields": {
       "active": true,
       "type": 1,
@@ -189,7 +189,7 @@
   },
   {
     "pk": 2,
-    "model": "base.application",
+    "model": "lizard_base.application",
     "fields": {
       "active": true,
       "type": 2,
@@ -199,7 +199,7 @@
   },
   {
     "pk": 3,
-    "model": "base.application",
+    "model": "lizard_base.application",
     "fields": {
       "active": true,
       "type": 3,
@@ -209,7 +209,7 @@
   },
   {
     "pk": 1,
-    "model": "base.subapplication",
+    "model": "lizard_base.subapplication",
     "fields": {
       "application": 1,
       "type": 11,
@@ -218,7 +218,7 @@
   },
   {
     "pk": 3,
-    "model": "base.subapplication",
+    "model": "lizard_base.subapplication",
     "fields": {
       "application": 1,
       "type": 12,
@@ -227,7 +227,7 @@
   },
   {
     "pk": 4,
-    "model": "base.subapplication",
+    "model": "lizard_base.subapplication",
     "fields": {
       "application": 1,
       "type": 13,
@@ -236,7 +236,7 @@
   },
   {
     "pk": 5,
-    "model": "base.subapplication",
+    "model": "lizard_base.subapplication",
     "fields": {
       "application": 1,
       "type": 14,
@@ -245,7 +245,7 @@
   },
   {
     "pk": 2,
-    "model": "base.subapplication",
+    "model": "lizard_base.subapplication",
     "fields": {
       "application": 2,
       "type": 21,
@@ -254,7 +254,7 @@
   },
   {
     "pk": 6,
-    "model": "base.subapplication",
+    "model": "lizard_base.subapplication",
     "fields": {
       "application": 2,
       "type": 22,
@@ -263,7 +263,7 @@
   },
   {
     "pk": 7,
-    "model": "base.subapplication",
+    "model": "lizard_base.subapplication",
     "fields": {
       "application": 2,
       "type": 23,
@@ -272,7 +272,7 @@
   },
   {
     "pk": 8,
-    "model": "base.subapplication",
+    "model": "lizard_base.subapplication",
     "fields": {
       "application": 3,
       "type": 31,
@@ -281,7 +281,7 @@
   },
   {
     "pk": 1,
-    "model": "base.groupconfigurationpermission",
+    "model": "lizard_base.groupconfigurationpermission",
     "fields": {
       "configuration": 4,
       "group": 1,
@@ -290,7 +290,7 @@
   },
   {
     "pk": 2,
-    "model": "base.groupconfigurationpermission",
+    "model": "lizard_base.groupconfigurationpermission",
     "fields": {
       "configuration": 7,
       "group": 1,
@@ -299,7 +299,7 @@
   },
   {
     "pk": 1,
-    "model": "base.setting",
+    "model": "lizard_base.setting",
     "fields": {
       "remarks": null,
       "value": "ABQIAAAAJF6CAN7ph1ijNyeuwroQERSi0i3DA2Zx1pB9_O2xaMhf8DkveBTDOdAyn0L1yisdEYvLctcYlQg55A",
@@ -308,7 +308,7 @@
   },
   {
     "pk": 2,
-    "model": "base.setting",
+    "model": "lizard_base.setting",
     "fields": {
       "remarks": null,
       "value": "1",
@@ -317,7 +317,7 @@
   },
   {
     "pk": 6,
-    "model": "base.setting",
+    "model": "lizard_base.setting",
     "fields": {
       "remarks": "",
       "value": "fewsMap",
@@ -326,7 +326,7 @@
   },
   {
     "pk": 3,
-    "model": "base.setting",
+    "model": "lizard_base.setting",
     "fields": {
       "remarks": "Wordt ingevuld in:\r\n  appManager.selectApp(4,2);",
       "value": "fews",
@@ -335,7 +335,7 @@
   },
   {
     "pk": 7,
-    "model": "base.setting",
+    "model": "lizard_base.setting",
     "fields": {
       "remarks": "",
       "value": "static_media/images/lizard_webinterface_white.png",
@@ -344,7 +344,7 @@
   },
   {
     "pk": 8,
-    "model": "base.setting",
+    "model": "lizard_base.setting",
     "fields": {
       "remarks": "",
       "value": "static_media/images/lizard_topbar.png",
@@ -353,7 +353,7 @@
   },
   {
     "pk": 9,
-    "model": "base.setting",
+    "model": "lizard_base.setting",
     "fields": {
       "remarks": "",
       "value": "static_media/images/lizard_webinterface_favicon2.ico",
@@ -362,7 +362,7 @@
   },
   {
     "pk": 10,
-    "model": "base.setting",
+    "model": "lizard_base.setting",
     "fields": {
       "remarks": "",
       "value": "\\\\192.168.0.21\\filedatabase",
@@ -371,7 +371,7 @@
   },
   {
     "pk": 11,
-    "model": "base.setting",
+    "model": "lizard_base.setting",
     "fields": {
       "remarks": "",
       "value": "\\\\192.168.0.21\\resultaten",
@@ -380,7 +380,7 @@
   },
   {
     "pk": 12,
-    "model": "base.setting",
+    "model": "lizard_base.setting",
     "fields": {
       "remarks": "",
       "value": "c:\\floodingdatabase\\presentation_totaal",
@@ -389,7 +389,7 @@
   },
   {
     "pk": 13,
-    "model": "base.setting",
+    "model": "lizard_base.setting",
     "fields": {
       "remarks": "",
       "value": "c:\\floodingdatabase\\LizardFlow",
@@ -398,7 +398,7 @@
   },
   {
     "pk": 14,
-    "model": "base.setting",
+    "model": "lizard_base.setting",
     "fields": {
       "remarks": "",
       "value": "0",
@@ -407,7 +407,7 @@
   },
   {
     "pk": 15,
-    "model": "base.setting",
+    "model": "lizard_base.setting",
     "fields": {
       "remarks": "",
       "value": "0",
@@ -416,7 +416,7 @@
   },
   {
     "pk": 1,
-    "model": "base.map",
+    "model": "lizard_base.map",
     "fields": {
       "layers": "hhnk",
       "name": "top10 lokaal",
@@ -431,7 +431,7 @@
   },
   {
     "pk": 2,
-    "model": "base.map",
+    "model": "lizard_base.map",
     "fields": {
       "layers": "hoogtes",
       "name": "ahn",
@@ -446,7 +446,7 @@
   },
   {
     "pk": 1,
-    "model": "base.site",
+    "model": "lizard_base.site",
     "fields": {
       "coords_s": 50.765000000000001,
       "favicon_image": "user/favicon/redghost.png",
@@ -466,7 +466,7 @@
   },
   {
     "pk": 2,
-    "model": "base.site",
+    "model": "lizard_base.site",
     "fields": {
       "coords_s": 50.765000000000001,
       "favicon_image": "",
