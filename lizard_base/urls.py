@@ -53,6 +53,8 @@ urlpatterns = patterns(
         'lizard_base.views.gui_translated_strings',
         name='gui_translated_strings'),
 
+    url(r'^admin/(.*)', admin.site.root),
+
     url(r'^admin/$',
         admin.site.root,
         name='admin_url'), #manually name admin root
@@ -65,9 +67,6 @@ urlpatterns = patterns(
         'lizard_base.views.userconfiguration',
         name='userconfiguration_url'),
 
-    url(r'^service/',
-        include('lizard_base.urls')),
-
     url(r'^base/testdatabase/$',
         'lizard_base.views.testdatabase_list',
         name='testdatabase_list',
@@ -76,6 +75,18 @@ urlpatterns = patterns(
     url(r'^base/testdatabase/(?P<configuration_id>\d+)/$',
         'lizard_base.views.testdatabase',
         name='testdatabase_detail'),
+
+    url(r'^accounts/login/$',
+        'django.contrib.auth.views.login',
+        {'template_name': 'registration/login_user.html'},
+        name='login_url'),
+
+    url(r'^accounts/logout/$',
+        'django.contrib.auth.views.logout',
+        name='logout_url'),
+
+
+
     )
 
 
