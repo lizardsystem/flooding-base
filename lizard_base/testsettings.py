@@ -13,3 +13,4 @@ INSTALLED_APPS = [
     'lizard_base']
 ROOT_URLCONF = ['lizard_base.urls']
 MEDIA_URL = '/static_media/'
+STATIC_URL = MEDIA_URL
