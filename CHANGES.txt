@@ -2,7 +2,7 @@ Changelog of lizard-base
 ========================
 
 
-1.2 (unreleased)
+1.2 (2010-03-10)
 ----------------
 
 - Renamed fixture from base into lizard_base.
