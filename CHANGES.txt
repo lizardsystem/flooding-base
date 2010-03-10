@@ -1,11 +1,11 @@
 Changelog of lizard-base
-===================================================
+========================
 
 
 1.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Renamed fixture from base into lizard_base.
 
 
 1.1 (2010-03-03)
@@ -26,4 +26,4 @@ Changelog of lizard-base
 1.0 (2010-02-24)
 ----------------
 
-- Initial library skeleton created by thaskel.  [your name]
+- Initial library skeleton created by nensskel.
