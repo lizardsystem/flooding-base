@@ -19,7 +19,7 @@ class Thread (threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        print(self.name)
+        #print(self.name)
         #vul hier je jdbc2ei adres en je jdbc adres in!
         #c = ConnectDatabase2EiServer(
         #    'http://localhost:8080/Jdbc2Ei/test',
@@ -31,7 +31,7 @@ class Thread (threading.Thread):
 
         counter = 0
         while True:
-            print('%s (%d)' % (self.name, counter))
+            #print('%s (%d)' % (self.name, counter))
             c.execute("SELECT * from locations WHERE Id = 'ALM_241/0'")
             c.execute("SELECT * from TimeSeries WHERE filterId = 'ALM_ALL' "
                       "AND parameterId = 'h.niveau.max'  AND "

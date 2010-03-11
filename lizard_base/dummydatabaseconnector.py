@@ -15,8 +15,10 @@ class DummyDatabaseConnector:
                 binary_fields=None,
                 requesttagname=None, debug=False):
         if debug:
-            print 'about to execute: ' + query
-        print query
+            #print 'about to execute: ' + query
+            # ^^^ No printing in mod_wsgi
+            pass
+        #print query
         if query == 'get_filters':
             result = [{'id': 1, 'name': 'Gebied1', 'parentid': None},
                       {'id': 2, 'name': 'Gebied2', 'parentid': None},
