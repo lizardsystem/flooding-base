@@ -2,7 +2,7 @@ Changelog of lizard-base
 ========================
 
 
-1.4 (unreleased)
+1.4 (2010-03-15)
 ----------------
 
 - Added missing password change urls from old base.
