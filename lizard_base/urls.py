@@ -85,6 +85,12 @@ urlpatterns = patterns(
         'django.contrib.auth.views.logout',
         name='logout_url'),
 
+    url(r'^accounts/password_change/$',
+        'django.contrib.auth.views.password_change',
+        name='password_change_url'),
+
+    url(r'^accounts/password_change_done/$',
+        'django.contrib.auth.views.password_change_done'),
 
 
     )
