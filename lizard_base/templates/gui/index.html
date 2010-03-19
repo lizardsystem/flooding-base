@@ -8,55 +8,55 @@
     	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
 
     	<title>Lizard</title>
-		
+
 		<!-- Load styles -->
 		<link rel="shortcut icon" href="{{ url_favicon }}">
-		<link href="{% url root_url %}static_media/style/style.css" media="screen" type="text/css" rel="stylesheet">
-		<link href="{% url root_url %}static_media/style/forms.css" media="screen" type="text/css" rel="stylesheet">
-		<link href="{% url root_url %}static_media/style/legend.css" rel="stylesheet" type="text/css">
-		
+		<link href="{{ STATIC_URL }}style/style.css" media="screen" type="text/css" rel="stylesheet">
+		<link href="{{ STATIC_URL }}style/forms.css" media="screen" type="text/css" rel="stylesheet">
+		<link href="{{ STATIC_URL }}style/legend.css" rel="stylesheet" type="text/css">
+
 		<!-- Load Javascript files -->
-		<script type="text/javascript" src="{% url root_url %}static_media/scripts/shared/InitializationFunctions.js"></script>
-		<script type="text/javascript" src="{% url root_url %}static_media/scripts/shared/lib/NLoadScripts.js"></script>
-		
+		<script type="text/javascript" src="{{ STATIC_URL }}scripts/shared/InitializationFunctions.js"></script>
+		<script type="text/javascript" src="{{ STATIC_URL }}scripts/shared/lib/NLoadScripts.js"></script>
+
 		{% if USE_GOOGLEMAPS %}
 			<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key={{ GOOGLEMAPS_KEY }}" type="text/javascript"> </script>
-			<script>setLoadMessage(5);</script>		
+			<script>setLoadMessage(5);</script>
 		{% endif %}
 		{% comment %}
 			<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAAJF6CAN7ph1ijNyeuwroQERSi0i3DA2Zx1pB9_O2xaMhf8DkveBTDOdAyn0L1yisdEYvLctcYlQg55A" type="text/javascript"> </script>
 		{% endcomment %}
 <style type="text/css" >
 .imageheader
-{	
+{
 		background-image: url('{{ url_topbar }}');
 		background-repeat: no-repeat;
-		background-position:top right; 
-	
+		background-position:top right;
+
 }
 {% ifequal site.name "default site" %}
 .imageheader
-{	
+{
 		background-image: url('{{ url_topbar }}');
 		background-repeat: repeat-x;
-		background-position:top right; 
-	
+		background-position:top right;
+
 }
 {% endifequal %}
 </style>
-		
+
 		<!-- Execute javascript -->
-		<script type="text/javascript">	
-			window['rootUrl'] = "{% url root_url %}";			
+		<script type="text/javascript">
+			window['rootUrl'] = "{% url root_url %}";
 			rootUrl = "{% url root_url %}";
 			var OpenLayers = {};
 			var map = null;
-			
+
 			/**** The method to be called after loading ****/
 			function afterLoad()
 			{
 			    console.log('entering method "afterLoad()"');
-			
+
 			    {% if applications.fews %}
 				    console.log('Loading Fews application script');
 				    loadFewsApp("../scripts/");
@@ -71,7 +71,7 @@
 				    console.log('Loading Flow application script');
 				    loadFlowApp("../scripts/");
 				    flow.addSubApps([{{ site.get_subapplication_jsnames_str.flow }}]);
-			    {% endif %}   
+			    {% endif %}
 			    {% if applications.gisviewer %}
 				    console.log('Loading Gisviewer application script');
 				    loadGisviewerApp("../scripts/");
@@ -83,30 +83,30 @@
 				    mis.addSubApps([{{ site.get_subapplication_jsnames_str.mis }}]);
 			    {% endif %}
 			    {% if applications.nhi %}
-				    console.log('Loading NHI application script');				    
+				    console.log('Loading NHI application script');
 				    loadNHIApp("../scripts/");
 				    nhi.addSubApps([{{ site.get_subapplication_jsnames_str.nhi }}]);
 			    {% endif %}
-			    
+
 			    toolbarManager = new NToolbarManager();
-			    infoWindowManager = new NInfoWindowManager('main', scPage, {} );			    			   
+			    infoWindowManager = new NInfoWindowManager('main', scPage, {} );
 			    appManager = new NAppManager("appManager", "appHeaderPane", "subAppHeaderPane", {
 			       	toolbarManager: 	toolbarManager,
 					mainScreenManager: 	mainScreenManager,
 					infoWindowManager: 	infoWindowManager,
 			                rootUrl: "{% url root_url %}"
 			    });
-			    		
-			    appManager.addApps([{{ app_list }}]);     
-			    appManager.init();    
+
+			    appManager.addApps([{{ app_list }}]);
+			    appManager.init();
 			    appManager.selectApp("{{ STARTER_APPLICATION }}");
-			    appManager.selectApp("{{ STARTER_SUBAPPLICATION }}", "{{ STARTER_APPLICATION }}");  
-			}			
-		
+			    appManager.selectApp("{{ STARTER_SUBAPPLICATION }}", "{{ STARTER_APPLICATION }}");
+			}
+
 		function onUnload() {
-			appManager.registerApp('{{ site.name }}', '{% url base_service_uberservice %}'); 
+			appManager.registerApp('{{ site.name }}', '{% url base_service_uberservice %}');
 			overlayManager = null;
-			
+
 			try {
 				if (map) {map.destroy();};
 			} catch (e) {
@@ -118,10 +118,10 @@
 				console.log('during unload: ' + e);
 			}
 		}
-		
-		</script>				
-	</head>	
-	
+
+		</script>
+	</head>
+
 	<body  overflow= "hidden" onload="afterLoad()" onunload="onUnload()" onresize="onResize()" >
 
 		<NOSCRIPT>
@@ -132,8 +132,8 @@
 			</div>
 		</NOSCRIPT>
 		<div id='load'>laden...</div>
-	
-		<script type="text/javascript">		
+
+		<script type="text/javascript">
 			NLoadScripts('{% url root_url %}',{
 			    core: true,
 				base: true,
@@ -145,33 +145,33 @@
 				nhi:{% if applications.nhi %}true{% else %}false{% endif %}
 				{% if site %},site:'{{ site.name }}'{% endif %}
 			});
-			
+
 			removeLoadMessage();
 			console.log("Scherm opbouwen...(1)");
 		</script>
-		
-		<script type="text/javascript" src="{% url root_url %}static_media/scripts/shared/LoadIconSet.js">
+
+		<script type="text/javascript" src="{{ STATIC_URL }}scripts/shared/LoadIconSet.js">
 			icons = LoadIconSet();
 		</script>
-		
+
 		<!-- Javascript for the screen Framework -->
-		<script type="text/javascript">			
-			//  Global settings for all components in this application			
+		<script type="text/javascript">
+			//  Global settings for all components in this application
 			isc.setAutoDraw(false);
-			
+
 			/*** Screen: top ***/
 			console.log("Scherm opbouwen...");
-			
+
 			isc.Img.create({
 				ID: "scLogo",
 				src: '{{ url_logo }}',
 				overflow: "hidden",
 				align: "center",
 				width: 280,
-			    height: 45,	
+			    height: 45,
 				autoDraw: false
 			});
-			
+
 			isc.HLayout.create({
 				ID: "scLogoCanvas",
 				align: "left",
@@ -182,8 +182,8 @@
 				width: 314,
 				showResizeBar: false,
 				autoDraw: false
-			});		
-			
+			});
+
 			isc.Canvas.create({
 				ID: "scHeader",
 				contents: "<div id=\"appHeaderPane\"></div>",
@@ -193,7 +193,7 @@
 				showResizeBar: false,
 				autoDraw: false
 			});
-			
+
 			isc.Canvas.create({
 				ID: "scUser",
 				contents: '<table align="right"><tr><td><div id="user-tools" class="normal" style="background-color:#FFFFFF; opacity:0.75; height:17;font-color:#000000" width="content"  >\
@@ -212,30 +212,30 @@
 				showResizeBar: false,
 				autoDraw: false
 			});
-			
+
 			isc.Canvas.create({
 				ID: "scSubApps",
-				contents: "<div id=\"subAppHeaderPane\"></div>",				
+				contents: "<div id=\"subAppHeaderPane\"></div>",
 				align: "left",
 				overflow: "hidden",
 				width: "340",
-				height:"26",		
-				showResizeBar: false,				
-				autoDraw: false
-			});
-			
-			isc.Canvas.create({
-				ID: "scNavigationToolbar",								
-				align: "left",
-				overflow: "hidden",
-				width: "340",
-				height:"26",		
+				height:"26",
 				showResizeBar: false,
-				backgroundColor: "red",				
 				autoDraw: false
 			});
-			
-			/*** Navigation: left ***/			
+
+			isc.Canvas.create({
+				ID: "scNavigationToolbar",
+				align: "left",
+				overflow: "hidden",
+				width: "340",
+				height:"26",
+				showResizeBar: false,
+				backgroundColor: "red",
+				autoDraw: false
+			});
+
+			/*** Navigation: left ***/
 			isc.TabSet.create({
 			    ID:"scNavigation",
 			    tabBarPosition: "bottom",
@@ -257,39 +257,39 @@
 			    	if (tab.app) {
 			    		tab.app.scNavigation.isAdded = false;
 			    		console.log('close tab');
-			    	}		
+			    	}
 				},
 			    autoDraw:true
 			});
-			
+
 			scNavigation.tabBar.setHeight(0);
-			
-			
+
+
 			/*** Screen: main ***/
-			// The element in the mainScreen where the buttons of the applications will be placed 
+			// The element in the mainScreen where the buttons of the applications will be placed
 			isc.HLayout.create({
-			    ID:"scButtons",		    
+			    ID:"scButtons",
 			    align: "center",
 			    overflow: "hidden",
 			    height: "30px",
 			    width: "100%",
 			    padding: 1,
-			    autoDraw:false		
+			    autoDraw:false
 			});
-			
+
 			isc.Label.create({
 					ID: "copyrightLabel",
 				    height: 26,
 				    width: '100%',
 				    //padding: 0,
 				    align: "center",
-				    valign: "center",				    
-				    wrap: false,	    
+				    valign: "center",
+				    wrap: false,
 				    showEdges: false,
 				    contents: "Copyright Nelen & Schuurmans - <a href='http://www.nelen-schuurmans.nl' target='_blank'>www.nelen-schuurmans.nl</a>"
 				});
-		
-			
+
+
 			mainScreenManager = new NMainScreenManager(null,{
 				customLayers: custom_layers,
 				useGoogleLayers: {% if USE_GOOGLEMAPS %}true{% else %}false{% endif %},
@@ -297,9 +297,9 @@
 				restrictMap: {% if RESTRICTMAP %}true{% else %}false{% endif %},
 				extent: { west:{{ extent.west }}, east:{{ extent.east }}, north:{{ extent.north }}, south:{{ extent.south }} }
 			});
-			
-					
-			/*** Creating total screen layout ***/		
+
+
+			/*** Creating total screen layout ***/
 			isc.VLayout.create({
 				ID: "scPage",
 				padding: "5px",
@@ -321,38 +321,38 @@
 					    height: "26px",
 					    overflow: "hidden",
 					    members : [scSubApps, scButtons],
-					    backgroundImage: "{% url root_url %}static_media/images/lizard3/balk_.png",
-					    backgroundRepeat: "repeat-x",					    
+					    backgroundImage: "{{ STATIC_URL }}images/lizard3/balk_.png",
+					    backgroundRepeat: "repeat-x",
 					    autoDraw: false
 					}),
 					isc.HLayout.create({
 						ID: 'scMain',
 						overflow: "hidden",
-						members: [scNavigation,						
+						members: [scNavigation,
 							isc.VLayout.create({
 								overflow: "hidden",
 								members: [isc.VLayout.create({ID:"scMainPage",width: "100%",height: "100%",overflow: "hidden", members: mainScreenManager.getScreens() })],//
 								autoDraw: false
 							})],
 						autoDraw: false
-					}),				
-					
-					isc.HLayout.create({					
+					}),
+
+					isc.HLayout.create({
 					    ID: 'scBottomPane',
 					    overflow: "hidden",
-					    //content: "test",					    					    
-					    height: 26,					    
+					    //content: "test",
+					    height: 26,
 					    members: [copyrightLabel],
 					    align: "center",
-					    backgroundImage: "{% url root_url %}static_media/images/lizard3/balk_.png",
+					    backgroundImage: "{{ STATIC_URL }}images/lizard3/balk_.png",
 					    backgroundRepeat: "repeat-x",
 					    autoDraw: false
 					})
-					
+
 				]
-			});		
+			});
 			mainScreenManager.mainPane = scMainPage;
-			mainScreenManager.isinit = true;	
+			mainScreenManager.isinit = true;
 		</script>
 	</body>
 </html>

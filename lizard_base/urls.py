@@ -57,7 +57,7 @@ urlpatterns = patterns(
 
     url(r'^admin/$',
         admin.site.root,
-        name='admin_url'), #manually name admin root
+        name='admin_url'),  # manually name admin root
 
     url(r'^help/$',
         'lizard_base.views.help',
@@ -94,7 +94,6 @@ urlpatterns = patterns(
 
 
     )
-
 
 
 if settings.DEBUG:

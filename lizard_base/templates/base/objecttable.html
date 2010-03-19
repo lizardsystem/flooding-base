@@ -6,7 +6,7 @@
       <tr>
 	{% for column in columns %}
 	<td{% if column.width %} width="{{ column.width }}"{% endif %}>
-	  <strong><a href="?sort={% ifequal sort column.sort %}{{ column.sort_rev }}{% else %}{% ifnotequal sort column.sort_rev %}{{ column.sort }}{% endifnotequal %}{% endifequal %}">{{ column.name }}{% ifequal sort column.sort %}<img src="{% url root_url %}static_media/images/icons/sort_up.png"/>{% endifequal %}{% ifequal sort column.sort_rev %}<img src="{% url root_url %}static_media/images/icons/sort_down.png"/>{% endifequal %}</a></strong>
+	  <strong><a href="?sort={% ifequal sort column.sort %}{{ column.sort_rev }}{% else %}{% ifnotequal sort column.sort_rev %}{{ column.sort }}{% endifnotequal %}{% endifequal %}">{{ column.name }}{% ifequal sort column.sort %}<img src="{{ STATIC_URL }}images/icons/sort_up.png"/>{% endifequal %}{% ifequal sort column.sort_rev %}<img src="{{ STATIC_URL }}images/icons/sort_down.png"/>{% endifequal %}</a></strong>
 	</td>
 	{% endfor %}
       </tr>
@@ -17,12 +17,12 @@
 	  {% if field.url %}<a href="{{ field.url }}">{% endif %}
 	    {{ field.value|markdown }}
 	    {% if not field.urlpost %}{% if field.icon %}
-	    <img src="{% url root_url %}static_media/images/icons/{{ field.icon }}.png"{% if field.icontitle %} title="{{ field.icontitle }}"{% endif %}/>
+	    <img src="{{ STATIC_URL }}images/icons/{{ field.icon }}.png"{% if field.icontitle %} title="{{ field.icontitle }}"{% endif %}/>
 	    {% endif %}{% endif %}
 	  {% if field.url %}</a>{% endif %}
 	  {% if field.urlpost %}
 	  <form action="{{ field.urlpost }}" method="POST">
-	    <input type="image" src="{% url root_url %}static_media/images/icons/{{ field.icon }}.png"{% if field.icontitle %} title="{{ field.icontitle }}"{% endif %}{% if field.postclickmessage %} onclick="javascript:confirm(&quot;{{ field.postclickmessage }}&quot;)"{% endif %}/>
+	    <input type="image" src="{{ STATIC_URL }}images/icons/{{ field.icon }}.png"{% if field.icontitle %} title="{{ field.icontitle }}"{% endif %}{% if field.postclickmessage %} onclick="javascript:confirm(&quot;{{ field.postclickmessage }}&quot;)"{% endif %}/>
 	  </form>
 	  {% endif %}
 	</td>

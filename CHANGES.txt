@@ -5,7 +5,9 @@ Changelog of lizard-base
 1.5 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Using RequestContext in several render_to_response() calls to gain the
+  benefit of the default context processors.  This way, I could add
+  ``{{ STATIC_URL }}`` in a lot of places instead of ``{{ root_url }}``.
 
 
 1.4 (2010-03-15)

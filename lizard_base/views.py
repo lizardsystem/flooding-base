@@ -16,7 +16,7 @@ from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404, render_to_response
-from django.template import Context, loader
+from django.template import Context, loader, RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import cache_control
@@ -102,7 +102,7 @@ def testdatabase(request, configuration_id):
     except:
         url = 'could not connector.getUrl()'
     t = loader.get_template('base/testdatabase.html')
-    c = Context(
+    c = RequestContext(
         {'errormessage': errormessage,
          'configuration': configuration,
          'is_standalone': get_and_set_is_standalone(request,
@@ -128,13 +128,15 @@ def testdatabase_list(request):
     breadcrumbs = [{'name': u'%s' % _('Database connection list')}]
     object_list = Configuration.objects.all()
 
-    return render_to_response('base/configuration_list.html',
-                              {'user': request.user,
-                               'is_standalone': get_and_set_is_standalone(
+    return render_to_response(
+        'base/configuration_list.html',
+        {'user': request.user,
+         'is_standalone': get_and_set_is_standalone(
                 request, is_standalone),
-                               'breadcrumbs': breadcrumbs,
-                               'object_list': object_list,
-                               })
+         'breadcrumbs': breadcrumbs,
+         'object_list': object_list,
+         },
+        context_instance=RequestContext(request))
 
 
 def get_filters(configuration_id):
@@ -519,21 +521,23 @@ def service_get_timeseries(request, configuration_id):
                             'dtend': dtend_str,
                             }
 
-            return render_to_response('base/timeseries.html',
-                                      {'title': title,
-                                       'datacolumns': columnnames,
-                                       'configuration_id': configuration.id,
-                                       'filter_id': filter_id,
-                                       'location_id': location_id,
-                                       'parameter_id': parameter_id,
-                                       'dtstart': dtstart_str,
-                                       'dtend': dtend_str,
+            return render_to_response(
+                'base/timeseries.html',
+                {'title': title,
+                 'datacolumns': columnnames,
+                 'configuration_id': configuration.id,
+                 'filter_id': filter_id,
+                 'location_id': location_id,
+                 'parameter_id': parameter_id,
+                 'dtstart': dtstart_str,
+                 'dtend': dtend_str,
 
-                                       #for digg-paginator
-                                       'paginator': paginator,
-                                       'page': paginator.page(page_nr),
-                                       'extra_fields': extra_fields,
-                                       })
+                 #for digg-paginator
+                 'paginator': paginator,
+                 'page': paginator.page(page_nr),
+                 'extra_fields': extra_fields,
+                 },
+                context_instance=RequestContext(request))
         elif format == 'graph':
             response = HttpResponse(result[0]['graph'])
             response['Content-type'] = 'image/png'
@@ -934,7 +938,6 @@ def gui(request):
     return render_to_response(
         'gui/index.html',
         {'user': request.user,
-         'LANGUAGES': settings.LANGUAGES,
          'USE_GOOGLEMAPS': USE_GOOGLEMAPS,
          'USE_OPENSTREETMAPS': USE_OPENSTREETMAPS,
          'RESTRICTMAP': RESTRICTMAP,
@@ -949,7 +952,8 @@ def gui(request):
          'url_topbar': url_topbar,
          'extent': extent,
          'site': site,
-         })
+         },
+        context_instance=RequestContext(request))
 
 
 def gui_config(request):
@@ -989,7 +993,8 @@ def gui_config(request):
         'map_list': map_list,
         'user_zoom': user_zoom,
         'wms_bounds': wms_bounds,
-        })
+        },
+        context_instance=RequestContext(request))
 
 
 def gui_translated_strings(request):
@@ -1002,7 +1007,9 @@ def help(request):
     This method renders the help-page.
     """
     # TODO: move to base?
-    return render_to_response('gui/help.html', {})
+    return render_to_response('gui/help.html',
+                              {},
+                              context_instance=RequestContext(request))
 
 
 def userconfiguration(request):
@@ -1010,5 +1017,7 @@ def userconfiguration(request):
     This method renders userconfiguration-page.
     """
     # TODO: move to base?
-    return render_to_response('gui/configuration.html',
-                              {'LANGUAGES': settings.LANGUAGES})
+    return render_to_response(
+        'gui/configuration.html',
+        {},
+        context_instance=RequestContext(request))

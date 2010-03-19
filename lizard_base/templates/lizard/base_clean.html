@@ -3,10 +3,10 @@
 <html>
   <head>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="{% url root_url %}static_media/style/style.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ STATIC_URL }}style/style.css"/>
     <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% load adminmedia %}{% admin_media_prefix %}css/base.css{% endblock %}" />
   </head>
-  
+
   <body>
     {% block content %}{% endblock %}
   </body>

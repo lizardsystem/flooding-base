@@ -3,11 +3,11 @@
 <html>
   <head>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="{% url root_url %}static_media/style/style.css"/>    
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ STATIC_URL }}style/style.css"/>
   </head>
-  
+
   <body>
-  <h2>{% block header %} {% endblock %}</h2> 
+  <h2>{% block header %} {% endblock %}</h2>
     {% block content %}{% endblock %}
   </body>
 </html>

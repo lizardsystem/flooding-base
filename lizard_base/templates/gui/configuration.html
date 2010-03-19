@@ -22,12 +22,12 @@ Lizard {% trans 'user settings' %}
 				</thead>
 				<tbody>
 					    <tr class="cellDark">
-				    		<td><a href="{% url password_change_url %}?next={% url root_url %}" onclick="popupwindow=window.open(\'{% url password_change_url %}?next={% url root_url %}\', \'popupwindow\',\'height=600,width=800,top=10,left=10,resizable\');return false;">{% trans "Change password" %}</a></td>			    		
+				    		<td><a href="{% url password_change_url %}?next={% url root_url %}" onclick="popupwindow=window.open(\'{% url password_change_url %}?next={% url root_url %}\', \'popupwindow\',\'height=600,width=800,top=10,left=10,resizable\');return false;">{% trans "Change password" %}</a></td>
 							<td></td>
 							<td></td>
-				    	</tr>	
+				    	</tr>
 				    	<tr class="cell">
-				    		<td>{% trans "Language" %}</td>			    		
+				    		<td>{% trans "Language" %}</td>
 							<td>
 
 <table><tr>
@@ -35,18 +35,18 @@ Lizard {% trans 'user settings' %}
 <td>
 <div class="language_form">
 <form action="{% url root_url %}language/{{ lang.0 }}/" method="post">
-<input type="image" src="{% url root_url %}static_media/images/language_{{ lang.0 }}.gif" value="{{ lang.1 }}" />
+<input type="image" src="{{ STATIC_URL }}images/language_{{ lang.0 }}.gif" value="{{ lang.1 }}" />
 </form>
 </div>
 </td>
 {% endfor %}
-</tr></table>					
+</tr></table>
 
 							</td>
 							<td>{% trans 'reload pages to get new language settings' %}</td>
 				    	</tr>
 
-			    </tbody>   
+			    </tbody>
 			</table>
 		</table>
 

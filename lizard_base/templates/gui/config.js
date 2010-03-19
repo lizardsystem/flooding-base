@@ -2,7 +2,7 @@ try {
     var console = console || {};
     console.log = console.log || function() {} ;
 } catch (e)	{}
-	
+
 
 console.log('start laden config.js');
 
@@ -15,7 +15,7 @@ settings.fews_default_period = 92; //standaard periode bij opstarten (in dagen t
 settings.useImageService = true;
 
 
-var isomorphicDir="{% url root_url %}static_media/weblib/isomorphic/"; // abs path to isomorphic, needed to locate SmartClient CSS
+var isomorphicDir="{{ STATIC_URL }}weblib/isomorphic/"; // abs path to isomorphic, needed to locate SmartClient CSS
 {% autoescape off %}
 var locationLizardFewsData = '{% url root_url %}service/';
 var locationLizardData = '{% url root_url %}lizard/service/';
@@ -48,14 +48,14 @@ maxExtent = wms_bounds;
 
 var OpenLayers = OpenLayers || null;
 if (OpenLayers) {
-    var maplayer = new OpenLayers.Layer.WMS(ST_EMPTY,{isBaseLayer: true, reproject: false, 
+    var maplayer = new OpenLayers.Layer.WMS(ST_EMPTY,{isBaseLayer: true, reproject: false,
     													maxExtent: new OpenLayers.Bounds(-20037508, -20037508,
                                                  				20037508, 20037508.34),
                                                  		maxResolution: 156543.0339});
-			
+
     //custom_layers.push(maplayer);
-    
-    
+
+
     {% for m in map_list %}
 		{% if m.active %}
 		var maplayer = new OpenLayers.Layer.WMS("{{ m.name }}", "{{ m.url }}",
@@ -68,7 +68,7 @@ if (OpenLayers) {
 			srs: '{{ m.srs }}',
 			singleTile: {% if m.tiled %}false{% else %}true{% endif %},
 			format: 'image/png',
-			
+
 		}, {
 			{% if m.is_base_layer %}{% else %}visibility: false,{% endif %}
 			isBaseLayer:{% if m.is_base_layer %}true{% else %}false{% endif %},

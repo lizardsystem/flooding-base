@@ -10,10 +10,10 @@ options (incomplete):
 <head>
     <title>{% block title %}Base template{% endblock %}</title>
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
-    {% block stylesheets %}    
+    {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="{% admin_media_prefix %}css/base.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="{% url root_url %}static_media/style/style.css"/>
-    <link rel="stylesheet" type="text/css" media="print" href="{% url root_url %}static_media/style/print.css"/>    
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ STATIC_URL }}style/style.css"/>
+    <link rel="stylesheet" type="text/css" media="print" href="{{ STATIC_URL }}style/print.css"/>
     {% endblock stylesheets %}
     {% block javascripts %}
     {% endblock javascripts%}
@@ -35,7 +35,7 @@ options (incomplete):
 	{% for lang in LANGUAGES %}
 	<div class="language_form">
 	  <form action="{% url root_url %}language/{{ lang.0 }}/" method="post">
-	    <input type="image" src="{% url root_url %}static_media/images/language_{{ lang.0 }}.gif" value="{{ lang.1 }}" />
+	    <input type="image" src="{{ STATIC_URL }}images/language_{{ lang.0 }}.gif" value="{{ lang.1 }}" />
 	  </form>
 	</div>
         {% endfor %}
