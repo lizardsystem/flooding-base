@@ -2,7 +2,7 @@ Changelog of lizard-base
 ========================
 
 
-1.5 (unreleased)
+1.5 (2010-03-19)
 ----------------
 
 - Using RequestContext in several render_to_response() calls to gain the
