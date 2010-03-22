@@ -102,8 +102,7 @@ def testdatabase(request, configuration_id):
     except:
         url = 'could not connector.getUrl()'
     t = loader.get_template('base/testdatabase.html')
-    c = RequestContext(
-        {'errormessage': errormessage,
+    d = {'errormessage': errormessage,
          'configuration': configuration,
          'is_standalone': get_and_set_is_standalone(request,
                                                     is_standalone),
@@ -115,9 +114,11 @@ def testdatabase(request, configuration_id):
          'breadcrumbs': [{'name': u'%s' % _('Database connection list'),
                           'url': reverse('testdatabase_list')},
                          {'name': u'%s' % _('Test database connection')}],
-         'LANGUAGES': settings.LANGUAGES,
-         })
-    return HttpResponse(t.render(c))
+        } 
+    return render_to_response(
+        'base/testdatabase.html',
+        d,
+        context_instance=RequestContext(request))
 
 
 @login_required
@@ -346,9 +347,9 @@ def service_get_locations(request, configuration_id, filter_id):
     if configuration.datasourcetype == Configuration.DATASOURCE_TYPE_EI:
         #some 'hacking' is needed to get the desired result from Jdbc...
         #first get the locations from filters
-        locations_from_filters = connector.execute(
-            ('select distinct locationid from filters'
-            'where id=\'%s\' order by location') % filter_id, ['id'])
+        q = ('select distinct locationid from filters ' + \
+             'where id=\'%s\' order by location') % filter_id
+        locations_from_filters = connector.execute(q, ['id'])
         #then join the the locations from locations, to get all location data
         location_array = []
         parent_dict = {}
