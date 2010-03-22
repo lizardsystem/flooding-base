@@ -5,8 +5,7 @@ Changelog of lizard-base
 1.6 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
+- Fix service_get_locations.
 
 1.5 (2010-03-19)
 ----------------
