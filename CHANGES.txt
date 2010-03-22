@@ -2,7 +2,7 @@ Changelog of lizard-base
 ========================
 
 
-1.6 (unreleased)
+1.6 (2010-03-22)
 ----------------
 
 - Fix service_get_locations.
