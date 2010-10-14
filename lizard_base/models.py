@@ -10,10 +10,6 @@ from lizard_base.dummydatabaseconnector import DummyDatabaseConnector
 class Configuration(models.Model):
     """Stores the datasource type and some meta data"""
 
-    class Meta:
-        verbose_name = _('Configuration')
-        verbose_name_plural = _('Configurations')
-
     DATASOURCE_TYPE_CHOICES = (
         (1, _('DataSourceEI')),
         (2, _('DataSourceDummy')),
@@ -37,6 +33,11 @@ class Configuration(models.Model):
     coords_s = models.FloatField(default=50.765)
     coords_n = models.FloatField(default=53.471)
 
+    class Meta:
+        verbose_name = _('Configuration')
+        verbose_name_plural = _('Configurations')
+        db_table = 'base_configuration'
+        
     def __unicode__(self):
         return self.name
 
@@ -75,10 +76,6 @@ class Configuration(models.Model):
 class DataSourceEI(models.Model):
     """datasource types for EI connection (i.e. Jdbc2Ei)"""
 
-    class Meta:
-        verbose_name = _('DataSourceEI')
-        verbose_name_plural = _('Data sources EI')
-
     configuration = models.OneToOneField(Configuration, unique=True)
     # configuration must be unique
     connectorurl = models.CharField(
@@ -93,6 +90,11 @@ class DataSourceEI(models.Model):
     customfilterresponse = models.TextField(
         null=True, blank=True,
         help_text="Use a pythonic list of dictionaries. The rootnode has 'parentid': None. i.e. [{'id':'id','name':'name','parentid':None}, {'id':'id2','name':'name2','parentid':'id'}]")
+
+    class Meta:
+        verbose_name = _('DataSourceEI')
+        verbose_name_plural = _('Data sources EI')
+        db_table = 'base_datasourceei'
 
     def __unicode__(self):
         return self.configuration.__unicode__()
@@ -116,12 +118,13 @@ class DataSourceEI(models.Model):
 class DataSourceDummy(models.Model):
     """datasource type dummy connection"""
 
+    configuration = models.OneToOneField(Configuration, unique=True)
+    # configuration must be unique
+
     class Meta:
         verbose_name = _('DataSourceDummy')
         verbose_name_plural = _('Data sources dummy')
-
-    configuration = models.OneToOneField(Configuration, unique=True)
-    # configuration must be unique
+        db_table = 'base_datasourcedummy'
 
     def __unicode__(self):
         return self.configuration.__unicode__()
@@ -130,7 +133,7 @@ class DataSourceDummy(models.Model):
         return DummyDatabaseConnector()
 
     def getSpecificData(self):
-        return {}
+        return {}           
 
 
 class Application(models.Model):
@@ -160,6 +163,9 @@ class Application(models.Model):
     type = models.IntegerField(choices=TYPE_CHOICES)
     active = models.BooleanField(default=True)
 
+    class Meta:
+        db_table = 'base_application'
+        
     def __unicode__(self):
         return u'%s' % self.name
 
@@ -198,9 +204,6 @@ class SubApplication(models.Model):
 
     DO NOT CHANGE TYPE_CHOICES WITHOUT KNOWING THE CONSEQUENCES
     """
-
-    class Meta:
-        ordering = ('application', 'index')
 
     TYPE_CHOICES = (
         (11, 'fewsMap'),
@@ -247,6 +250,10 @@ class SubApplication(models.Model):
     index = models.IntegerField(default=1)
     type = models.IntegerField(choices=TYPE_CHOICES)
 
+    class Meta:
+        ordering = ('application', 'index')
+        db_table = 'base_subapplication'
+        
     def __unicode__(self):
         return u'%s' % self.TYPE_DICT[self.type]
 
@@ -255,8 +262,7 @@ class SubApplication(models.Model):
 
     def get_subapplication_jsname(self):
         return self.JSNAMES[self.type]
-
-
+            
 class GroupConfigurationPermission(models.Model):
     """Permission of groups on configurations"""
     PERMISSION_CHOICES = (
@@ -269,6 +275,9 @@ class GroupConfigurationPermission(models.Model):
     group = models.ForeignKey(Group)
     permission = models.IntegerField(choices=PERMISSION_CHOICES, default=1)
 
+    class Meta:
+        db_table = 'base_groupconfigurationpermission'
+        
     def __unicode__(self):
         return u'%s %s %s' % (self.group, self.configuration, self.permission)
 
@@ -279,6 +288,9 @@ class Setting(models.Model):
     value = models.CharField(max_length=200)
     remarks = models.TextField(null=True, blank=True)
 
+    class Meta:
+        db_table = 'base_setting'
+        
     def __unicode__(self):
         return u'%s = %s' % (self.key, self.value)
 
@@ -296,6 +308,9 @@ class Map(models.Model):
     tiled = models.NullBooleanField(default=None)
     srs = models.CharField(max_length=50, default='EPSG:900913')
 
+    class Meta:
+        db_table = 'base_map'
+    
     def __unicode__(self):
         return self.name
 
@@ -329,7 +344,10 @@ class Site(models.Model):
     coords_e = models.FloatField(default=7.314)
     coords_s = models.FloatField(default=50.765)
     coords_n = models.FloatField(default=53.471)
-
+    
+    class Meta:
+        db_table = 'base_site'
+    
     def __unicode__(self):
         return self.name
 
