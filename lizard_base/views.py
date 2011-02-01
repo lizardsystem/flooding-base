@@ -1000,8 +1000,6 @@ def gui_config(request):
 
 def gui_translated_strings(request):
     """Returns translated_strings.html, with translated strings"""
-    print '---'
-    print RequestContext(request)
     return render_to_response('gui/translated_strings.html', 
                                 context_instance=RequestContext(request))
 
