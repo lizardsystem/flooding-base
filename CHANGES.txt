@@ -2,7 +2,7 @@ Changelog of lizard-base
 ========================
 
 
-1.10 (unreleased)
+1.10 (2011-02-07)
 -----------------
 
 - Making ready for releasing on Lizard-PyPi
