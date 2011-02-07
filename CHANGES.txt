@@ -5,7 +5,7 @@ Changelog of lizard-base
 1.10 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Making ready for releasing on Lizard-PyPi
 
 
 1.9 (2011-02-07)
