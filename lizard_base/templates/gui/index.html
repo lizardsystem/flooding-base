@@ -118,6 +118,13 @@
 				console.log('during unload: ' + e);
 			}
 		}
+		
+		function onResize(){
+			if (typeof(infoWindowManager)!= 'undefined')
+    		{
+    		infoWindowManager.repositionWindow();
+    		}
+		}
 
 		</script>
 	</head>
