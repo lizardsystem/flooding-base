@@ -26,25 +26,7 @@ Lizard {% trans 'user settings' %}
 							<td></td>
 							<td></td>
 				    	</tr>
-				    	<tr class="cell">
-				    		<td>{% trans "Language" %}</td>
-							<td>
-
-<table><tr>
-{% for lang in LANGUAGES %}
-<td>
-<div class="language_form">
-<form action="{% url root_url %}language/{{ lang.0 }}/" method="post">
-<input type="image" src="{{ STATIC_URL }}images/language_{{ lang.0 }}.gif" value="{{ lang.1 }}" />
-</form>
-</div>
-</td>
-{% endfor %}
-</tr></table>
-
-							</td>
-							<td>{% trans 'reload pages to get new language settings' %}</td>
-				    	</tr>
+				    
 
 			    </tbody>
 			</table>
