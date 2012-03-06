@@ -2,6 +2,12 @@ Changelog of lizard-base
 ========================
 
 
+1.18 (unreleased)
+-----------------
+
+- Nothing changed yet.
+
+
 1.17 (2012-03-06)
 -----------------
 
