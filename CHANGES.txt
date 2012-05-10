@@ -2,10 +2,14 @@ Changelog of lizard-base
 ========================
 
 
-1.19 (unreleased)
+1.19 (2012-05-10)
 -----------------
 
-- Nothing changed yet.
+- New user manual.
+
+- "Export" button disable/enable when a scenario is selected/deselected.
+
+- Typo fix.
 
 
 1.18 (2012-05-03)
