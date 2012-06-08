@@ -2,7 +2,7 @@ Changelog of flooding-base
 ========================
 
 
-1.22 (unreleased)
+1.22 (2012-06-08)
 -----------------
 
 - MOVED TO GIT
