@@ -4,7 +4,7 @@ DATABASE_ENGINE = 'sqlite3'
 DATABASE_NAME = 'test.db'
 SITE_ID = 1
 INSTALLED_APPS = [
-    'lizard_base',
+    'flooding_base',
     'staticfiles',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -12,7 +12,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     ]
-ROOT_URLCONF = 'lizard_base.urls'
+ROOT_URLCONF = 'flooding_base.urls'
 # Used for django-staticfiles
 STATIC_URL = '/static_media/'
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -28,6 +28,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 try:
     # Import local settings that aren't stored in svn.
-    from lizard_base.local_testsettings import *
+    from flooding_base.local_testsettings import *
 except ImportError:
     pass

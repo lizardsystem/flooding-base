@@ -1,11 +1,11 @@
-lizard-base
+flooding-base
 ==========================================
 
 Introduction
 
 Usage, etc.
 
-More details in src/lizard_base/USAGE.txt .
+More details in src/flooding_base/USAGE.txt .
 
 
 Requirements

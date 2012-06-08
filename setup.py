@@ -5,7 +5,7 @@ version = '1.22.dev0'
 
 long_description = '\n\n'.join([
     open('README.txt').read(),
-    open(os.path.join('lizard_base', 'USAGE.txt')).read(),
+    open(os.path.join('flooding_base', 'USAGE.txt')).read(),
     open('TODO.txt').read(),
     open('CREDITS.txt').read(),
     open('CHANGES.txt').read(),
@@ -21,7 +21,7 @@ install_requires = [
 tests_require = [
     ]
 
-setup(name='lizard-base',
+setup(name='flooding-base',
       version=version,
       description="TODO",
       long_description=long_description,
@@ -34,7 +34,7 @@ setup(name='lizard-base',
       author_email='TODO@nelen-schuurmans.nl',
       url='',
       license='GPL',
-      packages=['lizard_base'],
+      packages=['flooding_base'],
       include_package_data=True,
       zip_safe=False,
       install_requires=install_requires,

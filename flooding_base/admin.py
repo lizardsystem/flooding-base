@@ -1,14 +1,14 @@
 from django.contrib import admin
 
-from lizard_base.models import Configuration
-from lizard_base.models import DataSourceEI
-from lizard_base.models import DataSourceDummy
-from lizard_base.models import GroupConfigurationPermission
-from lizard_base.models import Setting
-from lizard_base.models import Map
-from lizard_base.models import Site
-from lizard_base.models import Application
-from lizard_base.models import SubApplication
+from flooding_base.models import Configuration
+from flooding_base.models import DataSourceEI
+from flooding_base.models import DataSourceDummy
+from flooding_base.models import GroupConfigurationPermission
+from flooding_base.models import Setting
+from flooding_base.models import Map
+from flooding_base.models import Site
+from flooding_base.models import Application
+from flooding_base.models import SubApplication
 
 
 class ConfigurationAdmin(admin.ModelAdmin):

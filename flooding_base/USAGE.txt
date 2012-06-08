@@ -1,9 +1,9 @@
-Usage of lizard-base
+Usage of flooding-base
 =============================================
 
 
 Usage:
 
-    >>> import lizard_base
+    >>> import flooding_base
 
 Show how to import the main classes and how to use them.

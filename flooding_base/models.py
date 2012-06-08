@@ -3,8 +3,8 @@ from django.db import models
 from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 
-from lizard_base.eidatabaseconnector import ConnectDatabase2EiServer
-from lizard_base.dummydatabaseconnector import DummyDatabaseConnector
+from flooding_base.eidatabaseconnector import ConnectDatabase2EiServer
+from flooding_base.dummydatabaseconnector import DummyDatabaseConnector
 
 
 class Configuration(models.Model):
@@ -37,7 +37,7 @@ class Configuration(models.Model):
         verbose_name = _('Configuration')
         verbose_name_plural = _('Configurations')
         db_table = 'base_configuration'
-        
+
     def __unicode__(self):
         return self.name
 
@@ -133,7 +133,7 @@ class DataSourceDummy(models.Model):
         return DummyDatabaseConnector()
 
     def getSpecificData(self):
-        return {}           
+        return {}
 
 
 class Application(models.Model):
@@ -165,7 +165,7 @@ class Application(models.Model):
 
     class Meta:
         db_table = 'base_application'
-        
+
     def __unicode__(self):
         return u'%s' % self.name
 
@@ -253,7 +253,7 @@ class SubApplication(models.Model):
     class Meta:
         ordering = ('application', 'index')
         db_table = 'base_subapplication'
-        
+
     def __unicode__(self):
         return u'%s' % self.TYPE_DICT[self.type]
 
@@ -262,7 +262,7 @@ class SubApplication(models.Model):
 
     def get_subapplication_jsname(self):
         return self.JSNAMES[self.type]
-            
+
 class GroupConfigurationPermission(models.Model):
     """Permission of groups on configurations"""
     PERMISSION_CHOICES = (
@@ -277,7 +277,7 @@ class GroupConfigurationPermission(models.Model):
 
     class Meta:
         db_table = 'base_groupconfigurationpermission'
-        
+
     def __unicode__(self):
         return u'%s %s %s' % (self.group, self.configuration, self.permission)
 
@@ -290,7 +290,7 @@ class Setting(models.Model):
 
     class Meta:
         db_table = 'base_setting'
-        
+
     def __unicode__(self):
         return u'%s = %s' % (self.key, self.value)
 
@@ -310,7 +310,7 @@ class Map(models.Model):
 
     class Meta:
         db_table = 'base_map'
-    
+
     def __unicode__(self):
         return self.name
 
@@ -344,10 +344,10 @@ class Site(models.Model):
     coords_e = models.FloatField(default=7.314)
     coords_s = models.FloatField(default=50.765)
     coords_n = models.FloatField(default=53.471)
-    
+
     class Meta:
         db_table = 'base_site'
-    
+
     def __unicode__(self):
         return self.name
 

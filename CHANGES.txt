@@ -1,11 +1,13 @@
-Changelog of lizard-base
+Changelog of flooding-base
 ========================
 
 
 1.22 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- MOVED TO GIT
+
+- RENAMED FROM lizard-base TO flooding-base
 
 
 1.21 (2012-05-16)

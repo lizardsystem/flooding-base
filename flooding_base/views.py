@@ -25,13 +25,13 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.dates import DateFormatter
 from matplotlib.figure import Figure
 
-from lizard_base.models import Configuration
-from lizard_base.models import GroupConfigurationPermission
-from lizard_base.models import SubApplication
-from lizard_base.models import Setting
-from lizard_base.models import Map
-from lizard_base.models import Site
-from lizard_base.models import Application
+from flooding_base.models import Configuration
+from flooding_base.models import GroupConfigurationPermission
+from flooding_base.models import SubApplication
+from flooding_base.models import Setting
+from flooding_base.models import Map
+from flooding_base.models import Site
+from flooding_base.models import Application
 
 
 log = logging.getLogger('nens.base.views')
@@ -114,7 +114,7 @@ def testdatabase(request, configuration_id):
          'breadcrumbs': [{'name': u'%s' % _('Database connection list'),
                           'url': reverse('testdatabase_list')},
                          {'name': u'%s' % _('Test database connection')}],
-        } 
+        }
     return render_to_response(
         'base/testdatabase.html',
         d,
@@ -1000,7 +1000,7 @@ def gui_config(request):
 
 def gui_translated_strings(request):
     """Returns translated_strings.html, with translated strings"""
-    return render_to_response('gui/translated_strings.html', 
+    return render_to_response('gui/translated_strings.html',
                                 context_instance=RequestContext(request))
 
 
