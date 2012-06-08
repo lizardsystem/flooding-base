@@ -9,4 +9,10 @@ import flooding_base.models
 import flooding_base.urls
 import flooding_base.views
 
-# No actual tests
+from django.utils.unittest import TestCase
+
+# Simple test, for testing
+class TrivialTest(TestCase):
+    def testAddition(self):
+        self.assertEquals(1+1, 2)
+
