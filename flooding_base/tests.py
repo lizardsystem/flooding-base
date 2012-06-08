@@ -1,17 +1,12 @@
-import doctest
+# Smoke test: just import everything and see if smoke comes out:
 
+import flooding_base
+import flooding_base.admin
+import flooding_base.dummydatabaseconnector
+import flooding_base.eidatabaseconnector
+import flooding_base.jdbctest
+import flooding_base.models
+import flooding_base.urls
+import flooding_base.views
 
-def suite():
-    """Return test suite
-
-    This method is automatically called by django's test mechanism.
-
-    """
-    return doctest.DocFileSuite(
-        'USAGE.txt',
-        'smoketest.txt',
-        #'TODO_several_more_tests.txt',
-        module_relative=True,
-        optionflags=(doctest.NORMALIZE_WHITESPACE|
-                     doctest.ELLIPSIS|
-                     doctest.REPORT_NDIFF))
+# No actual tests

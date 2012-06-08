@@ -12,7 +12,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django_extensions',
+    'django_nose',
     ]
+
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
 ROOT_URLCONF = 'flooding_base.urls'
 # Used for django-staticfiles
 STATIC_URL = '/static_media/'

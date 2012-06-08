@@ -15,6 +15,7 @@ install_requires = [
     'Django',
     'iso8601',
     'django-extensions',
+    'django-nose',
     'django-staticfiles',
     'Markdown',
     ],
