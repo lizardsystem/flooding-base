@@ -11,6 +11,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    'django_extensions',
     ]
 ROOT_URLCONF = 'flooding_base.urls'
 # Used for django-staticfiles
