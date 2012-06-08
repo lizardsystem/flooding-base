@@ -1,4 +1,6 @@
-from django.conf.urls.defaults import *
+from django.conf.urls.defaults import patterns
+from django.conf.urls.defaults import include
+from django.conf.urls.defaults import url
 from django.conf import settings
 
 from django.contrib import admin
@@ -53,11 +55,7 @@ urlpatterns = patterns(
         'flooding_base.views.gui_translated_strings',
         name='gui_translated_strings'),
 
-    url(r'^admin/(.*)', admin.site.root),
-
-    url(r'^admin/$',
-        admin.site.root,
-        name='admin_url'),  # manually name admin root
+    url(r'^admin/(.*)', include(admin.site.urls)),
 
     url(r'^help/$',
         'flooding_base.views.help',

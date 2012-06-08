@@ -25,7 +25,7 @@
 {% if user.is_staff %}
 <h2>{% trans 'Staff options' %}</h2>
 <ul>
-<li><a href="{% url admin_url %}">{% trans 'admin' %}</a></li>
+<li><a href="/admin/">{% trans 'admin' %}</a></li>
 <li><a href="{% url testdatabase_list %}">{% trans 'Test database' %}</a></li>
 <li><a href="{% url locationparameterhelper_list %}">{% trans 'Location/parameter helper' %}</a></li>
 </ul>
