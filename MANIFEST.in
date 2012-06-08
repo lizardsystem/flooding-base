@@ -1,4 +1,5 @@
 # Include docs in the root.
 include *.rst
+include *.txt
 # Include everything in our project directory.
 graft flooding_base
