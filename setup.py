@@ -14,6 +14,7 @@ long_description = '\n\n'.join([
 install_requires = [
     'Django',
     'iso8601',
+    'django-extensions',
     'django-staticfiles',
     'Markdown',
     ],
