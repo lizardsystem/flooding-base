@@ -5,7 +5,7 @@ Changelog of flooding-base
 1.24 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Add 'Text' model to store bits of text that need to be shown on the site.
 
 
 1.23 (2012-06-12)

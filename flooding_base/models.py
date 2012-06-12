@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+from django.conf import settings
 from django.db import models
 from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
+from django.utils.html import escape
 
 from flooding_base.eidatabaseconnector import ConnectDatabase2EiServer
 from flooding_base.dummydatabaseconnector import DummyDatabaseConnector
@@ -369,3 +371,49 @@ class Site(models.Model):
                 [sa.get_subapplication_jsname()
                  for sa in self.subapplications.filter(application=a)])
         return result
+
+
+class Text(models.Model):
+    """Some text to show on the site, somewhere."""
+
+    LANGUAGE_CHOICES = getattr(settings, 'LANGUAGES',
+                               ('nl', 'Nederlands'))
+    slug = models.CharField(max_length=20)
+    language = models.CharField(
+        max_length=5, default="nl",
+        choices=LANGUAGE_CHOICES)
+    content = models.TextField(blank=True)
+    is_html = models.BooleanField(default=False)
+
+    @classmethod
+    def get(cls, slug, language_code=None, request=None, default=""):
+        """Returns the text's content, HTML-escaped unless it is
+        itself HTML.
+
+        If language_code is not given, it can be retrieved from the
+        request, if that is given.
+
+        If the text isn't found, default is returned."""
+
+        if language_code is None:
+            language_code = getattr(request, 'LANGUAGE_CODE', None)
+
+        search = {
+            'slug': slug,
+        }
+        if language_code is not None:
+            search['language'] = language_code
+
+        texts = cls.objects.filter(**search)
+        if texts.count() > 0:
+            text = texts[0]
+            if text.is_html:
+                return text.content
+            else:
+                return escape(text.content)
+        else:
+            return default
+
+    def __unicode__(self):
+        return "{slug} ({language})".format(
+            slug=self.slug, language=self.language)
