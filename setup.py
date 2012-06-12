@@ -18,6 +18,7 @@ install_requires = [
     'django-nose',
     'django-staticfiles',
     'Markdown',
+    'south',
     ],
 
 tests_require = [

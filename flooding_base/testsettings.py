@@ -12,7 +12,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django_extensions',
-    'django_nose',
+    'south',
+    'django_nose',  # Must be below south
     ]
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
