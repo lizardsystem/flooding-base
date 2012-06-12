@@ -16,7 +16,7 @@ from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404, render_to_response
-from django.template import Context, loader, RequestContext
+from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import cache_control
@@ -101,7 +101,7 @@ def testdatabase(request, configuration_id):
         url = connector.getUrl()
     except:
         url = 'could not connector.getUrl()'
-    t = loader.get_template('base/testdatabase.html')
+
     d = {'errormessage': errormessage,
          'configuration': configuration,
          'is_standalone': get_and_set_is_standalone(request,

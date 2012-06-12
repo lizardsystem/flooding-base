@@ -7,6 +7,8 @@ from django.contrib import admin
 
 admin.autodiscover()
 
+config_pattern = r'^service/configuration/(?P<configuration_id>\d+)'
+filter_pattern = config_pattern + r'/filter/(?P<filter_id>[_A-Za-z0-9]*)/'
 
 urlpatterns = patterns(
     '',
@@ -20,23 +22,23 @@ urlpatterns = patterns(
         'flooding_base.views.service_get_configurations',
         name='base_service_get_configurations'),
 
-    url(r'^service/configuration/(?P<configuration_id>\d+)/filter/$',
+    url(config_pattern + r'/filter/$',
         'flooding_base.views.service_get_filters',
         name='base_service_get_filters'),
 
-    url(r'^service/configuration/(?P<configuration_id>\d+)/filter/(?P<filter_id>[_A-Za-z0-9]*)/location/$',
+    url(filter_pattern + r'location/$',
         'flooding_base.views.service_get_locations',
         name='base_service_get_locations'),
 
-    url(r'^service/configuration/(?P<configuration_id>\d+)/filter/(?P<filter_id>[_A-Za-z0-9]*)/parameter/$',
+    url(filter_pattern + r'parameter/$',
         'flooding_base.views.service_get_parameters',
         name='base_service_get_parameters'),
 
-    url(r'^service/configuration/(?P<configuration_id>\d+)/location/(?P<location_id>[_/A-Za-z0-9]*)/$',
+    url(config_pattern + r'/location/(?P<location_id>[_/A-Za-z0-9]*)/$',
         'flooding_base.views.service_get_location',
         name='base_service_get_location'),
 
-    url(r'^service/configuration/(?P<configuration_id>\d+)/timeseries/$',
+    url(config_pattern + r'/timeseries/$',
         'flooding_base.views.service_get_timeseries',
         name='base_service_get_timeseries'),
 

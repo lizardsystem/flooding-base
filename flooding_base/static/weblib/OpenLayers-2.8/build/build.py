@@ -24,7 +24,7 @@ if len(sys.argv) > 1:
     configFilename = sys.argv[1]
     extension = configFilename[-4:]
 
-    if extension  != ".cfg":
+    if extension != ".cfg":
         configFilename = sys.argv[1] + ".cfg"
 
 if len(sys.argv) > 2:
@@ -38,9 +38,9 @@ if have_compressor == "jsmin":
 elif have_compressor == "minimize":
     print "Compressing using minimize."
     minimized = minimize.minimize(merged)
-else: # fallback
+else:  # fallback
     print "Not compressing."
-    minimized = merged 
+    minimized = merged
 print "Adding license file."
 minimized = file("license.txt").read() + minimized
 

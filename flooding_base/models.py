@@ -89,7 +89,10 @@ class DataSourceEI(models.Model):
     usecustomfilterresponse = models.BooleanField(default=False)
     customfilterresponse = models.TextField(
         null=True, blank=True,
-        help_text="Use a pythonic list of dictionaries. The rootnode has 'parentid': None. i.e. [{'id':'id','name':'name','parentid':None}, {'id':'id2','name':'name2','parentid':'id'}]")
+        help_text=("Use a pythonic list of dictionaries. The rootnode has "
+                   "'parentid': None. i.e. [{'id':'id','name':'name',"
+                   "'parentid':None}, {'id':'id2','name':'name2',"
+                   "'parentid':'id'}]"))
 
     class Meta:
         verbose_name = _('DataSourceEI')
@@ -156,7 +159,6 @@ class Application(models.Model):
         (TYPE_NHI, 'nhi'),
         )
     TYPE_DICT = dict(TYPE_CHOICES)
-
 
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
@@ -263,6 +265,7 @@ class SubApplication(models.Model):
     def get_subapplication_jsname(self):
         return self.JSNAMES[self.type]
 
+
 class GroupConfigurationPermission(models.Model):
     """Permission of groups on configurations"""
     PERMISSION_CHOICES = (
@@ -302,7 +305,10 @@ class Map(models.Model):
     active = models.BooleanField(default=True)
 
     url = models.CharField(max_length=200)
-    layers = models.CharField(max_length=200) #layernames seperated with comma
+
+    #layernames separated with comma
+    layers = models.CharField(max_length=200)
+
     transparent = models.NullBooleanField(default=None)
     is_base_layer = models.NullBooleanField(default=False)
     tiled = models.NullBooleanField(default=None)
