@@ -2,7 +2,7 @@ Changelog of flooding-base
 ==========================
 
 
-1.25 (unreleased)
+1.25 (2012-06-14)
 -----------------
 
 - New versions of the group import example Excel files.
