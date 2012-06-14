@@ -2,6 +2,12 @@ Changelog of flooding-base
 ==========================
 
 
+1.26 (unreleased)
+-----------------
+
+- Nothing changed yet.
+
+
 1.25 (2012-06-14)
 -----------------
 
