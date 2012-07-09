@@ -5,7 +5,8 @@ Changelog of flooding-base
 1.26 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Removed static/examples files, moved them to the flooding site. This
+  makes it slightly easier to update them.
 
 
 1.25 (2012-06-14)
