@@ -2,7 +2,7 @@ Changelog of flooding-base
 ==========================
 
 
-1.26 (unreleased)
+1.26 (2012-07-09)
 -----------------
 
 - Removed static/examples files, moved them to the flooding site. This
