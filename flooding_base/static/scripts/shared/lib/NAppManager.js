@@ -6,10 +6,10 @@ console.log('NAppManager laden ...');
 /****				and creates the 'App' header  		*/
 /********************************************************/
 
-/* 
+/*
  * @requires NApp.js
- * 
- */ 
+ *
+ */
 
 function NAppManager(appManagerName, appHeaderPaneID, subAppHeaderPaneId, settings) {
     console.log('Creating NAppManager');
@@ -19,15 +19,15 @@ function NAppManager(appManagerName, appHeaderPaneID, subAppHeaderPaneId, settin
 
     this.appList = {};
     this.selectedApp = null;
-    this.mainScreen = {};    
+    this.mainScreen = {};
     settings = settings || {};
-    
+
     this.mainScreenManager = settings.mainScreenManager || null;
     this.overlayManager = settings.overlayManager || null;
     this.toolbarManager = settings.toolbarManager || null;
     this.infoWindowManager = settings.infoWindowManager || null;
     this.rootUrl = settings.rootUrl || "/";
- }
+}
 
 /**** Initialize the function ****/
 NAppManager.prototype.init = function() {
@@ -35,7 +35,7 @@ NAppManager.prototype.init = function() {
 }
 
 NAppManager.prototype.destroy = function() {
-	this.mainScreenManager.destroyMap();
+    this.mainScreenManager.destroyMap();
 }
 
 /**** Returns the HTML for describing the header of the website, that displays the applications as links ****/
@@ -86,7 +86,7 @@ NAppManager.prototype.refresh= function() {
 
 /**** Add app to App Manager ****/
 NAppManager.prototype.addApp= function(app) {
-   // console.assert(this.appList[app.id] == null, "The id of this application is already used in the list of applications.");
+    // console.assert(this.appList[app.id] == null, "The id of this application is already used in the list of applications.");
     this.appList[app.id] = app;
 }
 
@@ -98,11 +98,11 @@ NAppManager.prototype.addApps= function(apps) {
 }
 
 /**** Remove app from App Manager ****/
-NAppManager.prototype.removeApp= function(app) {    
+NAppManager.prototype.removeApp= function(app) {
     if(this.appList[app.id]==null)
     {
     	console.warning("Application id does not exisit in the list of application id's!" )
-    }    
+    }
     delete this.appList[app.id];
 }
 
@@ -119,73 +119,73 @@ NAppManager.prototype.selectApp= function(app_id, parent_id) {
         }
     } else { //search parent
 	if (typeof(this.appList[parent_id]) == 'undefined') {
-          alert('Configureerfout, applicatie "'+parent_id+'" bestaat niet. Contacteer systeembeheerder.');
-	  	return;
+            alert('Configureerfout, applicatie "'+parent_id+'" bestaat niet. Contacteer systeembeheerder.');
+	    return;
         } else if (typeof(this.appList[parent_id].subApps[app_id]) == 'undefined'){
-	    	alert('Configureerfout, subapplicatie "'+app_id+'" onder applicatie "'+parent_id+'" bestaat niet. Contacteer systeembeheerder.');
-	    	return;
+	    alert('Configureerfout, subapplicatie "'+app_id+'" onder applicatie "'+parent_id+'" bestaat niet. Contacteer systeembeheerder.');
+	    return;
         } else {
-        	this.selectedApp = this.appList[parent_id].subApps[app_id];
-        	this.appList[parent_id].selectedSubApp = this.selectedApp;
+            this.selectedApp = this.appList[parent_id].subApps[app_id];
+            this.appList[parent_id].selectedSubApp = this.selectedApp;
         }
     }
 
     //todo: register app_id and parent_id with server
     // func(app_id, parent_id)...
 
-     //change mainscreen (voor overlayContainer)
-    
+    //change mainscreen (voor overlayContainer)
+
     this.mainScreenManager.setScreen(this.selectedApp.screenType, this.selectedApp);
-    
+
     if (!this.selectedApp.isInit) {
         this.selectedApp.init();
-    }  
-     
-    if (this.selectedApp.navigation) {    	    	
+    }
+
+    if (this.selectedApp.navigation) {
         scMain.showMember(scNavigation);
-        scNavigation.setShowResizeBar(true);        
-        this.selectedApp.navigation.show();        
-    } else {    	
+        scNavigation.setShowResizeBar(true);
+        this.selectedApp.navigation.show();
+    } else {
         scMain.hideMember(scNavigation, null);
-        scNavigation.setShowResizeBar(false);        
-    }    
+        scNavigation.setShowResizeBar(false);
+    }
     //scMain.redraw();
- 
-    if (this.infoWindowManager ) {                             
+
+    if (this.infoWindowManager ) {
     	this.infoWindowManager.setWindows(this.selectedApp.infoWindowContainer);
-    }  
-    
-    if (this.selectedApp.overlayContainer) {        
+    }
+
+    if (this.selectedApp.overlayContainer) {
     	this.selectedApp.overlayContainer.addOverlays();
     }
-    
-    if (this.selectedApp.overlayManager) {  
-    	this.selectedApp.overlayManager.setMap(this.mainScreenManager.getMap())   
+
+    if (this.selectedApp.overlayManager) {
+    	this.selectedApp.overlayManager.setMap(this.mainScreenManager.getMap())
     	this.selectedApp.overlayManager.show();
     }
-        
-    if (this.toolbarManager ) {    	
+
+    if (this.toolbarManager ) {
     	this.toolbarManager.setToolbar(this.selectedApp.toolbar);
-    }    
-       
-    this.selectedApp.onSelect();    
-	//refresh header
+    }
+
+    this.selectedApp.onSelect();
+    //refresh header
     this.refresh();
-	
+
     this.selectedApp.onShow();
 }
 
 /**** Deselect application (does not change screen!)  ****/
 NAppManager.prototype.unselectApp= function() {
-   
+
     if (this.selectedApp && this.selectedApp.overlayContainer) {
     	this.selectedApp.overlayContainer.removeOverlays();
     }
-    
-    if (this.selectedApp && this.selectedApp.overlayManager) {        
+
+    if (this.selectedApp && this.selectedApp.overlayManager) {
     	this.selectedApp.overlayManager.hide();
     }
-    
+
     if (this.selectedApp != null) {
         this.selectedApp.onUnselect();
     }
@@ -202,15 +202,15 @@ NAppManager.prototype.getSelectedApp= function() {
 /****  Register app in server ****/
 NAppManager.prototype.registerApp = function(site_name, url) {
     RPCManager.sendRequest({
-	    actionURL: url,
-	    useSimpleHttp: true,
-	    httpMethod: "GET",
-	    params: {app_name: this.selectedApp.id, 
-		     action: "set_current_subapplication",
-	             site_name: site_name},
-	    callback: function(response, data, request) {
-	    }
-	});
+	actionURL: url,
+	useSimpleHttp: true,
+	httpMethod: "GET",
+	params: {app_name: this.selectedApp.id,
+		 action: "set_current_subapplication",
+	         site_name: site_name},
+	callback: function(response, data, request) {
+	}
+    });
 }
 
 /****  Get reference to selected or parent of selected NApp ****/
@@ -228,7 +228,7 @@ NAppManager.prototype.getSelectedSubApp= function() {
     if (!this.selectedApp) { return null; }
     if (this.selectedApp.hasParentApp) {
         return this.selectedApp;
-     } else {
+    } else {
         return null;
     }
 }
@@ -238,5 +238,5 @@ NAppManager.prototype.closeAppTab= function(tab) {
     scNavigation.removeTab(tab);
     tab.app.scNavigation.isAdded = false;
 
- }
+}
 console.log('NAppManager geladen ...');

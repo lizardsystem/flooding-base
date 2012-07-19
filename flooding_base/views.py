@@ -854,9 +854,6 @@ def gui(request):
     applications = Application.get_applications()
     #default urls
     url_root = reverse('root_url')
-    url_favicon = url_root + Setting.objects.get(key='URL_FAVICON').value
-    url_logo = url_root + Setting.objects.get(key='URL_LOGO').value
-    url_topbar = url_root + Setting.objects.get(key='URL_TOPBAR').value
 
     if request.GET.__contains__('clear_session'):
         request.session.clear()
@@ -891,69 +888,58 @@ def gui(request):
             if 'configuration' in request.session:
                 del request.session['configuration']
 
-    site_value = request.GET.get('site', '')
-    site = None
-    if site_value == '':
-        #default site
-        log.debug('site_value == \'\'')
-        try:
-            site = Site.objects.filter(
-                name__iexact='default_site').order_by('id')[0]
-        except:
-            pass
+    site = Site.objects.get(name='default_site')
+
+    if site.favicon_image:
+        url_favicon = url_root + site.favicon_image.url
     else:
-        try:
-            site = Site.objects.get(name__iexact=site_value)
-        except Site.DoesNotExist:
-            if 'configuration' in request.session:
-                del request.session['configuration']
+        url_favicon = url_root + Setting.objects.get(key='URL_FAVICON').value
 
-    if site is not None:
-        if site.favicon_image:
-            url_favicon = url_root + site.favicon_image.url
-        if site.logo_image:
-            url_logo = url_root + site.logo_image.url
-        if site.topbar_image:
-            url_topbar = url_root + site.topbar_image.url
-        request.session['configuration'] = [c.id for c in
-                                            site.configurations.all()]
+    if site.topbar_image:
+        url_topbar = url_root + site.topbar_image.url
+    else:
+        url_topbar = url_root + Setting.objects.get(key='URL_TOPBAR').value
 
-        #set default starter subapp
-        starter_subapp = site.starter_application
+    request.session['configuration'] = [c.id for c in
+                                        site.configurations.all()]
 
-        #optionally overwrite with session_subapp, if application is available
-        if site.name in session_subapp:
-            if len(site.subapplications.filter(
-                    id=session_subapp[site.name].id)) > 0:
-                starter_subapp = session_subapp[site.name]
-        STARTER_SUBAPPLICATION = starter_subapp.get_subapplication_name()
-        STARTER_APPLICATION = starter_subapp.application.get_application_name()
+    #set default starter subapp
+    starter_subapp = site.starter_application
 
-        applications = site.get_applications()
+    #optionally overwrite with session_subapp, if application is available
+    if site.name in session_subapp:
+        if len(site.subapplications.filter(
+                id=session_subapp[site.name].id)) > 0:
+            starter_subapp = session_subapp[site.name]
+
+    applications = site.get_applications()
 
     extent = {'east': site.coords_e, 'west': site.coords_w,
               'north': site.coords_n, 'south': site.coords_s}
 
     RESTRICTMAP = bool(int(Setting.objects.get(key='RESTRICTMAP').value))
 
+    javascript_parameters = simplejson.dumps({
+            'root_url': reverse('root_url'),
+            'sitename': site.name,
+            'uberservice_url': reverse('base_service_uberservice'),
+            'use_googlemaps': USE_GOOGLEMAPS,
+            'use_openstreetmaps': USE_OPENSTREETMAPS,
+            'restrictmap': RESTRICTMAP,
+            'extent': extent,
+        })
+
     return render_to_response(
-        'gui/index.html',
-        {'user': request.user,
-         'USE_GOOGLEMAPS': USE_GOOGLEMAPS,
-         'USE_OPENSTREETMAPS': USE_OPENSTREETMAPS,
-         'RESTRICTMAP': RESTRICTMAP,
-         'GOOGLEMAPS_KEY': GOOGLEMAPS_KEY,
-         'MEDIA_URL': settings.MEDIA_URL,
-         'STARTER_APPLICATION': STARTER_APPLICATION,
-         'STARTER_SUBAPPLICATION': STARTER_SUBAPPLICATION,
-         'app_list': ', '.join(applications.keys()),
-         'applications': applications,
-         'url_favicon': url_favicon,
-         'url_logo': url_logo,
-         'url_topbar': url_topbar,
-         'extent': extent,
-         'site': site,
-         },
+        'gui/index.html', {
+            'url_topbar': url_topbar,
+            'USE_GOOGLEMAPS': USE_GOOGLEMAPS,
+            'GOOGLEMAPS_KEY': GOOGLEMAPS_KEY,
+            'javascript_parameters': javascript_parameters,
+            'user': request.user,
+            'USE_OPENSTREETMAPS': USE_OPENSTREETMAPS,
+            'RESTRICTMAP': RESTRICTMAP,
+            'url_favicon': url_favicon,
+            },
         context_instance=RequestContext(request))
 
 

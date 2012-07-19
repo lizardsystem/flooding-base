@@ -1,57 +1,56 @@
 /*************************************************************/
-/**** description: 	Load the Flooding application            */
+/**** description: Load the Flooding application            */
 /****                                                        */
 /*************************************************************/
 
-function loadFloodingApp(urlScriptRoot) {
-    console.log('loading Flooding Application')
-    flooding = new NApp("flooding",{
+var loadFloodingApp = function () {
+    console.log('loading Flooding Application');
+    var flooding = new NApp("Lizard Flooding",{
         id: "flooding",
         description: "overstromingsinformatie",
-        defaultSubAppId: "floodingResults",        
+        defaultSubAppId: "floodingResults",
 
         onInit:function() {},
         onShow:function() {},
         onHide:function() {}
     });
 
-	// Create Flooding
-    flooding_result = new NApp(ST_RESULTS ,{
+    // Create Flooding
+    var flooding_result = new NApp(ST_RESULTS ,{
         id: "floodingResults",
         description: "resultaten overstromings informatie bekijken",
         screenType: MAP,
         combMapData:true,
 
-        navigation: new NNavigation({ initFunction: "frNavigation"}),        
+        navigation: new NNavigation({ initFunction: "frNavigation"}),
         infoWindowContainer: new NInfoWindowContainer({ initFunction: "frInfoWindowSettings"}),
         overlayContainer: new NOverlayContainer({ initFunction: "frOverlaySettings"}),
         toolbar: new NToolbar({ initFunction: "frToolbarSettings"}),
         overlayManager: new NOverlayManager(map, {prefixPngLocation: lizardKbFloodPngDirectory}),
-        
+
         onInit:function() {},
         onShow:function() {
-        		try {
-        			region_layers_results.addOverlays();
-        		} 
-        		catch (e) {}
+            try {
+                region_layers_results.addOverlays();
+            }
+            catch (e) {}
         },
-        onUnselect:function() {        		
-        		cancelLayerControls();
-				try {
-					region_layers_results.removeOverlays();
-				} 
-				catch (e) {} 
+        onUnselect:function() {
+            cancelLayerControls();
+            try {
+                region_layers_results.removeOverlays();
+            }
+            catch (e) {}
         }
     });
 
-
-    flooding_new = new NApp(ST_NEW_SCENARIO,{
-    	id: "floodingNew",
+    var flooding_new = new NApp(ST_NEW_SCENARIO,{
+        id: "floodingNew",
         description: "nieuwe overstromingsinformatie samenstellen",
         screenType: MAP,
         combMapData:true,
 
-        navigation: new NNavigation({ initFunction: "fnNavigation"}),        
+        navigation: new NNavigation({ initFunction: "fnNavigation"}),
         infoWindowContainer: new NInfoWindowContainer({ initFunction: "fnInfoWindowSettings"}),
         overlayContainer: new NOverlayContainer({ initFunction: "fnOverlaySettings"}),
         //toolbar: new NToolbar({initFunction: "fnToolbarSettings"}),
@@ -59,54 +58,63 @@ function loadFloodingApp(urlScriptRoot) {
 
         onInit:function() {},
         onShow:function() {
-        		try {
-        			region_layers.addOverlays();
-        		} 
-        		catch (e) {}
+            try {
+                region_layers.addOverlays();
+            }
+            catch (e) {}
         },
-        onUnselect:function() {        		
-        		cancelLayerControls();
-				try {
-					region_layers.removeOverlays();
-				} 
-				catch (e) {} 
+        onUnselect:function() {
+            cancelLayerControls();
+            try {
+                region_layers.removeOverlays();
+            }
+            catch (e) {}
         }
     });
 
-    flooding_table = new NApp(ST_TABLE,{
+    var flooding_table = new NApp(ST_TABLE,{
         id: "floodingTable",
-        description: "overstromings informatie",        
+        description: "overstromings informatie",
 
         screenType: IFRAME,
-		url:'flooding/scenario/',
+        url:'flooding/scenario/',
 
         onInit:function() {},
         onShow:function() {},
         onHide:function() {}
     });
-    
-    flooding_import = new NApp(ST_IMPORT,{
+
+    var flooding_import = new NApp(ST_IMPORT,{
         id: "floodingImport",
-        description: "importeren scenario gegevens",        
+        description: "importeren scenario gegevens",
 
         screenType: IFRAME,
-		url:'flooding/tools/import/',
+        url:'flooding/tools/import/',
 
         onInit:function() {},
         onShow:function() {},
         onHide:function() {}
     });
-    
-    
-     flooding_export = new NApp(ST_EXPORT,{
+
+    var flooding_export = new NApp(ST_EXPORT,{
         id: "floodingExport",
-        description: "exporteren voor genereren waterkaart",        
+        description: "exporteren voor genereren waterkaart",
 
         screenType: IFRAME,
-		url:'flooding/tools/export/',
+        url:'flooding/tools/export/',
 
         onInit:function() {},
         onShow:function() {},
         onHide:function() {}
-    });  
-}
+    });
+
+    flooding.addSubApps([
+        flooding_result,
+        flooding_new,
+        flooding_table,
+        flooding_import,
+        flooding_export
+    ]);
+
+    return flooding;
+};

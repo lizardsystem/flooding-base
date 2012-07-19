@@ -9,7 +9,7 @@ html, body {
 
 html.scrollable{
     overflow: auto;
-    margin: 0;  
+    margin: 0;
 }
 
 li {
@@ -72,7 +72,7 @@ app2 {
 }
 
 textarea
-{ 
+{
     cols: 79;
     rows: 10;
 }
@@ -105,8 +105,8 @@ select
 
 .language_form
 {
-    float: right; 
-    width: 20px; 
+    float: right;
+    width: 20px;
     top: 5px;
 }
 
@@ -148,7 +148,7 @@ table.timeseries
 }
 
 tr.timeseriesHead
-{ 
+{
     background-color: #c4dedf;
     border: 1px #000000 solid;
     font-family: Verdana;
@@ -172,7 +172,7 @@ td.timeseriesDataColumn
 }
 
 tr.timeseriesData
-{ 
+{
     border-bottom: 1px #6699CC dotted;
     text-align: left;
     font-family: Verdana, sans-serif, Arial;
@@ -183,7 +183,7 @@ tr.timeseriesData
     padding-top: 4px;
     padding-bottom: 4px;
     padding-left: 8px;
-    padding-right: 0px; 
+    padding-right: 0px;
 }
 
 td.timeseriesDataRed
@@ -244,7 +244,7 @@ th.sort_rev
 
 .canvasxxx {
     background-color:#FAFAFA;
-    /*border:1px solid #CCCCCC;*/ 
+    /*border:1px solid #CCCCCC;*/
     border-left:1px solid #CCCCCC;
     border-right:1px solid #555555;
     border-top:1px solid #CCCCCC;
@@ -258,7 +258,7 @@ th.sort_rev
 
 
 
-.olControlPanel div { 
+.olControlPanel div {
     display:block;
     width:  24px;
     height: 24px;
@@ -268,23 +268,23 @@ th.sort_rev
     top:150px;
     background-color:red;
 }
-.olControlPanel .olControlMouseDefaultsItemActive { 
+.olControlPanel .olControlMouseDefaultsItemActive {
   background-color: orange;
   background-image: url("../weblib/OpenLayers-2.8/theme/default/img/pan_on.png");
 }
-.olControlPanel .olControlMouseDefaultsItemInactive { 
+.olControlPanel .olControlMouseDefaultsItemInactive {
   background-color: white;
   background-image: url("../weblib/OpenLayers-2.8/theme/default/img/pan_off.png");
 }
 
-.olControlPanel .olControlZoomBoxItemInactive { 
-  width:  22px;  
+.olControlPanel .olControlZoomBoxItemInactive {
+  width:  22px;
   height: 22px;
   background-color: orange;
   background-image: url("../weblib/OpenLayers-2.8/img/drag-rectangle-on.png");
 }
-.olControlPanel .olControlZoomBoxItemActive { 
-  width:  22px;  
+.olControlPanel .olControlZoomBoxItemActive {
+  width:  22px;
   height: 22px;
   background-color: white;
   background-image: url("../weblib/OpenLayers-2.8/img/drag-rectangle-off.png");
@@ -293,19 +293,19 @@ th.sort_rev
 
 
 #load{
-    position: absolute; 
-    font-family: arial; 
-    font-size: 16; 
-    left: 400px; 
-    top: 0px; 
-    background-color: white; 
-    layer-background-color: white; 
-    height: 100%; 
+    position: absolute;
+    font-family: arial;
+    font-size: 16;
+    left: 400px;
+    top: 0px;
+    background-color: white;
+    layer-background-color: white;
+    height: 100%;
     width:100%;
 }
 
 #maincontent
-{    
+{
     margin-left: 10px;
     color:#333333;
     font-family:"Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif;
@@ -326,18 +326,18 @@ th.sort_rev
 }
 
 /** PAGINATOR **/
-.paginator { 
-    padding:.5em .75em; 
-    float:left; 
-    font:normal .8em arial; 
+.paginator {
+    padding:.5em .75em;
+    float:left;
+    font:normal .8em arial;
 }
- 
+
 .paginator .prev-na,
 .paginator .next-na {
     padding:.3em;
     font:bold .875em arial;
 }
- 
+
 .paginator .prev-na,
 .paginator .next-na {
     border:1px solid #ccc;
@@ -345,7 +345,7 @@ th.sort_rev
     color:#aaa;
     font:bold 1em arial;
 }
- 
+
 .paginator .prev a, .paginator .prev a:visited,
 .paginator .next a, .paginator .next a:visited {
     border:1px solid #7BA0D2;
@@ -354,26 +354,26 @@ th.sort_rev
     padding:.3em;
     font:bold 1em arial;
 }
- 
+
 .paginator .prev, .paginator .prev-na { margin-right:.5em; }
 .paginator .next, .paginator .next-na { margin-left:.5em; }
- 
+
 .paginator .page a, .paginator .page a:visited, .paginator .curr {
     padding:.3em;
     font:normal 1em verdana;
     border:1px solid #7BA0D2;
     background-color:#EBF0FF;
-    margin:0em .25em;   
+    margin:0em .25em;
     color:#4B7092;
 }
- 
-.paginator .curr { 
+
+.paginator .curr {
     background-color:#5B80B2;
     color:#fff;
     border:1px solid #5B80B2;
     font:normal 1em verdana;
 }
- 
+
 .paginator .page a:hover,
 .paginator .curr a:hover,
 .paginator .prev a:hover,
@@ -384,18 +384,18 @@ th.sort_rev
 }
 
 /** NHIPAGINATOR **/
-.nhipaginator { 
-    padding:.5em .75em; 
-    float:left; 
-    font:normal .8em arial; 
+.nhipaginator {
+    padding:.5em .75em;
+    float:left;
+    font:normal .8em arial;
 }
- 
+
 .nhipaginator .prev-na,
 .nhipaginator .next-na {
     padding:.3em;
     font:bold .875em arial;
 }
- 
+
 .nhipaginator .nhiprev-na,
 .nhipaginator .nhinext-na {
     border:1px solid #ccc;
@@ -412,26 +412,26 @@ th.sort_rev
     padding:.3em;
     font:bold 0.8em arial;
 }
- 
+
 .nhipaginator .nhiprev, .nhipaginator .nhiprev-na { margin-right:.5em; }
 .nhipaginator .nhinext, .nhipaginator .nhinext-na { margin-left:.5em; }
- 
+
 .nhipaginator .nhipage a, .nhipaginator .nhipage a:visited, .paginator .curr {
     padding:.3em;
     font:normal 0.8em verdana;
     border:1px solid #7BA0D2;
     background-color:#EBF0FF;
-    margin:0em .25em;   
+    margin:0em .25em;
     color:#4B7092;
 }
- 
-.nhipaginator .nhicurr { 
+
+.nhipaginator .nhicurr {
     background-color:#5B80B2;
     color:#fff;
     border:1px solid #5B80B2;
     font:normal 0.8em verdana;
 }
- 
+
 .nhipaginator .nhipage a:hover,
 .nhipaginator .nhicurr a:hover,
 .nhipaginator .nhiprev a:hover,

@@ -2,24 +2,24 @@
 lastmarker = null;
 
 function initLabel() {
-	if (typeof(label) == 'undefined') {
-		isc.Label.create({
-  				ID: "label",
-	        showFocusedAsOver:false,
-	        wrap:false,
-	        left:10,
-	        height:24,
-	        autoFit:true,
-	        styleName:"textItem",
-	        overflow:"hidden",
-	        autoDraw:false,
-	        top:5,
-	        showShadow: true, shadowSoftness: 2, shadowOffset: 3,
-	        dynamicContents:true,
-	        showTitle:false,
-	        showFocused:false
-		});
-	}
+    if (typeof(label) == 'undefined') {
+	isc.Label.create({
+  	    ID: "label",
+	    showFocusedAsOver:false,
+	    wrap:false,
+	    left:10,
+	    height:24,
+	    autoFit:true,
+	    styleName:"textItem",
+	    overflow:"hidden",
+	    autoDraw:false,
+	    top:5,
+	    showShadow: true, shadowSoftness: 2, shadowOffset: 3,
+	    dynamicContents:true,
+	    showTitle:false,
+	    showFocused:false
+	});
+    }
 }
 
 
@@ -49,30 +49,30 @@ function frOverlaySettings() {
             //scroll to position in treegrid
             var height = frBlockBreaches.tree.getRecordIndex(node)* frBlockBreaches.tree.cellHeight - 0.15* frBlockBreaches.tree.getHeight();
             frBlockBreaches.tree.body.scrollTo(0,height);
-                        
+
             frBlockBreaches.tree.leafClick(null,node,null);
 
         },
         onMouseOver: function(marker, event) {
-        	if (lastmarker != marker) {
-	        	console.log(marker.loc.name);
-				if (typeof(label) == 'undefined') {
-					initLabel();
-				}
-				label.moveTo(event.clientX+5,event.clientY-25);				
-				label.setContents(marker.loc.name);
-				label.show();				
-			}		
-			lastmarker = marker;
-			
-		},
-		onMouseOut: function(marker,event) {
-			label.hide();
-			lastmarker = null;
-			
-		},
-		app: 'flooding',
-	    visibile: true
+            if (lastmarker != marker) {
+	        console.log(marker.loc.name);
+		if (typeof(label) == 'undefined') {
+		    initLabel();
+		}
+		label.moveTo(event.clientX+5,event.clientY-25);
+		label.setContents(marker.loc.name);
+		label.show();
+	    }
+	    lastmarker = marker;
+
+	},
+	onMouseOut: function(marker,event) {
+	    label.hide();
+	    lastmarker = null;
+
+	},
+	app: 'flooding',
+	visibile: true
     });
 
     var CUTOFFLOCATION_TYPE_LOCK = 1
@@ -89,8 +89,8 @@ function frOverlaySettings() {
             [[CUTOFFLOCATION_TYPE_BRIDGE],0.001,25000]
         ]
     });
-   
-	var loccutoffsLegendResult = new NMarkerSymbology('afsluitlocaties',MARKERLEGENDA,{
+
+    var loccutoffsLegendResult = new NMarkerSymbology('afsluitlocaties',MARKERLEGENDA,{
         rangeType: RANGEEQUAL,
         defaultMarker:icons["squarered"],
         defaultSelectedMarker:icons["squarered"],
@@ -117,58 +117,48 @@ function frOverlaySettings() {
         latfield:"y",
         lonfield:"x",
         clickMarker: function(isSelect,marker,loc){
-        
+
         },
         onMouseOver: function(marker, event) {
-        	if (lastmarker != marker) {
-	        	console.log(marker.loc.name);
-				if (typeof(label) == 'undefined') {
-					initLabel();
-				}
-				label.moveTo(event.clientX+5,event.clientY-25);
-				label.show();
-				label.setContents(marker.loc.name + ', dicht na: ' +  intervalFormatter( new Date(marker.loc.tclose * 1000 ) ));
-			}		
-			lastmarker = marker;	
-		},
-		onMouseOut: function(marker,event) {
-			label.hide();
-			lastmarker = null;		
-		},
-		app: 'flooding',
-		visibile: true
-		
+            if (lastmarker != marker) {
+	        console.log(marker.loc.name);
+		if (typeof(label) == 'undefined') {
+		    initLabel();
+		}
+		label.moveTo(event.clientX+5,event.clientY-25);
+		label.show();
+		label.setContents(marker.loc.name + ', dicht na: ' +  intervalFormatter( new Date(marker.loc.tclose * 1000 ) ));
+	    }
+	    lastmarker = marker;
+	},
+	onMouseOut: function(marker,event) {
+	    label.hide();
+	    lastmarker = null;
+	},
+	app: 'flooding',
+	visibile: true
+
     });
-    
+
     frExtraEmbankmentLayer = new NWMSOverlay("Extra embankement", "Aangepaste keringen", {
-		rootURL:rootUrl,
-		singleTile:true,
-		geoType:3,
-		valueType:1,
-		layerIndex:40,					    
-		getFramesFromRequest:true,
-		frameUrl: locationFloodingData, 
-		framesRequestParams: {
-			action:'get_existing_embankments_shape',
-			only_selected:True
-		},
-		app: 'flooding',
-		visibile: false
+	rootURL: flooding_config.root_url,
+	singleTile:true,
+	geoType:3,
+	valueType:1,
+	layerIndex:40,
+	getFramesFromRequest:true,
+	frameUrl: locationFloodingData,
+	framesRequestParams: {
+	    action:'get_existing_embankments_shape',
+	    only_selected:True
+	},
+	app: 'flooding',
+	visibile: false
     });
-    
+
 
     //frExtraRegionGrids.legendSection.setLegends([{"id": 10, "name": "hoogte grid"}]);
-	//frExtraRegionGrids.showLegendSection();
-    
+    //frExtraRegionGrids.showLegendSection();
+
     return  {overlays:[frbreachLayer,frLoccutoffsLayer, frExtraEmbankmentLayer]};
 }
-
-
-
-
-
-
-
-
-
-

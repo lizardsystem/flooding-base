@@ -5,7 +5,15 @@ Changelog of flooding-base
 1.27 (unreleased)
 -----------------
 
-- Nothing changed yet.
+Cleaned up index.html. Made header background image work and uses the
+current logo now. Moved most of the Javascript that used to be in
+index.html into separate files.
+
+Removed a lot of the Application/Subapplication code as this isn't
+Lizard anymore, it is now purely Flooding and it doesn't need to be as
+dynamic anymore.
+
+Removed much of the code for FEWS, NHI, etc.
 
 
 1.26 (2012-07-09)
