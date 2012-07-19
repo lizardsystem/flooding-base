@@ -31,7 +31,6 @@ from flooding_base.models import SubApplication
 from flooding_base.models import Setting
 from flooding_base.models import Map
 from flooding_base.models import Site
-from flooding_base.models import Application
 
 
 log = logging.getLogger('nens.base.views')
@@ -851,7 +850,6 @@ def gui(request):
                 key='USE_OPENSTREETMAPS').value))
     GOOGLEMAPS_KEY = Setting.objects.get(key='GOOGLEMAPS_KEY').value
 
-    applications = Application.get_applications()
     #default urls
     url_root = reverse('root_url')
 
@@ -902,17 +900,6 @@ def gui(request):
 
     request.session['configuration'] = [c.id for c in
                                         site.configurations.all()]
-
-    #set default starter subapp
-    starter_subapp = site.starter_application
-
-    #optionally overwrite with session_subapp, if application is available
-    if site.name in session_subapp:
-        if len(site.subapplications.filter(
-                id=session_subapp[site.name].id)) > 0:
-            starter_subapp = session_subapp[site.name]
-
-    applications = site.get_applications()
 
     extent = {'east': site.coords_e, 'west': site.coords_w,
               'north': site.coords_n, 'south': site.coords_s}
