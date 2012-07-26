@@ -5,7 +5,10 @@ Changelog of flooding-base
 1.28 (unreleased)
 -----------------
 
-- Nothing changed yet.
+Refactor Text.get() so that it works nicely with templates (it always
+returns SafeString instances so they aren't escaped anymore in the
+template) and gives a helpful reminder text where they are used in the
+template while there is no text entered in the admin yet.
 
 
 1.27 (2012-07-19)
