@@ -2,7 +2,7 @@ Changelog of flooding-base
 ==========================
 
 
-1.28 (unreleased)
+1.28 (2012-07-26)
 -----------------
 
 Refactor Text.get() so that it works nicely with templates (it always
