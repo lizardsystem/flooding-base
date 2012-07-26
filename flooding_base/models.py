@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import Group
 from django.utils.translation import ugettext_lazy as _
 from django.utils.html import escape
+from django.utils.safestring import SafeString
 
 from flooding_base.eidatabaseconnector import ConnectDatabase2EiServer
 from flooding_base.dummydatabaseconnector import DummyDatabaseConnector
@@ -376,8 +377,7 @@ class Site(models.Model):
 class Text(models.Model):
     """Some text to show on the site, somewhere."""
 
-    LANGUAGE_CHOICES = getattr(settings, 'LANGUAGES',
-                               ('nl', 'Nederlands'))
+    LANGUAGE_CHOICES = (('nl', 'Nederlands'),)
     slug = models.CharField(max_length=20)
     language = models.CharField(
         max_length=5, default="nl",
@@ -386,16 +386,18 @@ class Text(models.Model):
     is_html = models.BooleanField(default=False)
 
     @classmethod
-    def get(cls, slug, language_code=None, request=None, default=""):
+    def get(cls, slug, language_code=None, request=None):
         """Returns the text's content, HTML-escaped unless it is
-        itself HTML.
+        itself HTML, and marked as a SafeString so that it can be used
+        in templates immediately.
 
         If language_code is not given, it can be retrieved from the
         request, if that is given.
 
-        If the text isn't found, default is returned."""
+        If the text isn't found, a short text saying which slug should be
+        entered into the admin interface is returned."""
 
-        if language_code is None:
+        if language_code is None and request:
             language_code = getattr(request, 'LANGUAGE_CODE', None)
 
         search = {
@@ -408,11 +410,13 @@ class Text(models.Model):
         if texts.count() > 0:
             text = texts[0]
             if text.is_html:
-                return text.content
+                return SafeString(text.content)
             else:
-                return escape(text.content)
+                return SafeString(escape(text.content))
         else:
-            return default
+            return SafeString(escape(
+        "Text not found. Enter a Text with slug '{0}' and language_code '{1}'."
+                .format(slug, language_code if language_code else '')))
 
     def __unicode__(self):
         return "{slug} ({language})".format(
