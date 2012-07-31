@@ -5,7 +5,8 @@ Changelog of flooding-base
 1.29 (unreleased)
 -----------------
 
-- Nothing changed yet.
+Fixed bug with showing result animations; didn't change rootUrl to
+flooding_config.root_url in some places.
 
 
 1.28 (2012-07-26)
