@@ -2,7 +2,7 @@ Changelog of flooding-base
 ==========================
 
 
-1.29 (unreleased)
+1.29 (2012-07-31)
 -----------------
 
 Fixed bug with showing result animations; didn't change rootUrl to
