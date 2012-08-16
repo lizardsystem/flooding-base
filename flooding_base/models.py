@@ -378,7 +378,7 @@ class Text(models.Model):
     """Some text to show on the site, somewhere."""
 
     LANGUAGE_CHOICES = (('nl', 'Nederlands'),)
-    slug = models.CharField(max_length=20)
+    slug = models.CharField(max_length=200)
     language = models.CharField(
         max_length=5, default="nl",
         choices=LANGUAGE_CHOICES)
