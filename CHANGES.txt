@@ -2,7 +2,7 @@ Changelog of flooding-base
 ==========================
 
 
-1.30 (unreleased)
+1.30 (2012-08-16)
 -----------------
 
 Increased length of slug field of Text model, 20 was too short.
