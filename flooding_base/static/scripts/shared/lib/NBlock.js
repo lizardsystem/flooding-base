@@ -7,12 +7,12 @@ console.log('NBlock laden ...');
 /****				tree in the left navigation balk of the interface  		*/
 /****************************************************************************/
 
-/* 
+/*
  * @requires Isomorfic Smartclient
- * 
- */ 
+ *
+ */
 
-function NBlock(name, title, datasourceSettings, treeSettings, labelSettings) {
+var NBlock = function (name, title, datasourceSettings, treeSettings, labelSettings) {
     this.name = name;
     this.title = title;
 
@@ -21,7 +21,7 @@ function NBlock(name, title, datasourceSettings, treeSettings, labelSettings) {
     this.ds = isc.DataSource.create(this.getSettings(datasourceSettings,this.defaultDatasourceSettings() ));
     this.label = isc.Label.create(this.getSettings(labelSettings, this.defaultLabelSettings() ));
     this.tree = isc.TreeGrid.create(this.getSettings(treeSettings, this.defaultTreeSettings() ));
-}
+};
 
 /**** Returns the default settings for the datasource ****/
 NBlock.prototype.defaultDatasourceSettings = function() {
@@ -32,9 +32,9 @@ NBlock.prototype.defaultDatasourceSettings = function() {
         callbackParam : "callback",
         autoFetchData:false,
         autoDraw:false
-    }
+    };
     return defaultSettings;
-}
+};
 
 NBlock.prototype.defaultLabelSettings = function() {
     var defaultSettings = {
@@ -116,20 +116,20 @@ function loadScript(uri, dynamic,callback) {
 	if(docWrite) {
 		var allScriptTags = new Array(1);
 	}
-    var host = "";    
-	
+    var host = "";
+
 	if (docWrite) {
 		document.write("<script src='" + host + jsfiles[i] +
-                          "'></script>"); 
+                          "'></script>");
 	} else {
 		var s = document.createElement("script");
 		s.src = host + uri;
-		var h = document.getElementsByTagName("head").length ? 
-                   document.getElementsByTagName("head")[0] : 
+		var h = document.getElementsByTagName("head").length ?
+                   document.getElementsByTagName("head")[0] :
                    document.body;
         h.appendChild(s);
     }
- 	callback();
+    callback();
     return true;
 }
 

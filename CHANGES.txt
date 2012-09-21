@@ -5,7 +5,8 @@ Changelog of flooding-base
 1.31 (unreleased)
 -----------------
 
-- Nothing changed yet.
+Changed Javascript, not showing an (I) icon link after some breaches
+(only works with new services.py from flooding-lib).
 
 
 1.30 (2012-08-16)
