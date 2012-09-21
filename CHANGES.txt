@@ -2,7 +2,7 @@ Changelog of flooding-base
 ==========================
 
 
-1.31 (unreleased)
+1.31 (2012-09-21)
 -----------------
 
 Changed Javascript, now showing an (I) icon link after some breaches
