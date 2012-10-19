@@ -3,37 +3,37 @@ console.log('NMapOverlay laden ...');
 /****************************************************************/
 /**** class: 		NMapOverlay         						*/
 /**** description: 	This class represents an overlay with ...   */
-/**** notes:        This class inherits from NOverlay           */ 
+/**** notes:        This class inherits from NOverlay           */
 /****************************************************************/
 
 function NMapOverlay(id,name,options) {
-	options = options || {};
+    options = options || {};
     this._superclass(id, name, options);
-    
+
     this.type = MAPOVERLAY;
-    this.isInit = false;  
-    
+    this.isInit = false;
+
     this.getSettingsFromPgw = options.getSettingsFromPgw || false;
     this.getSettingsFromRequest = options.getSettingsFromRequest || false;
     this.settingsRequestUrl = options.settingsRequestUrl || null;
     this.settingsRequestParams = options.settingsRequestParams || {};
-    
+
     this.framesFromRequest = options.getFramesFromRequest || false;
     this.frameUrl = options.frameUrl || null;
-    this.framesRequestParams = options.framesRequestParams || {};    
+    this.framesRequestParams = options.framesRequestParams || {};
     this.rawResultUrl = options.rawResultUrl || null;
-        
+
     //settings which can also be get from pgw // request
     this.bounds = options.bounds || null;
     this.size = options.size || null;
     if (this.size) {
     	this.pictureSize = new OpenLayers.Size(this.size.width, this.size.height);
     }
-    
+
     //settings which can are also set when added2 overlayManager
     this.overlayManager = options.overlayManager || null;
-    this.events = []; 
-    this.events_active = false;  
+    this.events = [];
+    this.events_active = false;
 }
 
 // _superclass is used for solving inheritance problems (this.superclass is also defined in the child)
@@ -42,46 +42,46 @@ NMapOverlay.prototype.superclass = NOverlay;
 NMapOverlay.prototype._superclass = NOverlay;
 
 /*** Initialize the NMapOverlay. The parameter 'callback' is a method that will be exectued after
-	 the settings for the layer have been retrieved. If there are no settings for the layer, the 
-	 method will also be executed. ***/
+     the settings for the layer have been retrieved. If there are no settings for the layer, the
+     method will also be executed. ***/
 NMapOverlay.prototype.init = function(callback) {
     if (this.isInit) {
     	return;
     }
 
-	var callback = callback || function() {};
-	var layer_ref = this;
-	
-	var totalCallback = function() {
-		console.log('execute totalcallback')
-		layer_ref._init();
-		callback();
-	}
+    var callback = callback || function() {};
+    var layer_ref = this;
 
-	if (this.getSettingsFromPgw) {
-		this.getLayerSettingsByFileData(totalCallback);
-	} else if (this.getSettingsFromRequest) {
-		this.getLayerSettingsByRequestData(totalCallback);
-	} else {
-		totalCallback();
-	}
-	if (this.visible) {
-		this.show();
-	}
+    var totalCallback = function() {
+	console.log('execute totalcallback')
+	layer_ref._init();
+	callback();
+    }
+
+    if (this.getSettingsFromPgw) {
+	this.getLayerSettingsByFileData(totalCallback);
+    } else if (this.getSettingsFromRequest) {
+	this.getLayerSettingsByRequestData(totalCallback);
+    } else {
+	totalCallback();
+    }
+    if (this.visible) {
+	this.show();
+    }
 }
 
-NMapOverlay.prototype._init = function() {    
+NMapOverlay.prototype._init = function() {
     console.log('init mapoverlay')
     this.Obounds = new OBounds(this.bounds, this._map.getExtent());
 
     this.layer = new OpenLayers.Layer.Image(this.name, this.getUrl(), this.Obounds, this.pictureSize,{
-            isBaseLayer: false,displayInLayerSwitcher: this.displayInLayerSwitcher, //reproject: true,
-            maxResolution: 100000, minResolution: 0.000001
+        isBaseLayer: false,displayInLayerSwitcher: this.displayInLayerSwitcher, //reproject: true,
+        maxResolution: 100000, minResolution: 0.000001
     });
     this.events.push({moment:"moveend", action:this.relocate })
-    
-    this.isInit = true; 
-}    
+
+    this.isInit = true;
+}
 
 NMapOverlay.prototype.preLoad = function() {
     (new Image()).src = this.getUrl() ;
@@ -92,51 +92,51 @@ NMapOverlay.prototype.resetPreLoad = function() {
 }
 
 NMapOverlay.prototype.addToOverlayManager = function(overlayManager, callback) {
-	this.overlayManager = overlayManager;
-	this._map = this.overlayManager._map
-	this.init(callback);
+    this.overlayManager = overlayManager;
+    this._map = this.overlayManager._map
+    this.init(callback);
 }
 
 NMapOverlay.prototype.addToMap = function(map, callback) {
-	this._map = map
-	this.init(callback);
+    this._map = map
+    this.init(callback);
 }
 
 /*** Creates and returns the url where the overlay image can be found ***/
 NMapOverlay.prototype.getUrl = function(frameNr) {
-	if (this.framesFromRequest) {
-		if (frameNr!= null) {
-			this.framesRequestParams['framenr'] = frameNr;
-		}
-		var url = this.frameUrl + '?';
-		var first = true;
-		for (elem in this.framesRequestParams) {
-			if (!first) { url+='&' } else {	first = false }
-			url+= elem + '=' + this.framesRequestParams[elem]
-		}
-		return url;
-	} else { 
-        if (frameNr != null) {
-        	
-        	var loc= new String(this.frameUrl);
-	        var url=   loc.replace(/#+/ , function(word){
-	            if (frameNr.toFixed) {
-	                var result = frameNr.toFixed(); //round value
-	            } else {
-	                var result = frameNr.toString();
-	            }
-	            for (var j = result.length ; j < word.length; j++) {
-	                result = "0" + result;
-	            }
-	            return result;
-	        });
-	        
-	        return url;
-	        
-	    } else {
-	    	return this.frameUrl;
-	    }
+    if (this.framesFromRequest) {
+	if (frameNr!= null) {
+	    this.framesRequestParams['framenr'] = frameNr;
 	}
+	var url = this.frameUrl + '?';
+	var first = true;
+	for (elem in this.framesRequestParams) {
+	    if (!first) { url+='&' } else {	first = false }
+	    url+= elem + '=' + this.framesRequestParams[elem]
+	}
+	return url;
+    } else {
+        if (frameNr != null) {
+
+            var loc= new String(this.frameUrl);
+	    var url=   loc.replace(/#+/ , function(word){
+	        if (frameNr.toFixed) {
+	            var result = frameNr.toFixed(); //round value
+	        } else {
+	            var result = frameNr.toString();
+	        }
+	        for (var j = result.length ; j < word.length; j++) {
+	            result = "0" + result;
+	        }
+	        return result;
+	    });
+
+	    return url;
+
+	} else {
+	    return this.frameUrl;
+	}
+    }
 }
 
 NMapOverlay.prototype.relocate = function( ) {
@@ -152,47 +152,47 @@ NMapOverlay.prototype.relocate = function( ) {
 
 
 NMapOverlay.prototype.activateEvents = function() {
-	if (!this.events_active) {
+    if (!this.events_active) {
         for (var i = 0 ; i < this.events.length ; i++) {
-           	ev = this.events[i];
-           	console.log('register event '+ ev.action + ' on moment '+ ev.moment);
-           	this._map.events.register(ev.moment, this, ev.action);
+            ev = this.events[i];
+            console.log('register event '+ ev.action + ' on moment '+ ev.moment);
+            this._map.events.register(ev.moment, this, ev.action);
         }
-		this.events_active = true;
-	}
+	this.events_active = true;
+    }
 }
 
-NMapOverlay.prototype.deactivateEvents = function() {	
-	if (this.events_active) {
-	    for (var i = 0 ; i < this.events.length ; i++) {
-           	ev = this.events[i];
-           	console.log('unregister event '+ ev.action + ' on moment '+ ev.moment)
-           	this._map.events.unregister(ev.moment, this, ev.action);
+NMapOverlay.prototype.deactivateEvents = function() {
+    if (this.events_active) {
+	for (var i = 0 ; i < this.events.length ; i++) {
+            ev = this.events[i];
+            console.log('unregister event '+ ev.action + ' on moment '+ ev.moment)
+            this._map.events.unregister(ev.moment, this, ev.action);
         }
-		this.events_active = false;
-	}
+	this.events_active = false;
+    }
 }
 
 
-NMapOverlay.prototype.show = function(timestep, opacity) {	
+NMapOverlay.prototype.show = function(timestep, opacity) {
     if (opacity == null) { var opacity  = 1}
-    if (this.layer) {    
+    if (this.layer) {
         try {
             if (this.overlayManager != null) {
             	this.layer.setOpacity( this.overlayManager.opacity );
             } else {
             	this.layer.setOpacity( opacity )
             }
-            
+
             this.layer.lizard_index = this.layerIndex;
             this._map.addLayer(this.layer);
-			this._map.reorder_layers();
+	    this._map.reorder_layers();
 
             if (timestep != null) {
             	this.setParams({timestep:timestep});
             }
-			this.activateEvents();
-            
+	    this.activateEvents();
+
             this.showLegendSection();
         } catch (e){
             console.log(e);
@@ -203,7 +203,7 @@ NMapOverlay.prototype.show = function(timestep, opacity) {
 NMapOverlay.prototype.hide = function() {
     if (this.layer) {
         try {
-        	this.deactivateEvents();
+            this.deactivateEvents();
         } catch (e){
             console.log(e);
         }
@@ -218,18 +218,18 @@ NMapOverlay.prototype.hide = function() {
 
 /*** Redraws the laye ***/
 NMapOverlay.prototype.redraw = function( ) {
-	if (this.isInit) {
-		this.layer.setUrl(this.getUrl());
-	}
+    if (this.isInit) {
+	this.layer.setUrl(this.getUrl());
+    }
 }
 
 NMapOverlay.prototype.destroy = function() {
-	this.hide();
-	try {
-		this.layer.destroy();
-	} catch (e) {
-		console.log(e);
-	}
+    this.hide();
+    try {
+	this.layer.destroy();
+    } catch (e) {
+	console.log(e);
+    }
 }
 
 NMapOverlay.prototype.setOpacity = function(opacity){
@@ -241,17 +241,17 @@ NMapOverlay.prototype.setOpacity = function(opacity){
 
 NMapOverlay.prototype.setParams= function(params){
     for (elem in params) {
-		this.framesRequestParams[elem] = params[elem];
+	this.framesRequestParams[elem] = params[elem];
+    }
+    if (this.isInit) {
+	if (typeof(this.layer.mergeNewParams) != 'undefined') {
+	    this.layer.mergeNewParams(params);
+	} else {
+	    this.resetPreLoad();
+	    this.redraw();
 	}
-	if (this.isInit) {
-		if (typeof(this.layer.mergeNewParams) != 'undefined') {
-			this.layer.mergeNewParams(params);
-		} else {
-			this.resetPreLoad();
-			this.redraw();
-		}	
-	}
-} 
+    }
+}
 
 
 /*** Sets the legend of the overlay  ***/
@@ -261,30 +261,30 @@ NMapOverlay.prototype.setActiveLegend = function(legend){
 
 
 NMapOverlay.prototype.getRawResultUrl= function(){
-	return this.rawResultUrl;
+    return this.rawResultUrl;
 }
 
 
-NMapOverlay.prototype.getLayerSettingsByFileData = function(callback){   
+NMapOverlay.prototype.getLayerSettingsByFileData = function(callback){
     var imgnr = 0;
     //var layer_ref = this;
     //internal function. get information after loading figure and download pgw to get extends
-    
+
     var downloadpgw = function(layer) {
         var nwidth = this.width;
         var nheight = this.height;
 
         var pgw = new String(this.imgurl);
         pgw = pgw.replace(".png" , ".pgw" );
- 
-        RPCManager.sendRequest({        
-			 actionURL: lizardKbFloodPngDirectory + pgw,
-			 callback: function(response, data, request){
-			    console.log(request);
-			    console.log(response);
-                if (response.httpResponseCode == 200) {                	
-                	var info = JSON.parse(data);                	
-                                      
+
+        RPCManager.sendRequest({
+	    actionURL: lizardKbFloodPngDirectory + pgw,
+	    callback: function(response, data, request){
+		console.log(request);
+		console.log(response);
+                if (response.httpResponseCode == 200) {
+                    var info = JSON.parse(data);
+
                     layer.gridsize = info.rec.gridsize;
                     layer.bounds = {};
                     layer.bounds.west = info.rec.west; // - 0.5*gridsize;
@@ -293,8 +293,8 @@ NMapOverlay.prototype.getLayerSettingsByFileData = function(callback){
                     layer.bounds.south = info.rec.south - (nheight) * layer.gridsize;
                     layer.bounds.projection = info.rec.projection || 'rds';
                     layer.pictureSize = new OpenLayers.Size(nwidth, nheight);
-                    
-                    
+
+
                 }
                 else {
                     console.log("error in het ophalen van gegevens ");
@@ -304,7 +304,7 @@ NMapOverlay.prototype.getLayerSettingsByFileData = function(callback){
                     callback(layer_ref);
                 }
             }
-        });   
+        });
     }
 
     //internal function. get figure and start downloading pgw
@@ -330,7 +330,7 @@ NMapOverlay.prototype.getLayerSettingsByFileData = function(callback){
     var imgurl =  new String( overlay.frameUrl);
     if (this.type == 'MAPOVERLAY') {
         downloadFigure(this,imgurl);
-     } else if (this.type == 'ANIMATEDMAPOVERLAY') {
+    } else if (this.type == 'ANIMATEDMAPOVERLAY') {
         //make file name of first picture
         imgurl = imgurl.replace(/#+/ , function(word){
             if (this.animation.firstnr.toFixed) {
@@ -346,7 +346,7 @@ NMapOverlay.prototype.getLayerSettingsByFileData = function(callback){
         });
         downloadFigure(this,imgurl);
     } else {
-          console.log("overlay type wordt nog niet ondersteund");
+        console.log("overlay type wordt nog niet ondersteund");
     }
 }
 
@@ -355,55 +355,55 @@ NMapOverlay.prototype.getLayerSettingsByFileData = function(callback){
 NMapOverlay.prototype.getLayerSettingsByRequestData = function(callback){
     var layer_ref = this;
     var postParams = this.settingsRequestParams;
-    
+
     RPCManager.sendRequest({
-		actionURL: this.settingsRequestUrl,
-		showPrompt:true,
-		useSimpleHttp: true,
-		httpMethod: "GET",			 
-		params: postParams, 
-		callback: function(response, data, request){
-			if (response.httpResponseCode == 200) {
-				console.log("Data ophalen gelukt.")
-		 		
-		 		var data = JSON.parse(data);
-		 	 	
-				if (layer_ref.geoType == 1) {
-					layer_ref.bounds = data.rec.bounds; //new OBounds(data);
-					layer_ref.pictureSize = new OpenLayers.Size(data.rec.width, data.rec.height);
-				}
-				if (layer_ref.valueType == 3) {
-					if (layer_ref.animation == null) {
-						layer_ref.animation = new NAnimation(data.anim.firstnr, data.anim.lastnr, data.anim.options);	
-					} else {
-						layer_ref.animation.updateSettings(data.anim.firstnr, data.anim.lastnr, data.anim.options);
-					}
-				}
-				if (data.legends) {
-					console.log('requested available legend = ' + data.legends);
-	               	console.log('requested default legend = ' + data.default_legend);             
-	                layer_ref.setAvailableLegends(data.legends);
-	                layer_ref.setDefaultLegend(data.default_legend); 
-                }                   
-             	
-             	//if a callback function is specified, execute this function
-			
-				if (callback) {	
-					console.log('callback after getting request data')			
-					callback(); 
-				}                                                    
-			} else {
-				console.log("Fout bij het ophalen van gegevens.");                   
-			}
+	actionURL: this.settingsRequestUrl,
+	showPrompt:true,
+	useSimpleHttp: true,
+	httpMethod: "GET",
+	params: postParams,
+	callback: function(response, data, request){
+	    if (response.httpResponseCode == 200) {
+		console.log("Data ophalen gelukt.")
+
+		var data = JSON.parse(data);
+
+		if (layer_ref.geoType == 1) {
+		    layer_ref.bounds = data.rec.bounds; //new OBounds(data);
+		    layer_ref.pictureSize = new OpenLayers.Size(data.rec.width, data.rec.height);
 		}
-	});
+		if (layer_ref.valueType == 3) {
+		    if (layer_ref.animation == null) {
+			layer_ref.animation = new NAnimation(data.anim.firstnr, data.anim.lastnr, data.anim.options);
+		    } else {
+			layer_ref.animation.updateSettings(data.anim.firstnr, data.anim.lastnr, data.anim.options);
+		    }
+		}
+		if (data.legends) {
+		    console.log('requested available legend = ' + data.legends);
+	            console.log('requested default legend = ' + data.default_legend);
+	            layer_ref.setAvailableLegends(data.legends);
+	            layer_ref.setDefaultLegend(data.default_legend);
+                }
+
+             	//if a callback function is specified, execute this function
+
+		if (callback) {
+		    console.log('callback after getting request data')
+		    callback();
+		}
+	    } else {
+		console.log("Fout bij het ophalen van gegevens.");
+	    }
+	}
+    });
 }
 
 //extra function for showing and hiding overlay. To get a smooth animation and
 //no problems with memory usage (internet explorer), the strategy is different for different browsers
 OpenLayers.Layer.Image.prototype.hide = function (realhide){
     realhide = realhide || false;
-    
+
     if (isc.Browser.isIE || realhide) {
         this.setVisibility( false );
     } else {

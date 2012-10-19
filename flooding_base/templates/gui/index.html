@@ -22,9 +22,15 @@
 
     <!-- Javascript -->
     <script type="text/javascript">
+
     {% comment %}Set Django variables as flooding_config global.{% endcomment %}
+
     var flooding_config = {{ javascript_parameters|safe }};
     flooding_config.static_url = '{{ STATIC_URL }}';
+
+    {% comment %}For direct links to scenarios. See the preload code in
+    scripts/flooding/results/navigation.js.{% endcomment %}
+    flooding_config.preload_scenario = {{ preload_scenario|safe }};
 
     flooding_config.user_block_contents = '<table align="right"><tr><td><div id="user-tools" class="normal" style="background-color:#FFFFFF; opacity:0.75; height:17;font-color:#000000" width="content"  >\
     {% if user.is_authenticated %}\

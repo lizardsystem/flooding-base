@@ -1,3 +1,92 @@
+var flooding = flooding || {};
+
+flooding.preload = (function () {
+    // Set the booleans to True if preload_scenario info exists. They will
+    // be set to False after the first time each function runs.
+    var do_preload_region = (flooding_config.preload_scenario !== null);
+    var do_preload_breach = do_preload_region;
+    var do_preload_scenario = do_preload_region;
+
+    // Open the parent folders of some record in a tree.
+    var open_parent = function (tree, record) {
+        var parentid = record.parentid;
+        while (parentid) {
+            var parent = tree.data.findById(parentid);
+            if (parent) {
+                tree.openFolder(parent);
+                parentid = parent.parentid;
+            } else {
+                parentid = null;
+            }
+        }
+    };
+
+    // Select some record in a tree and act as if it were click.
+    var select = function (tree, record) {
+        tree.selectRecord(record);
+        tree.leafClick(null, record, null);
+    };
+
+    // Get all the leaves in a tree.
+    var leaves = function (tree) {
+        return tree.data.getDescendantLeaves(tree.data.getRoot());
+    };
+
+    var preload_region = function (tree) {
+        if (do_preload_region) {
+            console.log("preload_region");
+            var regionrecords = leaves(tree);
+
+            for (var i=0; i < regionrecords.length; i++) {
+                var record = regionrecords[i];
+                console.log(record);
+                if (record.rid === flooding_config.preload_scenario.region_id) {
+                    open_parent(tree, record);
+                    select(tree, record);
+                    break;
+                }
+            }
+            do_preload_region = false;
+        }
+    };
+
+    var preload_breach = function (tree) {
+        if (do_preload_breach) {
+            var breaches = leaves(tree);
+            for (var i=0; i < breaches.length; i++) {
+                if (breaches[i].id === flooding_config.preload_scenario.breach_id) {
+                    var breach = breaches[i];
+                    open_parent(tree, breach);
+                    select(tree, breach);
+                    break;
+                }
+            }
+            do_preload_breach = false;
+        }
+    };
+
+    var preload_scenario = function (tree) {
+        if (do_preload_scenario) {
+            console.log("yes");
+            var scenarios = leaves(tree);
+            for (var i=0; i < scenarios.length; i++) {
+                var scenario = scenarios[i];
+                if (scenario.sid === flooding_config.preload_scenario.scenario_id &&
+                    scenario.parentid === flooding_config.preload_scenario.project_id) {
+                    select(tree, scenario);
+                }
+            }
+            do_preload_scenario = false;
+        }
+    };
+
+    return {
+        preload_region: preload_region,
+        preload_breach: preload_breach,
+        preload_scenario: preload_scenario
+    };
+})();
+
 console.log('laden flooding/result/navigation ...');
 /***************** functions **********************/
 var selectedScenario = null;
@@ -122,15 +211,17 @@ function frNavigation() {
             }
         }, {
             emptyMessage:"<a href='javascript: frBlockRegions.tree.fetchData()'>herladen</a>",
-            autoFetchData:true,
+            autoFetchData: false,
+            loadDataOnDemand: false,
             leafClick: function(viewer,leaf,recordNum) {
+                viewer = null; recordNum = null; // To document they are unused
                 if (leaf.isregion === true) {
                     frBlockRegions.setLabel(leaf.name);
                     selectedRegion = leaf;//to do, dit moet anders
-                    frBlockBreaches.tree.fetchData({region_id:leaf.rid, filter:floodingFilterResults},function(dsResponse, data, dsRequest) {
+                    frBlockBreaches.tree.fetchData({region_id:leaf.rid, filter:floodingFilterResults}, function(dsResponse, data, dsRequest) {
                         frbreachLayer.refreshByData(data);
                         frbreachLayer.show();
-
+                        flooding.preload.preload_breach(frBlockBreaches.tree);
                     });//teken punten via callback (na het laden)
                     clear_scenarios();
                     Ozoom(map ,leaf );
@@ -163,15 +254,17 @@ function frNavigation() {
                         }
 
                     });
-
                 }
             },
-
             folderClick: function(viewer,folder,recordNum){
                 Ozoom(map ,folder );
                 this.openFolder(folder);
             }
         });
+
+    frBlockRegions.tree.fetchData(null, function () {
+        flooding.preload.preload_region(frBlockRegions.tree);
+    });
 
     frBlockBreaches = new NBlock(
         ST_BREACH,ST_BREACH,
@@ -217,6 +310,7 @@ function frNavigation() {
                                 frBlockScenarios.tree.openFolder(data[idx]);
                             }
                         }
+                        flooding.preload.preload_scenario(frBlockScenarios.tree);
                     });
                 }
             },

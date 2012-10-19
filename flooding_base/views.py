@@ -916,6 +916,14 @@ def gui(request):
             'extent': extent,
         })
 
+    # If there is a 'preload_scenario' in the session (from a link
+    # that goes directly to a scenario, we place it in the template as
+    # JSON. Then we clear it from the session, otherwise the site will
+    # keep going to that scenario!
+    preload_scenario = simplejson.dumps(
+        request.session.get('preload_scenario', None))
+    request.session['preload_scenario'] = None
+
     return render_to_response(
         'gui/index.html', {
             'url_topbar': url_topbar,
@@ -926,6 +934,7 @@ def gui(request):
             'USE_OPENSTREETMAPS': USE_OPENSTREETMAPS,
             'RESTRICTMAP': RESTRICTMAP,
             'url_favicon': url_favicon,
+            'preload_scenario': preload_scenario,
             },
         context_instance=RequestContext(request))
 

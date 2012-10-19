@@ -5,7 +5,13 @@ Changelog of flooding-base
 1.32 (unreleased)
 -----------------
 
-- Nothing changed yet.
+Add Javascript that can open a specific project/scenario upon loading
+the homepage.
+
+Get the information about which scenario to open from the session (it
+is set in a view in flooding-lib).
+
+Some cleanup in Javascript.
 
 
 1.31 (2012-09-21)

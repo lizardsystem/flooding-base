@@ -53,9 +53,9 @@ NBlock.prototype.defaultLabelSettings = function() {
         dynamicContents:true,
         showTitle:false,
         showFocused:false
-    }
+    };
     return defaultSettings;
-}
+};
 
 NBlock.prototype.defaultTreeSettings = function() {
     var defaultSettings = {
@@ -72,9 +72,9 @@ NBlock.prototype.defaultTreeSettings = function() {
         overflow:"auto",
         autoFetchData:false,
         autoDraw:false
-    }
+    };
     return defaultSettings;
-}
+};
 
 /**** Returns the specific setting, but the unknown variables in the specific setting are filled with these from the defaultsettings  ****/
 NBlock.prototype.getSettings = function( specificSettings, defaultsettings ) {
