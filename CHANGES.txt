@@ -5,7 +5,8 @@ Changelog of flooding-base
 1.33 (unreleased)
 -----------------
 
-- Nothing changed yet.
+Added gaug.es tracking Javascript to the gui index.html because Joep
+wants to track the site.
 
 
 1.32 (2012-10-19)
