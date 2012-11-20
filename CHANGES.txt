@@ -2,7 +2,7 @@ Changelog of flooding-base
 ==========================
 
 
-1.33 (unreleased)
+1.33 (2012-11-20)
 -----------------
 
 Added gaug.es tracking Javascript to the gui index.html because Joep
