@@ -671,7 +671,7 @@ function fnNavigation() {
 
 
     function create_windowsettings() {
-
+	
     	var content = isc.HTMLPane.create({
 	    ID: "settingContent",
 	    width: "100%",
@@ -736,14 +736,20 @@ function fnNavigation() {
 	showFocused: false,
 	width: 180,
 	click: function(form, item){
+	    var is_3di, action;
 	    if (typeof(windowsettings) == "undefined") {
 	        console.log('create windowsettings');
 	        create_windowsettings();
 	    }
 
+	    is_3di = formModel.getItem("selectInundationModel").getSelectedRecord().is_3di;
+	    action = "compose_scenario";
+	    if (is_3di) {
+		action = "compose_3di_scenario";
+	    }
 	    windowsettings.show();
 	    var breach = fnBlockBreaches.tree.getSelectedRecord();
-	    settingContent.setContentsURL(locationFloodingData, { action:"compose_scenario", breach_id: breach.id }	)
+	    settingContent.setContentsURL(locationFloodingData, { action: action, breach_id: breach.id }	)
 	},
 
 	autoDraw: false
