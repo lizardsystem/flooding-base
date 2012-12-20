@@ -2,7 +2,7 @@ Changelog of flooding-base
 ==========================
 
 
-1.35 (unreleased)
+1.35 (2012-12-20)
 -----------------
 
 - Fix widht of IFrame for Table, Importeren, Exporteren (removed float:left style from flooding_base/static/weblib/isomorphic/system/modules/ISC_Core.js
