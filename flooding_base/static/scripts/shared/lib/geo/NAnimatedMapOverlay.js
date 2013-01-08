@@ -48,10 +48,23 @@ NAnimatedMapOverlay.prototype._init = function() {
 
     this.layer = new Array();
     for (var i = 0; i < this.nrPreAddToMap ; i ++ ) {
-        this.layer[i] = new OpenLayers.Layer.Image(this.name+i , this.getUrl(0), this.Obounds, this.pictureSize, {
-            isBaseLayer: false,displayInLayerSwitcher:this.displayInLayerSwitcher,//reproject: true,
-            maxResolution: 100000, minResolution: 0.000001
-        });
+        // this.layer[i] = new OpenLayers.Layer.Image(this.name+i , this.getUrl(0), this.Obounds, this.pictureSize, {
+        //     isBaseLayer: false,displayInLayerSwitcher:this.displayInLayerSwitcher,//reproject: true,
+        //     maxResolution: 100000, minResolution: 0.000001
+        // });
+
+        this.layer[i] = new OpenLayers.Layer.TMS(
+                'ex frame nr '+i,
+                'http://localhost:8080',
+                {
+                    'layername': 'ex',
+                    'type': 'png',
+                  'alpha': true,
+                  'isBaseLayer': false,
+                  'serviceVersion': ''
+            });
+
+
         this.layer[i].lizard_index = this.layerIndex;
 
         this.layer[i].loadedFrame = -1;
@@ -199,6 +212,11 @@ NAnimatedMapOverlay.prototype.setOpacity = function(opacity){
     }
 }
 
+
+// 20120108 testing for tile based animations
+// NAnimatedMapOverlay.prototype.getUrl = function(frameNr) {
+//   return 'http://localhost:8080/exaa/'
+// }
 
 
 console.log('NAnimatedMapOverlay geladen ...');

@@ -21,6 +21,7 @@ var locationLizardFewsData = '{% url root_url %}service/';
 var locationLizardData = '{% url root_url %}lizard/service/';
 var locationFloodingData = '{% url root_url %}flooding/service/';
 var locationPresentationData = "{% url root_url %}presentation/service/";
+//var locationPresentationData = "http://localhost:8080/ex/";
 var locationFlowData = "{% url root_url %}flow/service/";
 var locationGisviewerData = "{% url root_url %}gisviewer/service/";
 var locationMapviewerData =  '{% url root_url %}mapviewer/service/';
