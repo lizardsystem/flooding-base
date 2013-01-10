@@ -51,7 +51,7 @@ isc.Canvas.create({
     contents: "<div id=\"subAppHeaderPane\"></div>",
     align: "left",
     overflow: "hidden",
-    width: "340",
+    width: "400",
     height:"26",
     showResizeBar: false,
     autoDraw: false

@@ -108,12 +108,25 @@ var loadFloodingApp = function () {
         onHide:function() {}
     });
 
+    var flooding_workflow = new NApp(ST_WORKFLOW,{
+        id: "floodingWorkflow",
+        description: "beheren workflows",
+
+        screenType: IFRAME,
+        url:'flooding/tools/workflow/',
+
+        onInit:function() {},
+        onShow:function() {},
+        onHide:function() {}
+    });
+
     flooding.addSubApps([
         flooding_result,
         flooding_new,
         flooding_table,
         flooding_import,
-        flooding_export
+        flooding_export,
+	flooding_workflow
     ]);
 
     return flooding;
