@@ -5,7 +5,7 @@ Changelog of flooding-base
 1.37 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Fix bug in NGeneral.js.
 
 
 1.36 (2013-06-12)

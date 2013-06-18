@@ -27,7 +27,7 @@ intervalFormatter = function(value, shortNotation) {
 }
 
 intervalReader = function(value) {//transformInput
-    //var unixDate = Date.UTC(1970,0,1,0,0,0);
+    var unixDate = Date.UTC(1970,0,1,0,0,0);
     if (value == null) {
     	return new Date(unixDate);
     } else if (typeof(value) == "object") {
