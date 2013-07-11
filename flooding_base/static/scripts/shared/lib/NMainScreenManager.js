@@ -263,7 +263,7 @@ NMainScreenManager.prototype.initMap = function() {
 		try{
 		    var layers = [new OpenLayers.Layer.OSM("OpenStreetMap NL", "http://tile.openstreetmap.nl/tiles/${z}/${x}/${y}.png", {buffer: 0} )];
 		    this.map.addLayers(layers);
-		    var layers = [new OpenLayers.Layer.OSM("OpenStreetMap", "http://tah.openstreetmap.org/Tiles/tile/${z}/${x}/${y}.png", {buffer: 0} )];
+		    var layers = [new OpenLayers.Layer.OSM("OpenStreetMap", "http://a.tile.openstreetmap.org/${z}/${x}/${y}.png", {buffer: 0} )];
 		    this.map.addLayers(layers);
 		}
 		catch (e) {

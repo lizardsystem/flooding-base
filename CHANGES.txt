@@ -5,7 +5,7 @@ Changelog of flooding-base
 1.38 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Fix OpenStreetMap layer.
 
 
 1.37 (2013-06-18)
