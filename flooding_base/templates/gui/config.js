@@ -67,8 +67,7 @@ if (OpenLayers) {
 			styles: '',
 			srs: '{{ m.srs }}',
 			singleTile: {% if m.tiled %}false{% else %}true{% endif %},
-			format: 'image/png',
-
+			format: 'image/png'
 		}, {
 			{% if m.is_base_layer %}{% else %}visibility: false,{% endif %}
 			isBaseLayer:{% if m.is_base_layer %}true{% else %}false{% endif %},
