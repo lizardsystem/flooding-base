@@ -5,7 +5,7 @@ Changelog of flooding-base
 1.39 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Set projection to maplayer in config.js.
 
 
 1.38 (2013-07-12)

@@ -48,59 +48,56 @@ maxExtent = wms_bounds;
 
 var OpenLayers = OpenLayers || null;
 if (OpenLayers) {
-    var maplayer = new OpenLayers.Layer.WMS(ST_EMPTY,{isBaseLayer: true, reproject: false,
-    													maxExtent: new OpenLayers.Bounds(-20037508, -20037508,
-                                                 				20037508, 20037508.34),
-                                                 		maxResolution: 156543.0339});
-
-    //custom_layers.push(maplayer);
-
+    var maplayer = new OpenLayers.Layer.WMS(ST_EMPTY,{
+	isBaseLayer: true, reproject: false,
+	maxExtent: new OpenLayers.Bounds(-20037508, -20037508, 20037508, 20037508.34),
+        maxResolution: 156543.0339});
 
     {% for m in map_list %}
-		{% if m.active %}
-		var maplayer = new OpenLayers.Layer.WMS("{{ m.name }}", "{{ m.url }}",
-		{
-			{% if m.transparent %}transparent: true,{% endif %}
-			height: '512',
-			width: '512',
-			layers: '{{ m.layers }}',
-			styles: '',
-			srs: '{{ m.srs }}',
-			singleTile: {% if m.tiled %}false{% else %}true{% endif %},
-			format: 'image/png'
-		}, {
-			{% if m.is_base_layer %}{% else %}visibility: false,{% endif %}
-			isBaseLayer:{% if m.is_base_layer %}true{% else %}false{% endif %},
-			buffer: 0,
-			reproject: false,
-			scales: [
-		        1.40625, 
-		        0.703125, 
-		        0.3515625, 
-		        0.17578125, 
-		        0.087890625, 
-		        0.0439453125,
-		        0.02197265625, 
-		        0.010986328125, 
-		        0.0054931640625, 
-		        0.00274658203125,
-		        0.001373291015625, 
-		        0.0006866455078125, 
-		        0.00034332275390625,
-		        0.000171661376953125, 
-		        0.0000858306884765625, 
-		        0.00004291534423828125,
-		        0.00002145767211914062, 
-		        0.00001072883605957031,
-		        0.00000536441802978515, 
-		        0.00000268220901489257
-		    ]
-		});
-
-
-		custom_layers.push(maplayer);
+	{% if m.active %}
+            var params = {
+		{% if m.transparent %}
+		    transparent: true,
 		{% endif %}
-	{% endfor %}
+		height: '512',
+		width: '512',
+		layers: '{{ m.layers }}',
+		styles: '',
+		singleTile: {% if m.tiled %}false{% else %}true{% endif %},
+		format: 'image/png'};
+            var options = {
+		{% if m.is_base_layer %}{% else %}
+		    visibility: false,
+		{% endif %}
+		isBaseLayer:{% if m.is_base_layer %}true{% else %}false{% endif %},
+		buffer: 0,
+		reproject: false,
+		scales: [
+		    1.40625, 
+		    0.703125, 
+		    0.3515625, 
+		    0.17578125, 
+		    0.087890625, 
+		    0.0439453125,
+		    0.02197265625, 
+		    0.010986328125, 
+		    0.0054931640625, 
+		    0.00274658203125,
+		    0.001373291015625, 
+		    0.0006866455078125, 
+		    0.00034332275390625,
+		    0.000171661376953125, 
+		    0.0000858306884765625, 
+		    0.00004291534423828125,
+		    0.00002145767211914062, 
+		    0.00001072883605957031,
+		    0.00000536441802978515, 
+		    0.00000268220901489257]}; 
+	    var maplayer = new OpenLayers.Layer.WMS("{{ m.name }}", "{{ m.url }}", params, options);
+            maplayer.projection = new OpenLayers.Projection('{{ m.srs}}');
+            custom_layers.push(maplayer);
+	{% endif %}
+    {% endfor %}
 }
 
 var helpPage="help.html"
