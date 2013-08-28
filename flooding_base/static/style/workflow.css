@@ -1,0 +1,35 @@
+.myBoxedGridCell,
+.myBoxedGridCellDark {
+    font-family:Verdana,Bitstream Vera Sans,sans-serif; font-size:11px;
+    color:black;
+    border-bottom:1px solid #a0a0a0; border-right:1px solid #a0a0a0;
+    background-color:#ffffff;
+}
+.myBoxedGridCellOver,
+.myBoxedGridCellOverDark {
+    font-family:Verdana,Bitstream Vera Sans,sans-serif; font-size:11px;
+    color:black;
+    border-bottom:1px solid #a0a0a0; border-right:1px solid #a0a0a0;
+    background-color:#c0ffc0;
+}
+.myBoxedGridCellSelected,
+.myBoxedGridCellSelectedDark {
+    font-family:Verdana,Bitstream Vera Sans,sans-serif; font-size:11px;
+    color:white;
+    border-bottom:1px solid #a0a0a0; border-right:1px solid #a0a0a0;
+    background-color:#000080;
+}
+.myBoxedGridCellSelectedOver,
+.myBoxedGridCellSelectedOverDark {
+    font-family:Verdana,Bitstream Vera Sans,sans-serif; font-size:11px;
+    color:white;
+    border-balertottom:1px solid #a0a0a0; border-right:1px solid #a0a0a0;
+    background-color:#8080ff;
+}
+.myBoxedGridCellDisabled,
+.myBoxedGridCellDisabledDark {
+    font-family:Verdana,Bitstream Vera Sans,sans-serif; font-size:11px;
+    color:#808080;
+    border-bottom:1px solid #a0a0a0; border-right:1px solid #a0a0a0;
+    background-color:#ffffff;
+}
