@@ -15,7 +15,8 @@ settings.fews_default_period = 92; //standaard periode bij opstarten (in dagen t
 settings.useImageService = true;
 
 
-var isomorphicDir="{{ STATIC_URL }}weblib/isomorphic/"; // abs path to isomorphic, needed to locate SmartClient CSS
+//var isomorphicDir="{{ STATIC_URL }}weblib/isomorphic/"; // abs path to isomorphic, needed to locate SmartClient CSS
+var isomorphicDir="{{ STATIC_URL }}weblib/smartclient/9.0/isomorphic/"; // abs path to isomorphic, needed to locate SmartClient CSS
 {% autoescape off %}
 var locationLizardFewsData = '{% url root_url %}service/';
 var locationLizardData = '{% url root_url %}lizard/service/';

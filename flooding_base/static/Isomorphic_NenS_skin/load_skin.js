@@ -14,13 +14,14 @@ with (theWindow) {
 // Specify skin directory
 //----------------------------------------
     // must be relative to your application file or isomorphicDir
-    isc.Page.setSkinDir("[ISOMORPHIC]/../../Isomorphic_NenS_skin/")
+    isc.Page.setSkinDir("[ISOMORPHIC]/../../../../Isomorphic_NenS_skin/")
 
 
 //----------------------------------------
 // Load skin style sheet(s)
 //----------------------------------------
-    isc.Page.loadStyleSheet("[ISOMORPHIC]/../../Isomorphic_NenS_skin/skin_styles.css", theWindow)
+
+    isc.Page.loadStyleSheet("[ISOMORPHIC]/../../../../Isomorphic_NenS_skin/skin_styles.css", theWindow)
 
 
 
