@@ -135,7 +135,7 @@ NAnimationControl.prototype._funcScAnimationControl = function(oMan) {
 
     isc.IButton.create({
     	ID: "scButtonAniSpeed",
-    	title: "x1",
+    	title: "x2",
     	showRollOver: false,
         actionType: "button",
         showFocused:false,
@@ -145,16 +145,21 @@ NAnimationControl.prototype._funcScAnimationControl = function(oMan) {
 	    var maxSpeed = appManager.selectedApp.overlayManager.animationControl.maxSpeed;
 	    var minSpeed = appManager.selectedApp.overlayManager.animationControl.minSpeed;
 	    var interval = appManager.selectedApp.overlayManager.animationControl.interval
-	    
-	    if (currentSpeed < maxSpeed) {
+
+	    if (currentSpeed == 1) {
+		scButtonAniSpeed.setTitle("x4");
 		currentSpeed *= 2;
-		scButtonAniSpeed.setTitle("x" + currentSpeed);
 		interval = interval / 2;
-	    } else {
-		scButtonAniSpeed.setTitle("x" + minSpeed);
+	    } else if (currentSpeed == 2) {
+		scButtonAniSpeed.setTitle("x1");
+		currentSpeed *= 2;
+		interval = interval / 2;
+	    } else if (currentSpeed == 4 ){
+		scButtonAniSpeed.setTitle("x2");
 		currentSpeed = minSpeed;
 		interval = appManager.selectedApp.overlayManager.animationControl.defaultInterval;
 	    }
+		
 	    this.redraw();
 	    appManager.selectedApp.overlayManager.animationControl.currentSpeed = currentSpeed;	    
 	    appManager.selectedApp.overlayManager.animationControl.interval = interval;
