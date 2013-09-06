@@ -7,6 +7,8 @@ Changelog of flooding-base
 
 - Update smartclient to v9.0.
 
+- Add speed control button for animations.
+
 
 1.39 (2013-08-14)
 -----------------

@@ -11,7 +11,8 @@ function NAnimationControl( _map, overlayManager,options ) {
     this.om = overlayManager;
     this._map = _map;
     this.smartClientScreen = options.smartClientScreen || scMap;
-    this.interval = options.interval || 1000 ;
+    this.defaultInterval = options.interval || 1000;
+    this.interval = this.defaultInterval;
     this.img = null;
     this.playState = 0;
     this.frameNr = 0;
@@ -19,6 +20,9 @@ function NAnimationControl( _map, overlayManager,options ) {
     this._visible = false;
     //lege zaken
     this.activeOverlay = null;
+    this.currentSpeed = 1;
+    this.maxSpeed = 4;
+    this.minSpeed = 1
 
     //omdat de control niet togevoegd wordt via map.addControl(), wordt hier 'handmatig' deze functie aangeroepen
     this.initialize();
@@ -51,14 +55,6 @@ NAnimationControl.prototype._funcScAnimationControl = function(oMan) {
         }
     });
 
-    isc.Label.create({
-        ID: "scAniSpeed",
-        height: "15px",
-        align: "center",
-        contents: "<b><font size=\"-3\"><a href=\"javascript:setSpeed(200);\">langzaam</a>&nbsp<a href=\"javascript:setSpeed(100);\">normaal</a>&nbsp<a href=\"javascript:setSpeed(50);\">snel</a></font></b><br>&nbsp",
-        autoDraw:false
-    });
-    
     isc.Label.create({
         ID: "scTimeDisplay",
         height: "15px",
@@ -137,6 +133,34 @@ NAnimationControl.prototype._funcScAnimationControl = function(oMan) {
       }
     });
 
+    isc.IButton.create({
+    	ID: "scButtonAniSpeed",
+    	title: "x1",
+    	showRollOver: false,
+        actionType: "button",
+        showFocused:false,
+    	width: 35,
+    	click: function () {
+	    var currentSpeed = appManager.selectedApp.overlayManager.animationControl.currentSpeed;
+	    var maxSpeed = appManager.selectedApp.overlayManager.animationControl.maxSpeed;
+	    var minSpeed = appManager.selectedApp.overlayManager.animationControl.minSpeed;
+	    var interval = appManager.selectedApp.overlayManager.animationControl.interval
+	    
+	    if (currentSpeed < maxSpeed) {
+		currentSpeed *= 2;
+		scButtonAniSpeed.setTitle("x" + currentSpeed);
+		interval = interval / 2;
+	    } else {
+		scButtonAniSpeed.setTitle("x" + minSpeed);
+		currentSpeed = minSpeed;
+		interval = appManager.selectedApp.overlayManager.animationControl.defaultInterval;
+	    }
+	    this.redraw();
+	    appManager.selectedApp.overlayManager.animationControl.currentSpeed = currentSpeed;	    
+	    appManager.selectedApp.overlayManager.animationControl.interval = interval;
+    	}
+    });
+
     isc.HLayout.create({
         ID:"scAniButtons",
         //align: "center",
@@ -152,6 +176,7 @@ NAnimationControl.prototype._funcScAnimationControl = function(oMan) {
             scButtonAniPlay,
             scButtonAniNext,
             scButtonAniEnd,
+	    scButtonAniSpeed,
             scTimeDisplay
         ],
         showResizeBar: false,
@@ -165,7 +190,6 @@ NAnimationControl.prototype._funcScAnimationControl = function(oMan) {
             padding:5,
             overflow: "hidden",
             members: [
-                    //scAniSpeed,
                     scAniButtons,
                     acSlider
             ]
