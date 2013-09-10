@@ -310,7 +310,7 @@ class Map(models.Model):
     url = models.CharField(max_length=200)
 
     #layernames separated with comma
-    layers = models.CharField(max_length=200)
+    layers = models.TextField()
 
     transparent = models.NullBooleanField(default=None)
     is_base_layer = models.NullBooleanField(default=False)
