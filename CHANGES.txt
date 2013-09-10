@@ -2,7 +2,7 @@ Changelog of flooding-base
 ==========================
 
 
-1.41 (unreleased)
+1.41 (2013-09-10)
 -----------------
 
 - Change layers field to TextFiled type.
