@@ -2,7 +2,7 @@ Changelog of flooding-base
 ==========================
 
 
-1.42 (unreleased)
+1.42 (2013-09-23)
 -----------------
 
 - Fix updateSize of map on resize window.
