@@ -94,7 +94,8 @@ if (OpenLayers) {
 		    0.00001072883605957031,
 		    0.00000536441802978515, 
 		    0.00000268220901489257]}; 
-	    var maplayer = new OpenLayers.Layer.WMS("{{ m.name }}", "{{ m.url }}", params, options);
+            
+     	    var maplayer = new OpenLayers.Layer.WMS("{{ m.name }}", "{{ m.url }}", params, options);
             maplayer.projection = new OpenLayers.Projection('{{ m.srs}}');
             custom_layers.push(maplayer);
 	{% endif %}

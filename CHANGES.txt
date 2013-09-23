@@ -5,7 +5,15 @@ Changelog of flooding-base
 1.42 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Fix updateSize of map on resize window.
+
+- Fix layout of LayerSwitcher.
+
+- Update OpenLayers to 2.12
+
+- Add top10nl as baselayer.
+
+- Handle error due TRANSPORT_ERROR by bad wifi connection in startup.js.
 
 
 1.41 (2013-09-10)

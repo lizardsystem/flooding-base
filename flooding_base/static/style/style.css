@@ -269,28 +269,52 @@ th.sort_rev
     background-color:red;
 }
 .olControlPanel .olControlMouseDefaultsItemActive {
-  background-color: orange;
-  background-image: url("../weblib/OpenLayers-2.8/theme/default/img/pan_on.png");
+    background-color: orange;
+    background-image: url("../weblib/OpenLayers-2.12-rc7/theme/default/img/pan_on.png");
 }
 .olControlPanel .olControlMouseDefaultsItemInactive {
-  background-color: white;
-  background-image: url("../weblib/OpenLayers-2.8/theme/default/img/pan_off.png");
+    background-color: white;
+    background-image: url("../weblib/OpenLayers-2.12-rc7/theme/default/img/pan_off.png");
 }
 
 .olControlPanel .olControlZoomBoxItemInactive {
-  width:  22px;
-  height: 22px;
-  background-color: orange;
-  background-image: url("../weblib/OpenLayers-2.8/img/drag-rectangle-on.png");
+    width:  22px;
+    height: 22px;
+    background-color: orange;
+    background-image: url("../weblib/OpenLayers-2.12-rc7/img/drag-rectangle-on.png");
 }
 .olControlPanel .olControlZoomBoxItemActive {
-  width:  22px;
-  height: 22px;
-  background-color: white;
-  background-image: url("../weblib/OpenLayers-2.8/img/drag-rectangle-off.png");
+    width:  22px;
+    height: 22px;
+    background-color: white;
+    background-image: url("../weblib/OpenLayers-2.12-rc7/img/drag-rectangle-off.png");
 }
 
+/** LayerSwitcher control **/
+.olAlphaImg {
+    opacity:0.45;
+    filter: alpha(opacity = 45);
+}
 
+.olControlLayerSwitcher .layersDiv {
+    opacity:0.85;
+    filter: alpha(opacity = 85);
+    font-size:10px !important;
+    border-radius: 15px 0px 0px 15px;
+    padding-bottom:15px !important;
+    padding-top:10px !important;
+}
+
+.olControlLayerSwitcher {
+    width: 25em !important;
+    font-size:10px !important;
+}
+
+.labelSpan {
+    color: white;		
+}
+
+/** END LayerSwitcher control **/
 
 #load{
     position: absolute;

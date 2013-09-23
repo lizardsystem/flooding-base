@@ -51,7 +51,7 @@ function NMarkerOverlay(id,name,_map,data,options) {
     this.isSelectedLayerAddedToMap = false;
 
     if (this.canSelect) {
-        this.selectedFrame = new OpenLayers.Layer.Markers("geselecteerde " + name, {displayInLayerSwitcher: this.displayInLayerSwitcher});
+        this.selectedFrame = new OpenLayers.Layer.Markers("Geselecteerde " + name, {displayInLayerSwitcher: this.displayInLayerSwitcher});
         this.selectedMarker = new Array();
         this.isSelectedLayerAddedToMap = false;
     }

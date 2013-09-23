@@ -204,49 +204,47 @@ NMainScreenManager.prototype.initMap = function() {
             document.getElementById(this.mapDivName).style.width = "100%";
             document.getElementById(this.mapDivName).parentNode.style.width = "100%"; //needed for smartclient
 
+	    function onZoomEnd (e) {
+		console.log(e.object.zoom);
+                var map = e.object;
+                var zoom = map.zoom;
+		if (zoom > 6) {
+                    map.setBaseLayer(map.layers[0]);
+                }
+		else {
+		    map.setBaseLayer(map.layers[1]);
+		}
+	    }
+
             var options = {
                 projection: new OpenLayers.Projection("EPSG:900913"),
                 displayProjection: new OpenLayers.Projection("EPSG:4326"),
-
                 units: "m",
                 numZoomLevels: 18,
+		autoUpdateSize: true,
                 //maxResolution: 156543.0339,
-                maxExtent: maxExtent
+                maxExtent: maxExtent,
+		controls: [
+		    new OpenLayers.Control.NavToolbar(),
+		    new OpenLayers.Control.Zoom(),
+		    new OpenLayers.Control.LayerSwitcher({'ascending':false})
+		],
+		// eventListeners: {
+		//     "zoomend": onZoomEnd
+		// }
             }
 
 
             this.map = new OpenLayers.Map(this.mapDivName, options);
-
-            //this.map.addControl(new OpenLayers.Control.PanZoomBar());
-            this.map.addControl(new OpenLayers.Control.LayerSwitcher({'ascending':false}));
-            //add ref of scale line for hiding it later on
-            //map.scaleLine = new OpenLayers.Control.ScaleLine(); // to do: dit levert een dubbeling op, werkt nog niet lekker
-            //map.addControl(new OpenLayers.Control.ScaleLine());
-
-            this.map.addControl(new OpenLayers.Control.MousePosition());
-            //this.map.addControl(new OpenLayers.Control.MousePosition({prefix: "RD Coordinates (", separator: ",", suffix: ")",displayProjection: new OpenLayers.Projection("EPSG:28992"),numdigits:0, displayClass: "olTilePosition" }));
-
-            //map.addControl(new OpenLayers.Control.OverviewMap(options)); // to do: werkt nog niet lekker
-            //var panel = new OpenLayers.Control.NavToolbar();
-
-            var panel = new OpenLayers.Control.Panel();
-            panel.addControls([
-                new OpenLayers.Control.MouseDefaults(
-                    {title:'You can use the default mouse configuration'}),
-                new OpenLayers.Control.ZoomBox(
-                    {title:"Zoom box: Selecting it you can zoom on an area by clicking and dragging."})
-
-            ]);
-
-            this.map.addControl(panel);
 	    this.map.isGoogleMaps = false;
+
 
 
 
             if (this.useGoogleLayers) {
                 try {
                     var layers = [
-                        new OpenLayers.Layer.Google("Google Physical",{type: G_PHYSICAL_MAP,sphericalMercator: true,numZoomLevels: 20}),
+                        new OpenLayers.Layer.Google("Google Physical",{type: G_PHYSICAL_MAP,sphericalMercator: true,numZoomLevels: 20, displayInLayerSwitcher:false}),
                         new OpenLayers.Layer.Google("Google Hybrid",{type: G_HYBRID_MAP,sphericalMercator: true,numZoomLevels: 20}),
                         new OpenLayers.Layer.Google("Google Streets",{sphericalMercator: true,numZoomLevels: 20}),
                         new OpenLayers.Layer.Google("Google Satellite",{type: G_SATELLITE_MAP,sphericalMercator: true,numZoomLevels: 20})
@@ -261,8 +259,11 @@ NMainScreenManager.prototype.initMap = function() {
             if (this.useOpenStreetMap)
 	    {
 		try{
-		    var layers = [new OpenLayers.Layer.OSM("OpenStreetMap NL", "http://tile.openstreetmap.nl/tiles/${z}/${x}/${y}.png", {buffer: 0} )];
-		    this.map.addLayers(layers);
+		    var layers = [new OpenLayers.Layer.OSM("OpenStreetMap NL",
+							   "http://tile.openstreetmap.nl/tiles/${z}/${x}/${y}.png",
+							   {buffer: 0, tileOptions: {crossOriginKeyword: null}}
+							   )];
+		    this.map.addLayers(layers)
 		    var layers = [new OpenLayers.Layer.OSM("OpenStreetMap", "http://a.tile.openstreetmap.org/${z}/${x}/${y}.png", {buffer: 0} )];
 		    this.map.addLayers(layers);
 		}
@@ -270,6 +271,20 @@ NMainScreenManager.prototype.initMap = function() {
 		    console.log("kan Openstreet Map lagen niet laden." + e);
 		}
 
+	    }
+	    
+	    // Add pdok layers
+	    //var top10layers = new Array('inrichtingselementlijnen','spoorbaandeel_lijnen','terreinen','waterdeel_vlakken','waterdeellijnen','wegdeelvlakken','inrichtingselement_punten','geo_labels,gebouwen','functioneelgebied_labels');
+	    try {
+         	    var layers = [
+			//new OpenLayers.Layer.WMS("Top10NL", "http://geodata.nationaalgeoregister.nl/top10nl/wms", {layers: top10layers, format: 'image/png'}, { resolutions: [9.5546284532547, 4.77731422662735, 0.42] } ),
+			//new OpenLayers.Layer.WMS("Top10NL", "http://geodata.nationaalgeoregister.nl/top10nl/wms", {layers: top10layers, format: 'image/png'}, { minResolution: 0.42, numZoomLevels: 7 } ),
+		        //new OpenLayers.Layer.WMS("Top50NL", "http://geodata.nationaalgeoregister.nl/top50vector/wms", {layers: 'top50vector', format: 'image/png'}),
+		        new OpenLayers.Layer.WMS("Top10NL", "http://geoserver6.lizard.net/geoserver/ipo_ror/wms", {layers: 'ipo_ror:pdok_top10_50', format: 'image/png'}, { minResolution: 0.42, numZoomLevels: 7 })
+		    ];
+		this.map.addLayers(layers);
+	    } catch (e) {
+		console.log("kan PDOK lagen niet laden.");
 	    }
 
             this.map.addLayers(this.customLayers);
@@ -320,16 +335,11 @@ NMainScreenManager.prototype.initMap = function() {
             	    }
             	}
             	layers.sort()
-
+	
             	for (var i = layers.length-1; i >= 0; i--) {
             	    this.setLayerIndex(layers[i][1], last_baseLayer+1);
             	}
             }
-
-
-
-            //expand the overview map control
-            //overview.maximizeControl();
 
         } else {
             console.error("kies map engine die ondersteunt wordt");

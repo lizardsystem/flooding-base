@@ -22,7 +22,7 @@ function NLoadScripts(root_url, options) {
 		
 		if(this.core){
 			jsfiles = jsfiles.concat(
-				"static_media/weblib/OpenLayers-2.8/OpenLayers.js",
+				"static_media/weblib/OpenLayers-2.12-rc7/OpenLayers.js",
 				"get_translated_strings.js",
 				"get_config.js?site="+this.site,
 				"static_media/weblib/isomorphic/system/modules/ISC_Core.js",
