@@ -228,7 +228,7 @@ NMainScreenManager.prototype.initMap = function() {
 		    new OpenLayers.Control.NavToolbar(),
 		    new OpenLayers.Control.Zoom(),
 		    new OpenLayers.Control.LayerSwitcher({'ascending':false})
-		],
+		]
 		// eventListeners: {
 		//     "zoomend": onZoomEnd
 		// }
