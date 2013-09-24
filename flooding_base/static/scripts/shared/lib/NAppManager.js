@@ -52,9 +52,9 @@ NAppManager.prototype.toHtml = function() {
                 var subApp = app.subApps[subApp_id];
                 //debugger;
                 if (app.selectedSubApp == subApp) {
-                    secondLine += '<b>'+subApp.name+'</b>&nbsp&nbsp&nbsp&nbsp';
+                    secondLine += '<b>'+subApp.name+'</b>&nbsp&nbsp';
                 } else {
-                    secondLine += '<a href="javascript:'+this.appManagerName+'.selectApp(\''+subApp.id+'\',\''+app.id+'\')">'+subApp.name+'</a>&nbsp&nbsp&nbsp&nbsp';
+                    secondLine += '<a href="javascript:'+this.appManagerName+'.selectApp(\''+subApp.id+'\',\''+app.id+'\')">'+subApp.name+'</a>&nbsp&nbsp';
                 }
             }
         } else {

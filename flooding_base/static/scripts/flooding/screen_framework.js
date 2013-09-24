@@ -47,19 +47,8 @@ isc.Canvas.create({
 });
 
 isc.Canvas.create({
-    ID: "scSubApps",
-    contents: "<div id=\"subAppHeaderPane\"></div>",
-    align: "left",
-    overflow: "hidden",
-    width: "340",
-    height:"26",
-    showResizeBar: false,
-    autoDraw: false
-});
-
-isc.Canvas.create({
     ID: "scNavigationToolbar",
-    align: "left",
+    align: "center",
     overflow: "hidden",
     width: "340",
     height:"26",
@@ -97,15 +86,24 @@ isc.TabSet.create({
 
 scNavigation.tabBar.setHeight(0);
 
+isc.Canvas.create({
+    ID: "scSubApps",
+    contents: "<div id=\"subAppHeaderPane\"></div>",
+    overflow: "hidden",
+    width: "370",
+    height:"26",
+    showResizeBar: false,
+    autoDraw: false
+});
 
 /*** Screen: main ***/
 // The element in the mainScreen where the buttons of the applications will be placed
 isc.HLayout.create({
     ID:"scButtons",
-    align: "center",
+    align: "right",
     overflow: "hidden",
-    height: "30px",
-    width: "100%",
+    height: "26",
+    width: "*",
     padding: 1,
     autoDraw:false
 });
