@@ -5,7 +5,7 @@ Changelog of flooding-base
 1.43 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Fix styles.
 
 
 1.42 (2013-09-23)

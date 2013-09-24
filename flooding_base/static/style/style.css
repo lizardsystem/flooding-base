@@ -291,10 +291,12 @@ th.sort_rev
 }
 
 /** LayerSwitcher control **/
-.olAlphaImg {
-    opacity:0.45;
-    filter: alpha(opacity = 45);
-}
+/**.olAlphaImg .olControlLayerSwitcher .maximizeDiv .olControlLayerSwitcher .minimizeDiv**/
+#OpenLayers_Control_MaximizeDiv_innerImage
+ {
+     opacity:0.65;
+     filter: alpha(opacity = 45);
+ }
 
 .olControlLayerSwitcher .layersDiv {
     opacity:0.85;
