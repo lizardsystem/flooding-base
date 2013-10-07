@@ -274,13 +274,9 @@ NMainScreenManager.prototype.initMap = function() {
 	    }
 	    
 	    // Add pdok layers
-	    //var top10layers = new Array('inrichtingselementlijnen','spoorbaandeel_lijnen','terreinen','waterdeel_vlakken','waterdeellijnen','wegdeelvlakken','inrichtingselement_punten','geo_labels,gebouwen','functioneelgebied_labels');
 	    try {
          	    var layers = [
-			//new OpenLayers.Layer.WMS("Top10NL", "http://geodata.nationaalgeoregister.nl/top10nl/wms", {layers: top10layers, format: 'image/png'}, { resolutions: [9.5546284532547, 4.77731422662735, 0.42] } ),
-			//new OpenLayers.Layer.WMS("Top10NL", "http://geodata.nationaalgeoregister.nl/top10nl/wms", {layers: top10layers, format: 'image/png'}, { minResolution: 0.42, numZoomLevels: 7 } ),
-		        //new OpenLayers.Layer.WMS("Top50NL", "http://geodata.nationaalgeoregister.nl/top50vector/wms", {layers: 'top50vector', format: 'image/png'}),
-		        new OpenLayers.Layer.WMS("Top10NL", "http://geoserver6.lizard.net/geoserver/ipo_ror/wms", {layers: 'ipo_ror:pdok_top10_50', format: 'image/png'}, { minResolution: 0.42, numZoomLevels: 7 })
+		        new OpenLayers.Layer.WMS("Top10NL", "http://geoserver6.lizard.net/geoserver/ipo_ror_flooding/wms", {layers: 'ipo_ror_flooding:pdok_top10_50', format: 'image/png'}, { minResolution: 0.42, numZoomLevels: 7 })
 		    ];
 		this.map.addLayers(layers);
 	    } catch (e) {
