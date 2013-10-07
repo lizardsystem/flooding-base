@@ -5,7 +5,7 @@ Changelog of flooding-base
 1.44 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Change workspace for pdok maps.
 
 
 1.43 (2013-09-24)
