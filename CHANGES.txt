@@ -2,7 +2,7 @@ Changelog of flooding-base
 ==========================
 
 
-1.44 (unreleased)
+1.44 (2013-10-07)
 -----------------
 
 - Change workspace for pdok maps.
