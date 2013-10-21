@@ -146,6 +146,7 @@ function clear_scenarios() {
     iwScenarioInformation.disable(false);
     iwScenarioRemarks.disable(false);
     iwEdit.disable(false);
+    iwArchive.disable(false);
     iwApprovalInformation.disable(true);
 }
 
@@ -354,6 +355,7 @@ function frNavigation() {
                 iwScenarioInformation.enable(false);
                 iwScenarioRemarks.enable(false);
                 iwEdit.enable(false);
+		iwArchive.enable(false);
                 iwApprovalInformation.enable(true);
                 if (leaf.strategy_id !== null) {
                     frExtraEmbankmentLayer.setParams({strategy_id:leaf.strategy_id});
@@ -367,6 +369,7 @@ function frNavigation() {
                 iwApprovalInformation.addOrUpdateParams({scenarioid:leaf.sid});
                 iwEdit.addOrUpdateParams({scenarioid:leaf.sid});
                 iwLegend.addOrUpdateParams({scenarioid:leaf.sid});
+		iwArchive.addOrUpdateParams({scenarioid:leaf.sid});
 
 
                 dsLoccuttoffs.fetchData({scenario_id:leaf.sid}, function(dsResponce,data,dsRequest) {

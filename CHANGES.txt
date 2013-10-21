@@ -5,7 +5,7 @@ Changelog of flooding-base
 1.45 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Add 'Archief' tab into infowindow.
 
 
 1.44 (2013-10-07)

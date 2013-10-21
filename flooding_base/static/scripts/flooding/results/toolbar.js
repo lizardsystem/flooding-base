@@ -11,35 +11,38 @@ floodingFilterResults = "all_with_results";
 
 function frToolbarSettings() {
 
-	isc.DynamicForm.create({
-		ID: "formTypeResults",
-		width: 200,
-		fields: [{
-			ID: 'selectResultType',
-			name: "selectResult",
-			title: ST_RESULT,
-			type: "select",
-			defaultValue:"all_with_results",
-			valueMap: {
-				all_with_results: ST_ALL_WITH_RESULTS,
-				accepted: ST_ACCEPTED,
-				rejected: ST_REJECTED,
-				verify: ST_VERIFY,
-				all: ST_ALL
-				},
-			change: function(form, item, value){
-	            floodingFilterResults = value;
-	        	var region = getSelectedRegion();
-	        	if (region!=null && region.isregion == true)
-	        	frBlockBreaches.tree.fetchData({region_id:region.rid, filter:floodingFilterResults},function(dsResponse, data, dsRequest) {
+    isc.DynamicForm.create({
+	ID: "formTypeResults",
+	width: 200,
+	fields: [{
+	    ID: 'selectResultType',
+	    name: "selectResult",
+	    title: ST_RESULT,
+	    type: "select",
+	    defaultValue:"all_with_results",
+	    valueMap: {
+		all_with_results: ST_ALL_WITH_RESULTS,
+		accepted: ST_ACCEPTED,
+		rejected: ST_REJECTED,
+		verify: ST_VERIFY,
+		all: ST_ALL,
+		archive: ST_ARCHIVE
+	    },
+	    change: function(form, item, value){
+		floodingFilterResults = value;
+	        var region = getSelectedRegion();
+	        if (region!=null && region.isregion == true)
+	            frBlockBreaches.tree.fetchData(
+			{region_id:region.rid, filter:floodingFilterResults},
+			function(dsResponse, data, dsRequest) {
 	        		frbreachLayer.refreshByData(data);
 	        		frbreachLayer.show();
-	        	});//teken punten via callback (na het laden)
+	            });//teken punten via callback (na het laden)
 	        	clear_scenarios();
-	        }
-		}],
-		autoDraw:false
-	});
+	    }
+	}],
+	autoDraw:false
+});
 
 
 	isc.IButton.create({

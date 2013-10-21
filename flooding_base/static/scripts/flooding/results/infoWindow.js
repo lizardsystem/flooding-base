@@ -165,8 +165,39 @@ function frInfoWindowSettings() {
         }
     });
 
+    iwArchive = new NInfoWindow("Archief",{
+        tabName: 'Archief' ,
+    	defaultSize : {width: 300, height:400 },
+    	canClose: false,
+    	canMax: false,
+    	canMin: false,
+    	showTitle: true,
+    	preLoad:false,
+    	enabled:false,
+    	baseUrl: flooding_config.root_url + "flooding/infowindow/",
+    	params:{scenarioid: 1, action: 'archive'},
+    	type: HTMLPANE,
+    	isForm:true,
 
-    return [iwScenarioInformation, iwLegend, iwScenarioRemarks, iwApprovalInformation, iwEdit ];
+        onInit: function(isSelected){
+
+        },
+        onRefreshContent:function(isSelected,reason){
+
+        },
+        onSelect: function() {
+
+        },
+        onUnSelect: function() {
+
+        },
+        onDestroy: function() {
+
+        }
+    });
+
+
+    return [iwScenarioInformation, iwLegend, iwScenarioRemarks, iwApprovalInformation, iwEdit, iwArchive ];
 }
 
 console.log('klaar laden flooding/result/infowindow ...');
