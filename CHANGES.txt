@@ -2,7 +2,7 @@ Changelog of flooding-base
 ==========================
 
 
-1.46 (unreleased)
+1.46 (2013-10-23)
 -----------------
 
 - Fix urls for table app.
