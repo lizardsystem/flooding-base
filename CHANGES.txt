@@ -5,7 +5,7 @@ Changelog of flooding-base
 1.46 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Fix urls for table app.
 
 
 1.45 (2013-10-21)
