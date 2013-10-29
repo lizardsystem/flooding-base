@@ -38,31 +38,31 @@ function frToolbarSettings() {
 	        		frbreachLayer.refreshByData(data);
 	        		frbreachLayer.show();
 	            });//teken punten via callback (na het laden)
-	        	clear_scenarios();
+	        clear_scenarios();
 	    }
 	}],
 	autoDraw:false
-});
+    });
 
 
-	isc.IButton.create({
-	    ID: "buttonExporteer",
-	    title: ST_EXPORT,
-	    showRollOver: false,
-	    showDown: true,
-	    showFocused: false,
-	    disabled:true,
-	    width: 120,
-	    click: function(form, item){
-	        scenario = getSelectedScenario()
-	        if (scenario) {
-				window.open(locationFloodingData+
-					    '?action=get_raw_result_scenario&scenarioid='+scenario.sid);
-			}
-	    },
-
-	    autoDraw: false
-	});
+    isc.IButton.create({
+	ID: "buttonExporteer",
+	title: ST_EXPORT,
+	showRollOver: false,
+	showDown: true,
+	showFocused: false,
+	disabled:true,
+	width: 120,
+	click: function(form, item){
+	    scenario = getSelectedScenario()
+	    if (scenario) {
+		window.open(locationFloodingData + 
+			    '?action=get_raw_result_scenario&scenarioid=' +
+			    scenario.sid);
+	    }
+	},
+	autoDraw: false
+    });
 
     isc.Slider.create({
         ID: "sliderOpacity",
@@ -81,25 +81,42 @@ function frToolbarSettings() {
         height:20,
         title: ST_OPACITY,
         valueChanged : function (value) {
-			if ((value<100) && !doneWarningIE) {
-				alert("Waarschuwing:\nHet doorzichtig maken van de kaartlagen, in combinatie met het ver ingezoomd zijn, neemt bij gebruik van Internet Explorer (erg) veel geheugen in. Aangeraden wordt om niet te ver in te zoomen of een andere browser te gebruiken" );
-				doneWarningIE = true;
-				sliderOpacity.setValue(100);
-
-			} else {
-				if (appManager.selectedApp.overlayManager) {
-					appManager.selectedApp.overlayManager.setOpacity(value / 100);
-				}
-			}
-        }
+	    if ((value<100) && !doneWarningIE) {
+		alert("Waarschuwing:\nHet doorzichtig maken van de kaartlagen," +
+		      "in combinatie met het ver ingezoomd zijn, neemt bij gebruik " +
+		      "van Internet Explorer (erg) veel geheugen in. Aangeraden " +
+		      "wordt om niet te ver in te zoomen of een andere browser te gebruiken" );
+		doneWarningIE = true;
+		sliderOpacity.setValue(100);
+	    } else {
+		if (appManager.selectedApp.overlayManager) {
+		    appManager.selectedApp.overlayManager.setOpacity(value / 100);
+		}
+	    }
+	}
     });
 
- 	return {
- 				name: "flooding resulttools",
- 				tools: [formTypeResults,
- 					sliderOpacity,
-			 		buttonExporteer]
-			 };
+    isc.IButton.create({
+    	ID: "btSearch",
+    	title: "",
+    	autoFit: true,
+    	icon: "/static_media/Isomorphic_NenS_skin/images/actions/find.png",
+    	//radioGroup: "views",
+    	//actionType: "checkbox",
+    	click : function () {
+    	    searchWindow.show();
+    	} 
+    });
+
+    return {
+	name: "flooding resulttools",
+ 	tools: [
+	    btSearch,
+	    formTypeResults,
+ 	    sliderOpacity,
+	    buttonExporteer
+	]
+    };
 }
 
 console.log('klaar laden flooding/result/toolbar ...');
