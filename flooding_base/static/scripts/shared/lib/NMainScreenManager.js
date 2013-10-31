@@ -1,9 +1,9 @@
 console.log('loading NMainScreenManager ...');
 
 /****************************************************************/
-/**** class: 		NMainScreenManager   				        */
-/**** description: 	This class represents the manager that is   */
-/****       		responsible for the action on and related   */
+/**** class:         NMainScreenManager                           */
+/**** description:     This class represents the manager that is   */
+/****               responsible for the action on and related   */
 /****               to the main screen.                         */
 /****************************************************************/
 
@@ -51,7 +51,7 @@ function NMainScreenManager(mainPane, settings) {
     this.ispre_init = false;
     this.isinit = false;
 
-    this.screen = new Array();
+    this.screen = [];
     this.screen[MAP] = null;
     this.screen[IFRAME] = null;
     this.screen[FRAME] = null;
@@ -61,42 +61,42 @@ function NMainScreenManager(mainPane, settings) {
 /**** Pre initializing the NMainScreenManager ****/
 NMainScreenManager.prototype.pre_init = function() {
     if (this.ispre_init) {
-	return false;
+        return false;
     }
 
-    this.screen = new Array();
+    this.screen = [];
 
     isc.Canvas.create({
-	ID: "scMap",
-	height: "100%",
-	width: "100%",
-	styleName:'canvasxxx',
-	overflow: "hidden",
-	contents: "<div id='map'></div>",
-	autoDraw: true,
-	layoutChildren: function(){
-	    //console.log('layout Childeren');
-	}
+        ID: "scMap",
+        height: "100%",
+        width: "100%",
+        styleName:'canvasxxx',
+        overflow: "hidden",
+        contents: "<div id='map'></div>",
+        autoDraw: true,
+        layoutChildren: function(){
+            //console.log('layout Childeren');
+        }
     });
 
     isc.HTMLPane.create({
-	ID: "scHTML",
-	width: "100%",
-	height: "100%",
-	overflow:"auto",
-	contentsType:"page",
-	border: "none",
-	autoDraw: false
+        ID: "scHTML",
+        width: "100%",
+        height: "100%",
+        overflow:"auto",
+        contentsType:"page",
+        border: "none",
+        autoDraw: false
     });
 
 
     isc.HTMLPane.create({
-	ID: "scCanvas",
-	width: "100%",
-	height: "100%",
-	border: "none",
-	overflow:"auto",
-	autoDraw: true // Note: needed for creating the pane object with all its content
+        ID: "scCanvas",
+        width: "100%",
+        height: "100%",
+        border: "none",
+        overflow:"auto",
+        autoDraw: true // Note: needed for creating the pane object with all its content
     });
 
     /*isc.Canvas.create({
@@ -114,17 +114,17 @@ NMainScreenManager.prototype.pre_init = function() {
     this.screen[FRAME] = scCanvas;
 
     for (var sc = 1; sc < this.screen.length;sc++) {
-    	this.screen[sc].init = false;
+        this.screen[sc].init = false;
     }
     this.ispre_init = true;
     return true;
-}
+};
 
 NMainScreenManager.prototype.getScreens = function() {
     this.pre_init();
 
     return [this.screen[MAP],this.screen[IFRAME], this.screen[FRAME]];
-}
+};
 
 
 /**
@@ -132,7 +132,7 @@ NMainScreenManager.prototype.getScreens = function() {
  */
 NMainScreenManager.prototype.init = function() {
     if (this.isinit) {
-	return false;
+        return false;
     }
 
     var screens = this.pre_init();
@@ -140,7 +140,7 @@ NMainScreenManager.prototype.init = function() {
 
     this.isinit = true;
     return true;
-}
+};
 
 
 /**
@@ -148,7 +148,7 @@ NMainScreenManager.prototype.init = function() {
  */
 NMainScreenManager.prototype.destroy = function() {
 
-}
+};
 
 /**
  * function:
@@ -159,32 +159,32 @@ NMainScreenManager.prototype.setScreen = function(screenType, app) {
     this.screen[IFRAME].setContentsURL("about:blank");
 
     for (var sc = 1; sc < this.screen.length;sc++) {
-       	if (sc != screenType) {
+        if (sc != screenType) {
             this.mainPane.hideMember(this.screen[sc]);
-       	}
+        }
     }
 
     this.mainPane.showMember(this.screen[screenType]);
     this.mainPane.reflowNow();
 
-    if (screenType == MAP && this.screen[MAP].init == false) {
-       	this.initMap();
+    if (screenType == MAP && !this.screen[MAP].init) {
+        this.initMap();
     } else if (screenType == IFRAME) {
-       	this.screen[screenType].setContentsURL(app.url);
+        this.screen[screenType].setContentsURL(app.url);
     } else if (screenType == FRAME) {
-       	if (app.url) {
-       	    this.screen[screenType].setContentsURL(app.url);
-       	} else {
-       	    this.screen[screenType].setContents("-");
-       	}
+        if (app.url) {
+            this.screen[screenType].setContentsURL(app.url);
+        } else {
+            this.screen[screenType].setContents("-");
+        }
     }
-}
+};
 
 NMainScreenManager.prototype.getMap = function() {
     return this.map;
-}
+};
 
-map = null
+map = null;
 /**** Initialize Openlayers Map for mainscreen ****/
 NMainScreenManager.prototype.initMap = function() {
     this.init();
@@ -192,7 +192,7 @@ NMainScreenManager.prototype.initMap = function() {
     var maxExtent = new OpenLayers.Bounds(-20037508, -20037508,
                                           20037508, 20037508.34);
 
-    if (this.map == null) {
+    if (!this.map) {
 
         if (this.useOpenLayers) {
 
@@ -204,46 +204,46 @@ NMainScreenManager.prototype.initMap = function() {
             document.getElementById(this.mapDivName).style.width = "100%";
             document.getElementById(this.mapDivName).parentNode.style.width = "100%"; //needed for smartclient
 
-	    function onZoomEnd (e) {
-		console.log(e.object.zoom);
+            var onZoomEnd = function (e) {
+                console.log(e.object.zoom);
                 var map = e.object;
                 var zoom = map.zoom;
-		if (zoom > 6) {
+                if (zoom > 6) {
                     map.setBaseLayer(map.layers[0]);
                 }
-		else {
-		    map.setBaseLayer(map.layers[1]);
-		}
-	    }
+                else {
+                    map.setBaseLayer(map.layers[1]);
+                }
+            };
 
             var options = {
                 projection: new OpenLayers.Projection("EPSG:900913"),
                 displayProjection: new OpenLayers.Projection("EPSG:4326"),
                 units: "m",
                 numZoomLevels: 18,
-		autoUpdateSize: true,
+                autoUpdateSize: true,
                 //maxResolution: 156543.0339,
                 maxExtent: maxExtent,
-		controls: [
-		    new OpenLayers.Control.NavToolbar(),
-		    new OpenLayers.Control.Zoom(),
-		    new OpenLayers.Control.LayerSwitcher({'ascending':false})
-		]
-		// eventListeners: {
-		//     "zoomend": onZoomEnd
-		// }
-            }
+                controls: [
+                    new OpenLayers.Control.NavToolbar(),
+                    new OpenLayers.Control.Zoom(),
+                    new OpenLayers.Control.LayerSwitcher({'ascending':false})
+                ]
+                // eventListeners: {
+                //     "zoomend": onZoomEnd
+                // }
+            };
 
 
             this.map = new OpenLayers.Map(this.mapDivName, options);
-	    this.map.isGoogleMaps = false;
+            this.map.isGoogleMaps = false;
 
 
-
+            var layers;
 
             if (this.useGoogleLayers) {
                 try {
-                    var layers = [
+                    layers = [
                         new OpenLayers.Layer.Google("Google Physical",{type: G_PHYSICAL_MAP,sphericalMercator: true,numZoomLevels: 20, displayInLayerSwitcher:false}),
                         new OpenLayers.Layer.Google("Google Hybrid",{type: G_HYBRID_MAP,sphericalMercator: true,numZoomLevels: 20}),
                         new OpenLayers.Layer.Google("Google Streets",{sphericalMercator: true,numZoomLevels: 20}),
@@ -257,31 +257,33 @@ NMainScreenManager.prototype.initMap = function() {
             }
 
             if (this.useOpenStreetMap)
-	    {
-		try{
-		    var layers = [new OpenLayers.Layer.OSM("OpenStreetMap NL",
-							   "http://tile.openstreetmap.nl/tiles/${z}/${x}/${y}.png",
-							   {buffer: 0, tileOptions: {crossOriginKeyword: null}}
-							   )];
-		    this.map.addLayers(layers)
-		    var layers = [new OpenLayers.Layer.OSM("OpenStreetMap", "http://a.tile.openstreetmap.org/${z}/${x}/${y}.png", {buffer: 0} )];
-		    this.map.addLayers(layers);
-		}
-		catch (e) {
-		    console.log("kan Openstreet Map lagen niet laden." + e);
-		}
+            {
+                try {
+                    layers = [
+                        new OpenLayers.Layer.OSM(
+                            "OpenStreetMap NL",
+                            "http://tile.openstreetmap.nl/tiles/${z}/${x}/${y}.png",
+                            {buffer: 0, tileOptions: {crossOriginKeyword: null}}
+                        )];
+                    this.map.addLayers(layers);
+                    layers = [new OpenLayers.Layer.OSM("OpenStreetMap", "http://a.tile.openstreetmap.org/${z}/${x}/${y}.png", {buffer: 0} )];
+                    this.map.addLayers(layers);
+                }
+                catch (e) {
+                    console.log("kan Openstreet Map lagen niet laden." + e);
+                }
 
-	    }
-	    
-	    // Add pdok layers
-	    try {
-         	    var layers = [
-		        new OpenLayers.Layer.WMS("Top10NL", "http://geoserver6.lizard.net/geoserver/ipo_ror_flooding/wms", {layers: 'ipo_ror_flooding:pdok_top10_50', format: 'image/png'}, { minResolution: 0.42, numZoomLevels: 7 })
-		    ];
-		this.map.addLayers(layers);
-	    } catch (e) {
-		console.log("kan PDOK lagen niet laden.");
-	    }
+            }
+
+            // Add pdok layers
+            try {
+                layers = [
+                    new OpenLayers.Layer.WMS("Top10NL", "http://geoserver6.lizard.net/geoserver/ipo_ror_flooding/wms", {layers: 'ipo_ror_flooding:pdok_top10_50', format: 'image/png'}, { minResolution: 0.42, numZoomLevels: 7 })
+                ];
+                this.map.addLayers(layers);
+            } catch (e) {
+                console.log("kan PDOK lagen niet laden.");
+            }
 
             this.map.addLayers(this.customLayers);
 
@@ -294,48 +296,50 @@ NMainScreenManager.prototype.initMap = function() {
                     this.map.setCenter(extent.getCenterLonLat(),this.map.getZoomForExtent(extent));
                 } else {
                     this.map.setCenter((new OpenLayers.LonLat(this.initLng, this.initLat)).transform(this.map.displayProjection, this.map.projection ) ,this.initZoomlevel, false, true);
-		}
+                }
             } catch(e) {
                 console.error(e);
             }
 
-	    map = this.map;
-	    this_extent = this.extent;
+            map = this.map;
+            this_extent = this.extent;
 
-	    //overload the zoomToMaxExtent function of Openlayers
-	    if (this.restrictMap)
+            //overload the zoomToMaxExtent function of Openlayers
+            if (this.restrictMap)
             {
                 map.zoomToMaxExtent = function() {
-            	    try {
-                	var extent = new OBounds(this_extent);
-                	if (extent.validRect()) {
-                	    map.setCenter(extent.getCenterLonLat(),map.getZoomForExtent(extent));
-                	} else {
-                	    map.setCenter((new OpenLayers.LonLat(this.initLng, this.initLat)).transform(map.displayProjection, map.projection ) ,this.initZoomlevel, false, true);
-			}
-            	    } catch(e) {
-                	console.error(e);
-            	    }
-            	};
+                    try {
+                        var extent = new OBounds(this_extent);
+                        if (extent.validRect()) {
+                            map.setCenter(extent.getCenterLonLat(),map.getZoomForExtent(extent));
+                        } else {
+                            map.setCenter((new OpenLayers.LonLat(this.initLng, this.initLat)).transform(map.displayProjection, map.projection ) ,this.initZoomlevel, false, true);
+                        }
+                    } catch(e) {
+                        console.error(e);
+                    }
+                };
             }
 
 
             map.reorder_layers = function() {
-            	var layers = []
-            	for (var i = 0; i < this.layers.length; i++) {
-            	    if (this.layers[i].isBaseLayer) {
-            		var last_baseLayer = i;
-            	    } else {
-            		var weight = this.layers[i].lizard_index || 0;
-            		layers.push([weight, this.layers[i]])
-            	    }
-            	}
-            	layers.sort()
-	
-            	for (var i = layers.length-1; i >= 0; i--) {
-            	    this.setLayerIndex(layers[i][1], last_baseLayer+1);
-            	}
-            }
+                var layers = [];
+                var last_baseLayer;
+                var i;
+                for (i = 0; i < this.layers.length; i++) {
+                    if (this.layers[i].isBaseLayer) {
+                        last_baseLayer = i;
+                    } else {
+                        var weight = this.layers[i].lizard_index || 0;
+                        layers.push([weight, this.layers[i]]);
+                    }
+                }
+                layers.sort();
+
+                for (i = layers.length-1; i >= 0; i--) {
+                    this.setLayerIndex(layers[i][1], last_baseLayer+1);
+                }
+            };
 
         } else {
             console.error("kies map engine die ondersteunt wordt");
@@ -344,7 +348,7 @@ NMainScreenManager.prototype.initMap = function() {
         console.info("map is al geinitialiseerd");
     }
     this.screen[MAP].init = true;
-}
+};
 
 /**
  * function: destroy Openlayers Map for mainscreen
@@ -353,23 +357,23 @@ NMainScreenManager.prototype.destroyMap = function() {
     this.map.destroy();
     this.screen[MAP].init = false;
     map = null;
-}
+};
 
 /**
  * function:
  */
 NMainScreenManager.prototype.setMapDataVisible = function() {
 
-}
+};
 
 /**
  * function:
  */
 NMainScreenManager.prototype.setMapDataHidden = function() {
 
-}
+};
 
 //function still worked on
 
 
-console.log('loaded NMainScreenManager successfully')
+console.log('loaded NMainScreenManager successfully');
