@@ -87,6 +87,7 @@ flooding.preload = (function () {
     };
 })();
 
+
 console.log('laden flooding/result/navigation ...');
 /***************** functions **********************/
 var selectedScenario = null;
@@ -249,9 +250,6 @@ function frNavigation() {
                                 region_layers_results.addOverlayToContainer(layer);
                             }
 
-                            //Bestaande keringen, get_existing_embankments_shape,
-                            //Hoogtekaart, action:'get_extra_grid_shapes', only_selected:True
-                            //Bestaande keringen, action:'get_extra_shapes', only_selected:True
                         }
 
                     });
@@ -506,7 +504,7 @@ frBlockRegions.tree.fetchData(null, function () {
                 if (!appManager.selectedApp.overlayManager.setActiveOverlay(leaf.id)) {
                     //add overlay
                     var layer = null;
-                    if (leaf.geoType == 1 && leaf.valueType == 2  ) { //MapOverlay
+                    if (leaf.geoType == 1 && leaf.valueType == 2  ) { // Single grid
 
                         layer = new NMapOverlay(leaf.id, leaf.name, {
                             legendWindow: iwLegend,
@@ -531,7 +529,7 @@ frBlockRegions.tree.fetchData(null, function () {
                             visibile: true
 
                         });
-                    } else if (leaf.geoType == 1 && [3,4].contains(leaf.valueType)  ){ //ANIMATEDMAPOVERLAY
+                    } else if (leaf.geoType == 1 && [3,4].contains(leaf.valueType)  ){ // Grid animation
                         layer = new NAnimatedMapOverlay(leaf.id, leaf.name, {
                             legendWindow: iwLegend,
                             rootURL: flooding_config.root_url,
@@ -582,7 +580,18 @@ frBlockRegions.tree.fetchData(null, function () {
                             rawResultUrl:locationFloodingData + '?TODO',
                             app: 'flooding',
                             visibile: true
-
+                        });
+                    }  else if (leaf.geoType == 6 && [1,2].contains(leaf.valueType)  ){ // Single (non-animated) Pyramid
+                        layer = new NPyramidOverlay(leaf.id, leaf.name, {
+                            legendWindow: iwLegend,
+                            rootURL: flooding_config.root_url,
+                            geoType:leaf.geoType,
+                            valueType:leaf.valueType,
+                            layerIndex:50,
+                            frameUrl :locationPresentationData,
+                            framesRequestParams: {},
+                            app: 'flooding',
+                            visible: true
                         });
                     } else if ( [2,3,4].contains(leaf.geoType) && [3].contains(leaf.valueType)  ){ //WMSOVERLAY
                         layer = new NAnimatedWMSOverlay(leaf.id, leaf.name, {
