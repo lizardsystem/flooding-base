@@ -27,28 +27,80 @@ var createSelectionDS = function(dS, actionParam){
     });
 }
 
-isc.Label.create({
-    ID: "searchLabel",
-    align: "center",
-    contents: "Zoeken, filtreren scenario's."
-});
+// isc.Label.create({
+//     ID: "searchLabel",
+//     autoFit: true,
+//     contents: "Zoeken, filtreren scenario's."
+// });
+
+var retrieveSearchParams = function(){
+    var searchParams = {}
+    var forms = searchForms.getMembers()
+    for (var i = 0; i < forms.length; i++){
+	var selectionField = forms[i].getField("selection");
+	var searchByValue = forms[i].getField("searchBy").getValue();
+	if (searchByValue == null) {
+	    continue;
+	}
+	if (selectionField.pickList == null) {
+	    continue;
+	}
+	var values = selectionField.pickList.selection.getSelection();
+	if (values.length <= 0) {
+	    continue;
+	}	    
+	searchParams[searchByValue] = values;	
+    }
+    return searchParams;
+}
+
+
+var reqCallback = function(res, rawData, req) {
+    // TODO FETCH SCENARIOS en BRESSES.
+    // if (data.Class != "String"){
+    // 	console.log("Missing callback data.");
+    // 	return;
+    // }
+    //data = isc.JSON.decode(rawData);
+    frBlockRegions.ds.transformRequest = function(dsRequest) {
+	if (dsRequest.operationType == "fetch"){
+	    var params = {
+		action: "get_region_tree",
+		to_search: true,
+		httpMethod: "POST"
+	    };
+	    return isc.addProperties({}, dsRequest.data, params);
+	}
+    }
+    //frBlockRegions.ds.fetchData();
+    var root = frBlockRegions.tree.getData().root;
+    frBlockRegions.tree.getData().reloadChildren(root);
+}
+
+var getSearchResult = function(){
+    isc.RPCManager.sendRequest(
+	{
+	    actionURL: locationFloodingData,
+	    showPrompt: false,
+	    httpMethod: "POST",
+	    params: {"params": retrieveSearchParams(),
+		     "action": "search_navigation_objects"},
+	    callback: reqCallback,
+	    dataFormat: "json",
+	    useSimpleHttp: true
+	});
+}
+
+var updateNavigationWindows = function(){
+    var params = retrieveSearchParams();
+
+}
 
 isc.IButton.create({
     ID: "btSubmit",
     title: "Toepassen",
     autoFit: true,
     click : function () {
-	var val = uploadForm.validate();
-	if (val) {
-	    lbUpload.setContents('Uploaden ...');
-	    lbUpload.icon = loading_img;
-	    if (!this.isDisabled()) {
-		this.disable();
-	    }
-	    this.getForm().submit();   
-	} else {
-	    console.log("Fout bij uploaden.");
-    	}
     }
 });
 
@@ -57,27 +109,24 @@ isc.IButton.create({
     title: "Afsluiten",
     autoFit: true,
     click : function () { 
-	uploadWindow.hide();
-	dsRORKeringen.fetchData({}, function(response, data, request){
-	    listGridKering.setData(data);
-	});
+	searchWindow.hide();
     }
 });
 
 var clearSearchFields = function(){
     forms = searchForms.getMembers();
-	for (var i = 0; i < forms.length; i++){
-	    var selectionField = forms[i].getField('selection');
-	    var serchByField = forms[i].getField('searchBy');
-	    if (selectionField.pickList != null) {
-		selectionField.pickList.deselectAllRecords();
-		selectionField.clearValue();
-	    }
-	    serchByField.clearValue();
-	    selectionField.setProperties({
-		"optionDataSource": null
-	    });
+    for (var i = 0; i < forms.length; i++){
+	var selectionField = forms[i].getField('selection');
+	var serchByField = forms[i].getField('searchBy');
+	if (selectionField.pickList != null) {
+	    selectionField.pickList.deselectAllRecords();
 	}
+	selectionField.clearValue();
+	serchByField.clearValue();
+	selectionField.setProperties({
+	    "optionDataSource": null
+	});
+    }
 }
 
 isc.IButton.create({
@@ -99,7 +148,6 @@ var createSearchForm = function() {
 		type: "select",
 		emptyDisplayValue: "Selecteer project",
 		change: function (f, i, v) {
-		    //clearSerchFields();
 		    var relField = f.getField('selection');
 		    if (relField.pickList != null) {
 			relField.pickList.deselectAllRecords();
@@ -108,17 +156,16 @@ var createSearchForm = function() {
 		    if (v == 'Project') {
 			helpText = "Select " + v;
 			relField.setProperties({
-			    "emptyDisplayValue": "Select Project",
 			    "optionDataSource": dSProjectSelection
 			});
-			//dSProjectSelection.fetchData();
 		    } else if (v == "Regio") {
 			relField.setProperties({
-			    "emptyDisplayValue": "Select Regio",
 			    "optionDataSource": dSRegionSelection
 			});
-			//dSRegionSelection.fetchData();
-			//relField.fetchData();
+		    } else if (v == "Buitenwater") {
+			relField.setProperties({
+			    "optionDataSource": dSEWSelection
+			});
 		    }
 		}
 	    },
@@ -131,6 +178,7 @@ var createSearchForm = function() {
 		multipleAppearance:"picklist",
 		type: "select",
 		displayField:"name",
+		emptyDisplayValue: "Selecteer ..."
 	    }
 	]
     });
@@ -139,19 +187,25 @@ var createSearchForm = function() {
 
 createSelectionDS("dSProjectSelection", "get_projects_only");
 createSelectionDS("dSRegionSelection", "get_all_regions");
-createSelectionDS("dSEWSelection", "get_externalwaters");
+createSelectionDS("dSEWSelection", "get_external_waters");
 
 isc.HLayout.create({
     ID: "searchForms",
-    membersMargin: 5,
-    padding: 5,
-    height: 20,
+    //membersMargin: 5,
+    //padding: 5,
     members: [
 	createSearchForm(),
 	createSearchForm(),
 	createSearchForm()
     ]
 });
+
+isc.HLayout.create({
+    ID: "buttons",
+    valign: "bottom",
+    //membersMargin: 5,
+    members: [btReset, btClose, btSubmit]
+})
 
 isc.Window.create({
     ID: "searchWindow",
@@ -165,10 +219,7 @@ isc.Window.create({
 	this.Super("closeClick", arguments)
     },
     items: [
-	searchLabel,
 	searchForms,
-	btClose,
-	btSubmit,
-	btReset
+	buttons
     ]
 });
