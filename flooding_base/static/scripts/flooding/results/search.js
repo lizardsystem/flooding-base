@@ -33,6 +33,15 @@ var createSelectionDS = function(dS, actionParam){
 //     contents: "Zoeken, filtreren scenario's."
 // });
 
+var retrieveIDs = function(values){
+
+    ids = new Array();
+    for (var i = 0; i < values.length; i++) {
+	ids[i] = values[i].id;
+    }
+    return ids;
+}
+
 var retrieveSearchParams = function(){
     var searchParams = {}
     var forms = searchForms.getMembers()
@@ -49,47 +58,83 @@ var retrieveSearchParams = function(){
 	if (values.length <= 0) {
 	    continue;
 	}	    
-	searchParams[searchByValue] = values;	
+	searchParams[searchByValue] = retrieveIDs(values);	
     }
     return searchParams;
 }
 
-
-var reqCallback = function(res, rawData, req) {
-    // TODO FETCH SCENARIOS en BRESSES.
-    // if (data.Class != "String"){
-    // 	console.log("Missing callback data.");
-    // 	return;
-    // }
-    //data = isc.JSON.decode(rawData);
+var applySearch = function() {
+    var searchParams = retrieveSearchParams()
+    var regionsTransformRequest = frBlockRegions.ds.transformRequest;
+    var breachesTransformRequest = frBlockBreaches.ds.transformRequest;
+    var scenariosTransformRequest = frBlockScenarios.ds.transformRequest;
     frBlockRegions.ds.transformRequest = function(dsRequest) {
 	if (dsRequest.operationType == "fetch"){
 	    var params = {
-		action: "get_region_tree",
-		to_search: true,
-		httpMethod: "POST"
+		action: "get_region_tree_search",
+		searchBy: searchParams
 	    };
 	    return isc.addProperties({}, dsRequest.data, params);
 	}
     }
-    //frBlockRegions.ds.fetchData();
-    var root = frBlockRegions.tree.getData().root;
-    frBlockRegions.tree.getData().reloadChildren(root);
+    frBlockBreaches.ds.transformRequest = function(dsRequest) {
+	if (dsRequest.operationType == "fetch"){
+	    var params = {
+		action: "get_breach_tree_search",
+		filter: selectResultType.getValue(),
+		searchBy: searchParams
+	    };
+	    return isc.addProperties({}, dsRequest.data, params);
+	}
+    }
+    frBlockScenarios.ds.transformRequest = function(dsRequest) {
+	if (dsRequest.operationType == "fetch"){
+	    var params = {
+		action: "get_scenario_tree_search",
+		filter: selectResultType.getValue(),
+		searchBy: searchParams
+	    };
+	    return isc.addProperties({}, dsRequest.data, params);
+	}
+    }
+    if (frBlockRegions.tree.getData().isEmpty()) {
+	frBlockRegions.tree.fetchData();
+    } else {
+	var rootRegions = frBlockRegions.tree.getData().root;
+	frBlockRegions.tree.getData().reloadChildren(rootRegions);
+    }
+    frBlockRegions.ds.transformRequest = regionsTransformRequest;
+    if (frBlockBreaches.tree.getData().isEmpty()) {
+	frBlockBreaches.tree.fetchData();
+    } else {
+	var rootBreaches = frBlockBreaches.tree.getData().root;
+	frBlockBreaches.tree.getData().reloadChildren(rootBreaches);
+    }
+    frBlockBreaches.ds.transformRequest = breachesTransformRequest;
+    if (frBlockScenarios.tree.getData().isEmpty()) {
+	frBlockScenarios.tree.fetchData();
+    } else {
+	var rootScenarios = frBlockScenarios.tree.getData().root;
+	frBlockScenarios.tree.getData().reloadChildren(rootScenarios);
+    }
+    frBlockScenarios.ds.transformRequest = scenariosTransformRequest;
+    frBlockResults.tree.data = [];
+    frBlockResults.tree.redraw();
 }
 
-var getSearchResult = function(){
-    isc.RPCManager.sendRequest(
-	{
-	    actionURL: locationFloodingData,
-	    showPrompt: false,
-	    httpMethod: "POST",
-	    params: {"params": retrieveSearchParams(),
-		     "action": "search_navigation_objects"},
-	    callback: reqCallback,
-	    dataFormat: "json",
-	    useSimpleHttp: true
-	});
-}
+// var getSearchResult = function(){
+//     isc.RPCManager.sendRequest(
+// 	{
+// 	    actionURL: locationFloodingData,
+// 	    showPrompt: false,
+// 	    httpMethod: "POST",
+// 	    params: {"params": retrieveSearchParams(),
+// 		     "action": "search_navigation_objects"},
+// 	    callback: reqCallback,
+// 	    dataFormat: "json",
+// 	    useSimpleHttp: true
+// 	});
+// }
 
 var updateNavigationWindows = function(){
     var params = retrieveSearchParams();
@@ -101,6 +146,7 @@ isc.IButton.create({
     title: "Toepassen",
     autoFit: true,
     click : function () {
+	applySearch();
     }
 });
 
@@ -110,6 +156,28 @@ isc.IButton.create({
     autoFit: true,
     click : function () { 
 	searchWindow.hide();
+    }
+});
+
+isc.IButton.create({
+    ID: "btReset",
+    title: "Reset",
+    autoFit: true,
+    click : function () { 
+	clearSearchFields();
+	if (frBlockRegions.tree.getData().isEmpty()) {
+	    frBlockRegions.tree.fetchData();
+	} else {
+	    regionsRoot = frBlockRegions.tree.getData().root;
+	    frBlockRegions.tree.getData().reloadChildren(regionsRoot);
+	}
+	frBlockRegions.tree.redraw();
+	frBlockBreaches.tree.data = [];
+	frBlockBreaches.tree.redraw();
+	frBlockScenarios.tree.data = [];
+	frBlockScenarios.tree.redraw();
+	frBlockResults.tree.data = [];
+	frBlockResults.tree.redraw();
     }
 });
 
@@ -128,15 +196,6 @@ var clearSearchFields = function(){
 	});
     }
 }
-
-isc.IButton.create({
-    ID: "btReset",
-    title: "Reset",
-    autoFit: true,
-    click : function () { 
-	clearSearchFields();
-    }
-});
 
 var createSearchForm = function() {
     var form = isc.DynamicForm.create({
