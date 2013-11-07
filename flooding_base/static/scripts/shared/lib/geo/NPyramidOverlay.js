@@ -271,6 +271,11 @@ NPyramidOverlay.prototype.relocate = function( ) {
 };
 
 
+NPyramidOverlay.prototype.hover_handler = function (lon, lat, callback) {
+    callback("Lon: "+lon+" Lat: "+lat);
+};
+
+
 /*** NOTE: hide function is an extension for Openlayers! ***/
 OpenLayers.Layer.WMS.prototype.hide = function (){
     if (isc.Browser.isIE) {

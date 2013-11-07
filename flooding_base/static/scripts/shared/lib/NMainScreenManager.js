@@ -29,8 +29,6 @@ isc.DataSource.create({
     ]
 });
 
-
-
 function NMainScreenManager(mainPane, settings) {
     this.mainPane = mainPane;
 
@@ -216,6 +214,8 @@ NMainScreenManager.prototype.initMap = function() {
                 }
             };
 
+            var hover_control = new hover.MapHoverControl();
+
             var options = {
                 projection: new OpenLayers.Projection("EPSG:900913"),
                 displayProjection: new OpenLayers.Projection("EPSG:4326"),
@@ -227,17 +227,15 @@ NMainScreenManager.prototype.initMap = function() {
                 controls: [
                     new OpenLayers.Control.NavToolbar(),
                     new OpenLayers.Control.Zoom(),
-                    new OpenLayers.Control.LayerSwitcher({'ascending':false})
+                    new OpenLayers.Control.LayerSwitcher({'ascending':false}),
+                    hover_control
                 ]
-                // eventListeners: {
-                //     "zoomend": onZoomEnd
-                // }
             };
-
 
             this.map = new OpenLayers.Map(this.mapDivName, options);
             this.map.isGoogleMaps = false;
-
+            hover_control.activate();
+            hover.init_map_tooltip(this.map, this.mapDivName);
 
             var layers;
 
