@@ -1,7 +1,7 @@
 /****************************************************************/
-/**** class: 		NAnimatedWMSOverlay         				*/
-/**** description: 	This class represents an overlay that...    */
-/**** notes:        This class inherits from NWMSOverlay        */ 
+/**** class:         NAnimatedWMSOverlay                         */
+/**** description:     This class represents an overlay that...    */
+/**** notes:        This class inherits from NWMSOverlay        */
 /****************************************************************/
 
 
@@ -10,11 +10,11 @@ function NAnimatedWMSOverlay(id,name,options) {
     options = options || {};
     this.superclass(id,name, options);
     this.isInit = false;
-    
+
     this.type = ANIMATEDWMSOVERLAY;
-    
- 	this.animation = options.animation || null;    
-	this.setParams({timestep:0});
+
+    this.animation = options.animation || null;
+    this.setParams({timestep:0});
 }
 
 NAnimatedWMSOverlay.prototype = new NWMSOverlay();
