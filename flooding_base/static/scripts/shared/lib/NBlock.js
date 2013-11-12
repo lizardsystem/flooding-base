@@ -12,15 +12,27 @@ console.log('NBlock laden ...');
  *
  */
 
-var NBlock = function (name, title, datasourceSettings, treeSettings, labelSettings) {
+var NBlock = function (name, title, datasourceSettings, treeSettings, labelSettings, useResetButton) {
     this.name = name;
     this.title = title;
+    this.useResetButton = useResetButton;
 
     labelSettings = labelSettings || {};
 
     this.ds = isc.DataSource.create(this.getSettings(datasourceSettings,this.defaultDatasourceSettings() ));
     this.label = isc.Label.create(this.getSettings(labelSettings, this.defaultLabelSettings() ));
     this.tree = isc.TreeGrid.create(this.getSettings(treeSettings, this.defaultTreeSettings() ));
+    this.labelLayout = isc.HLayout.create({height: 24, styleName: "textItem", members: [this.label]});
+    if (useResetButton) {
+        btR = isc.IButton.create({
+	    autoFit: true,
+	    icon: "/static_media/Isomorphic_NenS_skin/images/actions/refresh.png",
+	    click : function () { 
+		resetNavigationBlocks();
+	    }
+	});
+	this.labelLayout.addMember(btR);
+    }
 };
 
 /**** Returns the default settings for the datasource ****/
@@ -46,7 +58,7 @@ NBlock.prototype.defaultLabelSettings = function() {
         wrap:false,
         left:10,
         height:24,
-        styleName:"textItem",
+        //styleName:"textItem",
         overflow:"hidden",
         autoDraw:false,
         top:5,
@@ -103,11 +115,11 @@ NBlock.prototype.clear= function(message) {
 
 /**** Returns the label (header of the block) and the tree to be shown in the block ****/
 NBlock.prototype.getMembers = function() {
-    return [this.label, this.tree];
+    return [this.labelLayout, this.tree];
 }
 
 /************** General Functions    **********************/
-function loadScript(uri, dynamic,callback) {
+function loadScript(uri, dynamic, callback) {
     dynamic = false;
     callback = callback || function(){};
 

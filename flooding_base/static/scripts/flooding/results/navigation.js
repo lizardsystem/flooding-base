@@ -261,11 +261,12 @@ function frNavigation() {
                 Ozoom(map ,folder );
                 this.openFolder(folder);
             }
-        });
+        }, null, true
+    );
 
-    frBlockRegions.tree.fetchData(null, function () {
-        flooding.preload.preload_region(frBlockRegions.tree);
-    });
+frBlockRegions.tree.fetchData(null, function () {
+    flooding.preload.preload_region(frBlockRegions.tree);
+});
 
     frBlockBreaches = new NBlock(
         ST_BREACH,ST_BREACH,

@@ -165,7 +165,12 @@ isc.IButton.create({
     autoFit: true,
     click : function () { 
 	clearSearchFields();
-	if (frBlockRegions.tree.getData().isEmpty()) {
+	resetNavigationBlocks();
+    }
+});
+
+var resetNavigationBlocks = function() {
+    if (frBlockRegions.tree.getData().isEmpty()) {
 	    frBlockRegions.tree.fetchData();
 	} else {
 	    regionsRoot = frBlockRegions.tree.getData().root;
@@ -178,23 +183,40 @@ isc.IButton.create({
 	frBlockScenarios.tree.redraw();
 	frBlockResults.tree.data = [];
 	frBlockResults.tree.redraw();
-    }
-});
+}
 
 var clearSearchFields = function(){
     forms = searchForms.getMembers();
     for (var i = 0; i < forms.length; i++){
 	var selectionField = forms[i].getField('selection');
 	var serchByField = forms[i].getField('searchBy');
-	if (selectionField.pickList != null) {
-	    selectionField.pickList.deselectAllRecords();
-	}
 	selectionField.clearValue();
 	serchByField.clearValue();
 	selectionField.setProperties({
-	    "optionDataSource": null
+	    "optionDataSource": null,
+	    "emptyDisplayValue": ""
 	});
+	selectionField.redraw();
     }
+}
+
+var isUniqueChoice = function(value){
+    /** 
+	Return true when the value in searchBy field
+	is not yet used.
+    */
+    var forms = searchForms.getMembers();
+    var count = 0;
+    for (var i = 0; i < forms.length; i++){
+	var searchBy = forms[i].getField('searchBy');
+	if (searchBy.getValue() == value){
+	    count+=1;
+	}
+	if (count > 0) {
+	    return false;
+	}
+    }
+    return true;
 }
 
 var createSearchForm = function() {
@@ -203,41 +225,65 @@ var createSearchForm = function() {
 	fields: [
 	    {
 		name: "searchBy",
+		title: "Zoeken&nbsp;bij",
 		valueMap: ['Project', 'Regio', 'Buitenwater'],
 		type: "select",
-		emptyDisplayValue: "Selecteer project",
+		autoFit: true,
+		overflow: 'hidden',
+		emptyDisplayValue: "Alles",
+		leaveScrollBarGap: false,
+		showAllOptions: true,
 		change: function (f, i, v) {
+		    var isUnique = isUniqueChoice(v);
 		    var relField = f.getField('selection');
 		    if (relField.pickList != null) {
-			relField.pickList.deselectAllRecords();
-			relField.clearValue();
-		    }
-		    if (v == 'Project') {
-			helpText = "Select " + v;
 			relField.setProperties({
-			    "optionDataSource": dSProjectSelection
+			    "optionDataSource": null,
+			    "emptyDisplayValue": ""
+			});
+			relField.clearValue();
+			relField.redraw();
+		    }
+		    if (!isUnique) {
+			isc.warn("Zoek criteria '" + v + "' is reeds gekozen.");
+			i.clearValue();
+			relField.setProperties({
+			    "optionDataSource": null,
+			    "emptyDisplayValue": ""
+			});
+			relField.redraw();
+			return;
+		    }
+
+		    if (v == 'Project') {
+			relField.setProperties({
+			    "optionDataSource": dSProjectSelection,
+			    "emptyDisplayValue": "Selecteer project(s)"
 			});
 		    } else if (v == "Regio") {
 			relField.setProperties({
-			    "optionDataSource": dSRegionSelection
+			    "optionDataSource": dSRegionSelection,
+			    "emptyDisplayValue": "Selecteer regio(nen)"
 			});
 		    } else if (v == "Buitenwater") {
 			relField.setProperties({
-			    "optionDataSource": dSEWSelection
+			    "optionDataSource": dSEWSelection,
+			    "emptyDisplayValue": "Selecteer buitenwater(s)"
 			});
 		    }
+		    relField.redraw();
 		}
 	    },
 	    {
-		name: "selection",	    
+		name: "selection",
+		title: "Selectie",
 		autoFetchData:false,
 		cachePickListResults: false,
 		valueField:"id",
 		multiple:true,
 		multipleAppearance:"picklist",
 		type: "select",
-		displayField:"name",
-		emptyDisplayValue: "Selecteer ..."
+		displayField:"name"
 	    }
 	]
     });
@@ -250,8 +296,7 @@ createSelectionDS("dSEWSelection", "get_external_waters");
 
 isc.HLayout.create({
     ID: "searchForms",
-    //membersMargin: 5,
-    //padding: 5,
+    membersMargin: 5,
     members: [
 	createSearchForm(),
 	createSearchForm(),
@@ -261,14 +306,25 @@ isc.HLayout.create({
 
 isc.HLayout.create({
     ID: "buttons",
-    valign: "bottom",
-    //membersMargin: 5,
+    layoutTopMargin: 20,
+    membersMargin: 5,
+    defaultLayoutAlign: "center",
+    align: "center",
     members: [btReset, btClose, btSubmit]
-})
+});
+
+isc.VLayout.create({
+    ID: "searchMainLayout",
+    layoutTopMargin: 10,
+    layoutLeftMargin: 10,
+    padding: 5,
+    width: "600",
+    members: [searchForms, buttons]
+});
 
 isc.Window.create({
     ID: "searchWindow",
-    title: "Search",
+    title: "Zoeken",
     autoSize:true,
     autoCenter: true,
     isModal: true,
@@ -278,7 +334,6 @@ isc.Window.create({
 	this.Super("closeClick", arguments)
     },
     items: [
-	searchForms,
-	buttons
+	searchMainLayout
     ]
 });
