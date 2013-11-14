@@ -1,17 +1,18 @@
 console.log('loading overlaymanager ...');
 
-MAPOVERLAY= 1;
-ANIMATEDMAPOVERLAY = 2;
-MARKEROVERLAY = 3;
-ANIMATEDMARKEROVERLAY = 4;
-VECTOROVERLAY = 5;
-WMSOVERLAY = 6;
-ANIMATEDWMSOVERLAY = 7;
-PYRAMIDOVERLAY = 8;
+var MAPOVERLAY= 1;
+var ANIMATEDMAPOVERLAY = 2;
+var MARKEROVERLAY = 3;
+var ANIMATEDMARKEROVERLAY = 4;
+var VECTOROVERLAY = 5;
+var WMSOVERLAY = 6;
+var ANIMATEDWMSOVERLAY = 7;
+var PYRAMIDOVERLAY = 8;
+var ANIMATEDPYRAMIDOVERLAY = 9;
 
 /******************Overlay Manager***********************/
 //options: use overlay select, png prefix, maxFramesPreLoad
-NOverlayManager = function(_map,options) {
+var NOverlayManager = function(_map,options) {
     options = options || {};
     this._map = _map;
 
@@ -24,7 +25,6 @@ NOverlayManager = function(_map,options) {
     this.maxFramesPreLoad = options.maxFramesPreLoad || 60;
     this.opacity = 0.7;
 };
-
 
 NOverlayManager.prototype.setMap = function(_map) {
     this._map = _map;
@@ -74,9 +74,9 @@ NOverlayManager.prototype.hide = function() {
 NOverlayManager.prototype.show = function() {
     //if animation, show animation control
     if (this.activeOverlay) {
-        if (this.activeOverlay.type == ANIMATEDMAPOVERLAY || this.activeOverlay.type == ANIMATEDWMSOVERLAY ) {
+        if (is_animated_overlay(this.activeOverlay)) {
             this.animationControl.show();
-            this.showOverlay( this.animationControl.frameNr);
+            this.showOverlay(this.animationControl.frameNr);
         } else {
             this.showOverlay();
         }
@@ -137,7 +137,7 @@ NOverlayManager.prototype.setActiveOverlay = function(id) {
     }
 
     //kijk of AnimationControl moet worden toegevoegd
-    if (this.activeOverlay.type == ANIMATEDMAPOVERLAY || this.activeOverlay.type == ANIMATEDWMSOVERLAY)  {
+    if (is_animated_overlay(this.activeOverlay)) {
         this.animationControl.show();
         this.animationControl.initOverlay(this.activeOverlay);
         this.animationControl.startFrame();
@@ -158,7 +158,6 @@ NOverlayManager.prototype.setActiveOverlay = function(id) {
             tabLegenda.setContents(legenda.getHTML());//
             //scLegenda.contents
         });
-
     }
     return true;
 };
@@ -213,4 +212,11 @@ NOverlayManager.prototype.showOverlay = function (frameNr) {
 
     this.activeOverlay.show(frameNr);
     return true;
+};
+
+
+var is_animated_overlay = function(overlay) {
+    return (overlay.type == ANIMATEDMAPOVERLAY ||
+            overlay.type == ANIMATEDWMSOVERLAY ||
+            overlay.type == ANIMATEDPYRAMIDOVERLAY);
 };

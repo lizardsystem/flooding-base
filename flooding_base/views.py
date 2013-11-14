@@ -914,7 +914,8 @@ def gui(request):
             'use_openstreetmaps': USE_OPENSTREETMAPS,
             'restrictmap': RESTRICTMAP,
             'extent': extent,
-            'pyramid_parameters_url': reverse('pyramids_parameters')
+            'pyramid_parameters_url': reverse('pyramids_parameters'),
+            'animated_pyramid_parameters_url': reverse('animated_pyramids_parameters')
         })
 
     # If there is a 'preload_scenario' in the session (from a link

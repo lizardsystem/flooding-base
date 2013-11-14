@@ -593,6 +593,18 @@ frBlockRegions.tree.fetchData(null, function () {
                             app: 'flooding',
                             visible: true
                         });
+                    }  else if (leaf.geoType == 6 && leaf.valueType == 3) { // Animated Pyramid
+                        layer = new NAnimatedPyramidOverlay(leaf.id, leaf.name, {
+                            legendWindow: iwLegend,
+                            rootURL: flooding_config.root_url,
+                            geoType:leaf.geoType,
+                            valueType:leaf.valueType,
+                            layerIndex:50,
+                            frameUrl :locationPresentationData,
+                            framesRequestParams: {},
+                            app: 'flooding',
+                            visible: true
+                        });
                     } else if ( [2,3,4].contains(leaf.geoType) && [3].contains(leaf.valueType)  ){ //WMSOVERLAY
                         layer = new NAnimatedWMSOverlay(leaf.id, leaf.name, {
                             legendWindow: iwLegend,

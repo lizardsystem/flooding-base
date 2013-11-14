@@ -319,13 +319,13 @@ NMapOverlay.prototype.setParams= function(params){
             this.redraw();
         }
     }
-}
+};
 
 
 /*** Sets the legend of the overlay  ***/
 NMapOverlay.prototype.setActiveLegend = function(legend){
     this.setParams({ legend_id: legend.id });
-}
+};
 
 
 NMapOverlay.prototype.getRawResultUrl= function(){
