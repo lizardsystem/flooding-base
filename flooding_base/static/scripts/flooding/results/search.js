@@ -43,8 +43,8 @@ var retrieveIDs = function(values){
 }
 
 var retrieveSearchParams = function(){
-    var searchParams = {}
-    var forms = searchForms.getMembers()
+    var searchParams = {};
+    var forms = searchForms.getMembers();
     for (var i = 0; i < forms.length; i++){
 	var selectionField = forms[i].getField("selection");
 	var searchByValue = forms[i].getField("searchBy").getValue();
@@ -63,8 +63,15 @@ var retrieveSearchParams = function(){
     return searchParams;
 }
 
+var isEmptyObject = function(obj) {
+    for (prop in obj) {
+	return false;
+    }
+    return true;
+}
+
 var applySearch = function() {
-    var searchParams = retrieveSearchParams()
+    var searchParams = retrieveSearchParams();
     var regionsTransformRequest = frBlockRegions.ds.transformRequest;
     var breachesTransformRequest = frBlockBreaches.ds.transformRequest;
     var scenariosTransformRequest = frBlockScenarios.ds.transformRequest;
@@ -146,7 +153,14 @@ isc.IButton.create({
     title: "Toepassen",
     autoFit: true,
     click : function () {
-	applySearch();
+	var searchParams = retrieveSearchParams();
+	if (isEmptyObject(searchParams)){
+	    isc.warn("Maak een selectie.");
+	} else {
+	    emptyNavigationBlocks();
+	    applySearch();
+	    searchWindow.hide();
+	}
     }
 });
 
@@ -169,20 +183,24 @@ isc.IButton.create({
     }
 });
 
+var emptyNavigationBlocks = function() {
+    frBlockRegions.clear();
+    frBlockBreaches.clear();
+    frBlockScenarios.clear();
+    frBlockResults.clear();
+}
+
 var resetNavigationBlocks = function() {
     if (frBlockRegions.tree.getData().isEmpty()) {
 	    frBlockRegions.tree.fetchData();
-	} else {
-	    regionsRoot = frBlockRegions.tree.getData().root;
-	    frBlockRegions.tree.getData().reloadChildren(regionsRoot);
-	}
-	frBlockRegions.tree.redraw();
-	frBlockBreaches.tree.data = [];
-	frBlockBreaches.tree.redraw();
-	frBlockScenarios.tree.data = [];
-	frBlockScenarios.tree.redraw();
-	frBlockResults.tree.data = [];
-	frBlockResults.tree.redraw();
+    } else {
+	regionsRoot = frBlockRegions.tree.getData().root;
+	frBlockRegions.tree.getData().reloadChildren(regionsRoot);
+    }
+    frBlockRegions.tree.redraw();
+    frBlockBreaches.clear();
+    frBlockScenarios.clear();
+    frBlockResults.clear();
 }
 
 var clearSearchFields = function(){
