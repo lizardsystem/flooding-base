@@ -243,7 +243,7 @@ var createSearchForm = function() {
 	fields: [
 	    {
 		name: "searchBy",
-		title: "Zoeken&nbsp;bij",
+		title: "Zoeken&nbsp;in",
 		valueMap: ['Project', 'Regio', 'Buitenwater'],
 		type: "select",
 		autoFit: true,

@@ -211,7 +211,7 @@ function frNavigation() {
                 }
             }
         }, {
-            emptyMessage:"<a href='javascript: frBlockRegions.tree.fetchData()'>herladen</a>",
+            emptyMessage:"Geen regio gevonden.",
             autoFetchData: false,
             loadDataOnDemand: false,
             leafClick: function(viewer,leaf,recordNum) {
