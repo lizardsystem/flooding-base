@@ -5,7 +5,7 @@ Changelog of flooding-base
 1.47 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Add search functionality.
 
 
 1.46 (2013-10-23)
