@@ -27,11 +27,116 @@ var createSelectionDS = function(dS, actionParam){
     });
 }
 
-// isc.Label.create({
-//     ID: "searchLabel",
-//     autoFit: true,
-//     contents: "Zoeken, filtreren scenario's."
-// });
+var navigateToRegionOnMap = function(leaf) {
+    /**
+       zoom in region of provided leaf
+       add the breaches to layer
+    */
+    Ozoom(map ,leaf );
+    region_layers_results.clear();
+    region_layers_results.addOverlays();
+    dsListRegionMapsResults.fetchData({region_id:leaf.rid}, function(dsResponse, data, dsRequest){
+	if (data.length > 0) {
+	    for (var i=0; i<data.length; i++){
+		var map = data[i];
+		layer = new NWMSOverlay(map.id, map.name, {
+		    rootURL:map.url,
+		    singleTile:!(map.tiled),
+		    layerIndex:20-i,
+		    displayInLayerSwitcher: true,
+		    geoType:3,
+		    valueType:2,
+		    getSettingsFromRequest: false,
+		    getFramesFromRequest:true,
+		    frameUrl:map.url,
+		    app: 'flooding',
+		    visible: false
+		});
+		region_layers_results.addOverlayToContainer(layer);
+	    }
+	}
+    });
+}
+
+var refreshRegionMaps = function(regionid, leaf){
+
+    region_layers_results.clear();
+    region_layers_results.addOverlays();
+    dsListRegionMapsResults.fetchData({region_id:regionid}, function(dsResponse, data, dsRequest){
+	if (data.length > 0) {
+	    for (var i=0; i<data.length; i++){
+		var map = data[i];
+		layer = new NWMSOverlay(map.id, map.name, {
+		    rootURL:map.url,
+		    singleTile:!(map.tiled),
+		    layerIndex:20-i,
+		    displayInLayerSwitcher: true,
+		    geoType:3,
+		    valueType:2,
+		    getSettingsFromRequest: false,
+		    getFramesFromRequest:true,
+		    frameUrl:map.url,
+		    app: 'flooding',
+		    visible: false
+		});
+		region_layers_results.addOverlayToContainer(layer);
+	    }
+
+	    //Bestaande keringen, get_existing_embankments_shape,
+	    //Hoogtekaart, action:'get_extra_grid_shapes', only_selected:True
+	    //Bestaande keringen, action:'get_extra_shapes', only_selected:True
+	}
+
+    });
+}
+
+var breachLeafClickSearch = function(viewer, leaf, recordNum){
+
+    if (leaf.isbreach === true) {
+	breach_def = leaf.id;//to do, dit kan anders
+        frBlockBreaches.setLabel(leaf.name);
+        frbreachLayer.select(leaf.id,false);
+        clear_scenarios();
+        frLoccutoffsLayer.clearAll();
+        frExtraEmbankmentLayer.hide();
+        frBlockScenarios.tree.fetchData({breach_id:leaf.id, filter:floodingFilterResults}, function(request, data) {
+	    for (var idx=0; idx<data.length; idx++) {
+		if (data[idx].isFolder) {
+		    frBlockScenarios.tree.openFolder(data[idx]);
+		}
+	    }
+	flooding.preload.preload_scenario(frBlockScenarios.tree);
+        });
+	Ozoom(map ,leaf );
+    region_layers_results.clear();
+    region_layers_results.addOverlays();
+    dsListRegionMapsResults.fetchData({region_id:leaf.rid}, function(dsResponse, data, dsRequest){
+	if (data.length > 0) {
+	    for (var i=0; i<data.length; i++){
+		var map = data[i];
+		layer = new NWMSOverlay(map.id, map.name, {
+		    rootURL:map.url,
+		    singleTile:!(map.tiled),
+		    layerIndex:20-i,
+		    displayInLayerSwitcher: true,
+		    geoType:3,
+		    valueType:2,
+		    getSettingsFromRequest: false,
+		    getFramesFromRequest:true,
+		    frameUrl:map.url,
+		    app: 'flooding',
+		    visible: false
+		});
+		region_layers_results.addOverlayToContainer(layer);
+	    }
+	}
+    });
+    }
+}
+
+var scenarioLeafClickSearch = function(viewer, leaf, record) {
+    return null;
+}
 
 var retrieveIDs = function(values){
 
@@ -75,6 +180,7 @@ var applySearch = function() {
     var regionsTransformRequest = frBlockRegions.ds.transformRequest;
     var breachesTransformRequest = frBlockBreaches.ds.transformRequest;
     var scenariosTransformRequest = frBlockScenarios.ds.transformRequest;
+    //var breachLeafClick = frBlockBreaches.tree.leafClick;
     frBlockRegions.ds.transformRequest = function(dsRequest) {
 	if (dsRequest.operationType == "fetch"){
 	    var params = {
@@ -84,6 +190,7 @@ var applySearch = function() {
 	    return isc.addProperties({}, dsRequest.data, params);
 	}
     }
+    //frBlockBreaches.tree.leafClick = breachLeafClickSearch;
     frBlockBreaches.ds.transformRequest = function(dsRequest) {
 	if (dsRequest.operationType == "fetch"){
 	    var params = {
@@ -118,6 +225,7 @@ var applySearch = function() {
 	frBlockBreaches.tree.getData().reloadChildren(rootBreaches);
     }
     frBlockBreaches.ds.transformRequest = breachesTransformRequest;
+    //frBlockBreaches.tree.leafClick = breachLeafClick;
     if (frBlockScenarios.tree.getData().isEmpty()) {
 	frBlockScenarios.tree.fetchData();
     } else {

@@ -5,7 +5,7 @@ Changelog of flooding-base
 1.48 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Select breach in navigation tree on click.
 
 
 1.47 (2013-11-18)

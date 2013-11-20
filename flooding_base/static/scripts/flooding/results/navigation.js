@@ -279,7 +279,8 @@ frBlockRegions.tree.fetchData(null, function () {
                 {name:"isbreach"},
                 {name:"x" , type:"integer"},
                 {name:"y" , type:"integer"},
-                {name:"info_url", type:"url"}
+                {name:"info_url", type:"url"},
+		{name:"region_id", type:"integer"}
             ],
             transformRequest : function (dsRequest) {
                 if (dsRequest.operationType == "fetch") {
@@ -300,6 +301,7 @@ frBlockRegions.tree.fetchData(null, function () {
             emptyMessage:ST_SELECT_REGION,
             leafClick: function(viewer,leaf,recordNum){
                 if (leaf.isbreach === true) {
+		    Ozoom(map, leaf);
                     breach_def = leaf.id;//to do, dit kan anders
                     frBlockBreaches.setLabel(leaf.name);
                     frbreachLayer.select(leaf.id,false);
@@ -315,6 +317,14 @@ frBlockRegions.tree.fetchData(null, function () {
                         flooding.preload.preload_scenario(frBlockScenarios.tree);
                     });
                 }
+
+		if (leaf.issearch === true) {
+		    frbreachLayer.clearAll();
+		    frbreachLayer.refreshByData(frBlockBreaches.tree.getData().getAllNodes().findAll('id', leaf.id));
+                    frbreachLayer.show();
+		    frbreachLayer.select(leaf.id, false);
+		    Ozoom(map, leaf);
+		}
             },
             folderClick: function(viewer,folder,recordNum){
                 this.openFolder(folder);
@@ -371,7 +381,77 @@ frBlockRegions.tree.fetchData(null, function () {
                 iwEdit.addOrUpdateParams({scenarioid:leaf.sid});
                 iwLegend.addOrUpdateParams({scenarioid:leaf.sid});
 		iwArchive.addOrUpdateParams({scenarioid:leaf.sid});
+		
+		/**
+		   var open_parent = function (tree, record) {
+        var parentid = record.parentid;
+        while (parentid) {
+            var parent = tree.data.findById(parentid);
+            if (parent) {
+                tree.openFolder(parent);
+                parentid = parent.parentid;
+            } else {
+                parentid = null;
+            }
+        }
+    };
 
+    // Select some record in a tree and act as if it were click.
+    var select = function (tree, record) {
+        tree.selectRecord(record);
+        tree.leafClick(null, record, null);
+    };
+
+    // Get all the leaves in a tree.
+    var leaves = function (tree) {
+        return tree.data.getDescendantLeaves(tree.data.getRoot());
+    };
+
+    var preload_region = function (tree) {
+        if (do_preload_region) {
+            console.log("preload_region");
+            var regionrecords = leaves(tree);
+
+            for (var i=0; i < regionrecords.length; i++) {
+                var record = regionrecords[i];
+                console.log(record);
+                if (record.rid === flooding_config.preload_scenario.region_id) {
+                    open_parent(tree, record);
+                    select(tree, record);
+                    break;
+                }
+            }
+            do_preload_region = false;
+        }
+    };
+		   */
+
+		if (leaf.issearch === true) {
+		    
+		    var breaches = frBlockBreaches.tree.getData().getAllNodes().findAll('id', leaf.breachid);
+		    
+		    if (breaches != null && breaches.length > 0) {
+			var breach = breaches[0];
+			frbreachLayer.clearAll();
+			frbreachLayer.refreshByData(breaches);
+			frbreachLayer.show();
+			frbreachLayer.select(breach.id, false);
+			Ozoom(map, breach);
+			
+			frBlockBreaches.tree.deselectAllRecords();
+			var breachFolders = frBlockBreaches.tree.getData().getAllNodes().findAll('isbreach', false);
+			for (var i = 0; i < breachFolders.length; i++){
+			    frBlockBreaches.tree.closeFolder(breachFolders[i]);
+			}
+			var breachFolders = frBlockBreaches.tree.getData().getAllNodes().findAll('id', breach.parentid);
+			if (breachFolders != null && breachFolders.length > 0) {
+			    frBlockBreaches.tree.openFolder(breachFolders[0]);
+			}
+			frBlockBreaches.tree.selectRecord(breach);
+		    } else {
+			isc.warn("Bres van scenario " + leaf.name + " is niet gevonden.");
+		    }
+		}
 
                 dsLoccuttoffs.fetchData({scenario_id:leaf.sid}, function(dsResponce,data,dsRequest) {
                     frLoccutoffsLayer.refreshByData(data);
