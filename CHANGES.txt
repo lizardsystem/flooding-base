@@ -11,7 +11,7 @@ Changelog of flooding-base
 1.47 (2013-11-18)
 -----------------
 
-- Add search functionality.
+- Add search functionality.a
 
 
 1.46 (2013-10-23)
