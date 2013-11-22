@@ -59,7 +59,7 @@ NAnimatedPyramidOverlay.prototype.setupPreloads = function(timestep) {
     // Remove old preloads
     for (var t in this.preloaded_wms_layers) {
         if (t < timestep) {
-            delete this.preloaded_wms_layers[t];
+            this.preloaded_wms_layers.setVisibility(false);
         }
     }
 
@@ -85,17 +85,71 @@ NAnimatedPyramidOverlay.prototype.setupPreloads = function(timestep) {
                     'layers': layer,
                     'styles': this.styles
                 } , map_options);
+            this._map.addLayer(this.preloaded_wms_layers[t]);
+        } else if (t !== timestep) {
+            this.preloaded_wms_layers[t].setVisibility(false);
         }
     }
+
+    this.preloaded_wms_layers[timestep].setVisibility(true);
+    return this.preloaded_wms_layers[timestep];
 };
 
 NAnimatedPyramidOverlay.prototype._init = function() {
     var timestep = this.framesRequestParams.timestep;
-    this.setupPreloads(timestep);
-
-    this.layer = this.preloaded_wms_layers[timestep];
-
-    this.show();
+    this.show(timestep);
 
     this.isInit = true;
 };
+
+
+NAnimatedPyramidOverlay.prototype.show = function(timestep, opacity) {
+    console.log("In NMapOverlay.show, opacity is "+opacity);
+    if (opacity === null) { opacity = 1; }
+
+    this.layer = this.setupPreloads(timestep);
+
+    if (this.layer) {
+        try {
+            if (this.overlayManager !== null) {
+                console.log("Setting opacity by overlayManager, " +
+                            this.overlayManager.opacity);
+                this.layer.setOpacity( this.overlayManager.opacity );
+            } else {
+                console.log("Setting opacity "+ opacity);
+                this.layer.setOpacity( opacity );
+            }
+
+            this.layer.lizard_index = this.layerIndex;
+            this._map.reorder_layers();
+
+            if (timestep !== null) {
+                this.setParams({timestep:timestep});
+            }
+            this.activateEvents();
+
+            this.showLegendSection();
+        } catch (e){
+            console.log(e);
+        }
+    }
+};
+
+
+NAnimatedPyramidOverlay.prototype.hide = function() {
+    if (this.layer) {
+        try {
+            this.deactivateEvents();
+        } catch (e){
+            console.log(e);
+        }
+        try {
+            this._map.removeLayer(this.layer);
+            this.hideLegendSection();
+        } catch (e){
+            console.log(e);
+        }
+    }
+};
+
+

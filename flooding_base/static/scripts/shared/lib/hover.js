@@ -39,6 +39,8 @@ var hover = hover || (function () {
         var pixel = openlayers_map.getViewPortPxFromLonLat(lonlat);
         map_tooltip_div.style.top = pixel.y + 10;
         map_tooltip_div.style.left = pixel.x + 10;
+        map_tooltip_div.style.padding = "5px";
+        map_tooltip_div.style.border = "solid black 1px";
         map_tooltip_div.textContent = text;
         map_tooltip_div.style.display = "block";
     };

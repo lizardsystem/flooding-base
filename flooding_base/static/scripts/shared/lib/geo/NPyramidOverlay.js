@@ -272,7 +272,22 @@ NPyramidOverlay.prototype.relocate = function( ) {
 
 
 NPyramidOverlay.prototype.hover_handler = function (lon, lat, callback) {
-    callback("Lon: "+lon+" Lat: "+lat);
+    RPCManager.sendRequest({
+        actionURL: '/flooding/tools/pyramids/pyramid_value',
+        useSimpleHttp: true,
+        httpMethod: "GET",
+        params: {
+            'presentationlayer_id': this.id,
+            'lat': lat,
+            'lon': lon
+        },
+        callback: function(response, data, request) {
+            data = JSON.parse(data);
+            if (typeof data.value !== "undefined") {
+                callback(data.value.toFixed(2) + " " + data.unit);
+            }
+        }
+    });
 };
 
 
