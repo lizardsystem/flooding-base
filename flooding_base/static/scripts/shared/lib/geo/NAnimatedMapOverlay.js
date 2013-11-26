@@ -199,6 +199,29 @@ NAnimatedMapOverlay.prototype.setOpacity = function(opacity){
     }
 };
 
+NAnimatedMapOverlay.prototype.hover_handler = function (lon, lat, callback) {
+    // See if there is hover handler for this overlay.
+
+    RPCManager.sendRequest({
+        actionURL: '/flooding/tools/pyramids/animation_value',
+        useSimpleHttp: true,
+        httpMethod: "GET",
+        params: {
+            'presentationlayer_id': this.id,
+            'framenr': this.currentFrame || 0,
+            'lat': lat,
+            'lon': lon
+        },
+        callback: function(response, data, request) {
+            data = JSON.parse(data);
+            if (typeof data.value !== "undefined") {
+                callback(data.value.toFixed(2) + " " + data.unit);
+            }
+        }
+    });
+};
+
+
 
 
 console.log('NAnimatedMapOverlay geladen ...');
