@@ -171,11 +171,19 @@ NMapOverlay.prototype.getUrl = function(frameNr) {
             if (!first) { url+='&'; } else { first = false; }
             url += elem + '=' + this.framesRequestParams[elem];
         }
+        if (typeof dynamic_legend.maxvalue !== "undefined") {
+            if (!first) { url+='&'; } else { first = false; }
+            url += "maxvalue=" + dynamic_legend.maxvalue;
+        }
+        if (typeof dynamic_legend.colormap !== "undefined") {
+            if (!first) { url+='&'; } else { first = false; }
+            url += "colormap=" + dynamic_legend.colormap;
+        }
         return url;
     } else {
         if (frameNr !== null) {
 
-            var loc = new String(this.frameUrl);
+            var loc = this.frameUrl;
             url = loc.replace(/#+/ , function(word) {
                 var result;
                 if (frameNr.toFixed) {
