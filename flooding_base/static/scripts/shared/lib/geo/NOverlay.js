@@ -65,6 +65,8 @@ function NOverlay(id,name,options) {
 
 
     this.legendBaseURL = options.legendBaseURL || legend_url;
+    console.log("Creating LegendSection with baseURL "+this.legendBaseURL);
+
     this.legendSection = new NLegendSection('legendsection_' + this.id,
                                             {title:ST_LEGEND_OF + ' ' + name,
                                              initialExpanded: true,
@@ -89,7 +91,7 @@ NOverlay.prototype.setAvailableLegends = function(legends) {
 
 /*** Shows the the legendsection related to this overlay, by calling the right method on the legendSection ***/
 NOverlay.prototype.showLegendSection = function () {
-    console.log('Show legend section');
+    console.log('Show legend section (= ' + this.legendSection + ")");
     this.legendWindow.addLegendSection(this.legendSection);
 };
 

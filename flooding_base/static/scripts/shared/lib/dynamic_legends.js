@@ -40,6 +40,9 @@ var dynamic_legend = (function () {
             }
 
             contents_url = url;
+
+            // Actually set the contents URL.
+            current_legend_pane.setContentsURL(contents_url);
             console.log("contents_url is now " + contents_url);
         },
 

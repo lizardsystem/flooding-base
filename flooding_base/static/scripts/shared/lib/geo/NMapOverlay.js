@@ -338,7 +338,7 @@ NMapOverlay.prototype.setActiveLegend = function(legend){
 
 NMapOverlay.prototype.getRawResultUrl= function(){
     return this.rawResultUrl;
-}
+};
 
 
 NMapOverlay.prototype.getLayerSettingsByFileData = function(callback){
@@ -451,8 +451,8 @@ NMapOverlay.prototype.getLayerSettingsByRequestData = function(callback){
             if (response.httpResponseCode == 200) {
                 console.log("Data ophalen gelukt.");
 
-                data = JSON.parse(data);
                 console.log(data);
+                data = JSON.parse(data);
 
                 if (layer_ref.geoType == 1) {
                     layer_ref.bounds = data.rec.bounds; //new OBounds(data);
@@ -470,8 +470,9 @@ NMapOverlay.prototype.getLayerSettingsByRequestData = function(callback){
                     console.log('requested default legend = ' + data.default_legend);
                     layer_ref.setAvailableLegends(data.legends);
                     layer_ref.setDefaultLegend(data.default_legend);
+                } else {
+                    console.log("No data.legends");
                 }
-
                 //if a callback function is specified, execute this function
 
                 if (callback) {

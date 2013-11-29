@@ -11,7 +11,7 @@ console.log('NLegend laden ...');
  */
 
 /**** Identity number generator - using the global variable Nget_id_nr ****/
-Nget_id_nr = 0;
+var Nget_id_nr = 0;
 function Nget_id() {
     return Nget_id_nr++;
 }
@@ -86,20 +86,24 @@ NLegendSection.prototype.setDefaultLegend = function(legend){
      - it changes the dropdownbutton to the right value,
      - it tells the overlay to retrieve a new layer from the server. ***/
 NLegendSection.prototype.selectLegend = function(legend){
-    if(typeof(legend)!='undefined')
+    console.log("In selectLegend");
+    if(typeof legend !== 'undefined')
     {
         console.log('Selecting legend with id=' + legend.id);
         console.log('Setting pane contentsURL='+ this.rootURL + this.baseURL + legend.id);
+        console.log("this.legendPane = "+this.legendPane);
         dynamic_legend.set_legend_contents(
             this.legendPane, this.rootURL + this.baseURL + legend.id);
         this.dropdownButton.setValue("selectLegendButton_" + this.id, legend.id);
         this.overlay.setActiveLegend(legend);
 
+    } else {
+        console.log("legend is undefined");
     }
 };
 
 /*** Shortcut function for selecting the default legend ***/
 NLegendSection.prototype.selectDefaultLegend = function(){
-    console.log('selecting default legend');
+    console.log('selecting default legend (= '+this.defaultLegend + ")");
     this.selectLegend(this.defaultLegend);
 };

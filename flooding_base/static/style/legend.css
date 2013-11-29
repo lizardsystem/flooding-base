@@ -40,3 +40,16 @@ table.legend-block {
     width:90%;
     font-size: 13px;
 }
+
+div.colormapcontrol {
+    font-size: 12px;
+    font-style: italic;
+}
+
+div.colormapcontrol select {
+    width: 15em;
+}
+
+div.colormapcontrol input {
+    width: 4em;
+}
