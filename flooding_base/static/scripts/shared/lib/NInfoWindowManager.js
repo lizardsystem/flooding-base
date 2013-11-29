@@ -34,21 +34,17 @@ NInfoWindowManager.prototype.pre_init = function() {
     });
 
     isc.Canvas.create({
-            ID:"informationWindow",
-            left:800, top:200, width:170,
-            //opacity:85, uit ivm i.e.
-            canDragReposition:true,
-            dragAppearance:"target",
-            canDragResize:true,
-            keepInParentRect: true,
-
-            showShadow: true, shadowSoftness: 5, shadowOffset: 4,
-            animateHideTime:500,
-            animateFadeTime:500,
-            animateShowTime:500,
-            overflow: "hidden",
-            autoDraw:false,
-            snapTo: "BR"                        
+	ID:"informationWindow",
+            left:800, top:200, width:400,
+	dragAppearance:"target",
+	canDragResize:true,        
+	keepInParentRect: true,
+	animateHideTime:500,
+	animateFadeTime:500,
+	animateShowTime:500,
+	overflow: "hidden",
+	autoDraw:false,
+	snapTo: "BR"                        
     });
            
     isc.Button.create({
@@ -61,7 +57,6 @@ NInfoWindowManager.prototype.pre_init = function() {
 	    align:'center',
 	    parentResized: function () {     	
         	this.moveTo(this.parentElement.getWidth() - 30 - this.width , this.top);
-        	//alert('resize');
         },
 	    top:5,
 	    width: 15,

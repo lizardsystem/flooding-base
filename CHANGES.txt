@@ -5,7 +5,8 @@ Changelog of flooding-base
 1.49 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Fix bug on resize infowindow.
+- Fix width of infowindow tabs.
 
 
 1.48 (2013-11-20)

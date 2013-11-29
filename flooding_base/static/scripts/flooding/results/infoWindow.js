@@ -106,7 +106,7 @@ function frInfoWindowSettings() {
 
     iwEdit = new NInfoWindow("Scenario bewerken",{
         tabName: 'Bewerken' ,
-	defaultSize : {width: 300, height:400 },
+	defaultSize : {width: 420, height:400 },
 	canClose: false,
 	canMax: false,
 	canMin: false,
@@ -138,7 +138,7 @@ function frInfoWindowSettings() {
 
     iwLegend = new NLegendInfoWindow("Legenda",{
         tabName: 'Legenda' ,
-	defaultSize : {width: 300, height:400 },
+	defaultSize : {width: 420, height:400 },
 	canClose: false,
 	canMax: false,
 	canMin: false,
@@ -167,7 +167,7 @@ function frInfoWindowSettings() {
 
     iwArchive = new NInfoWindow("Archief",{
         tabName: 'Archief' ,
-    	defaultSize : {width: 300, height:400 },
+    	defaultSize : {width: 420, height:400 },
     	canClose: false,
     	canMax: false,
     	canMin: false,
