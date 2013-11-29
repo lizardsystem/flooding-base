@@ -2,7 +2,7 @@ Changelog of flooding-base
 ==========================
 
 
-1.49 (unreleased)
+1.49 (2013-11-29)
 -----------------
 
 - Fix bug on resize infowindow.
