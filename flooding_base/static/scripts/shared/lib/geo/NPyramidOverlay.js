@@ -139,7 +139,12 @@ NPyramidOverlay.prototype.getLayerSettingsByRequestData = function(callback){
                 console.log(data);
 
                 layer_ref.layer_id = data.layer;
-                layer_ref.styles = data.styles;
+                layer_ref.default_colormap = data.default_colormap;
+                layer_ref.default_maxvalue = data.default_maxvalue;
+
+                // hrm
+                layer_ref.setAvailableLegends([{"id": layer_ref.id, "name": "Dummy name"}]);
+                layer_ref.setDefaultLegend({"id": layer_ref.id, "name": "Dummy name"});
 
                 //if a callback function is specified, execute this function
                 if (callback) {
@@ -235,7 +240,7 @@ NPyramidOverlay.prototype._init = function() {
 
     this.layer = new OpenLayers.Layer.WMS("pyramidtest", "http://127.0.0.1:5000/wms" , {
         'layers': this.layer_id,
-        'styles': this.styles
+        'styles': this.getStyleParam()
     } , map_options);
 
     this.show();
@@ -243,11 +248,17 @@ NPyramidOverlay.prototype._init = function() {
     this.isInit = true;
 };
 
+NPyramidOverlay.prototype.getStyleParam = function () {
+    var colormap = dynamic_legend.colormap || this.default_colormap;
+    var maxvalue = dynamic_legend.maxvalue || this.default_maxvalue;
+    return colormap + ":0:" + maxvalue;
+};
+
 /*** Redraws the map (can be called for example when new request
      parameters (e.g. legend)) for the map have been set) ***/
 NPyramidOverlay.prototype.redraw = function(){
     if (this.isInit) {
-        this.layer.mergeNewParams({ct:(new Date()).valueOf()});
+        this.layer.mergeNewParams({styles: this.getStyleParam()});
     }
 };
 

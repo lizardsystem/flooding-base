@@ -49,23 +49,23 @@ function NInfoWindow(name,options) {
 /**** Pre-initializes the NInfoWindow (applying SmartClient settings) ****/
 NInfoWindow.prototype.pre_init = function() {
     if (this.type = HTMLPANE) {
-    var this_ref = this;
-    this.pane = isc.HTMLPane.create({
-        ID: "pane"+this.paneId,
-        width: "100%",
-        height: "100%",
-        contentsURL:this.getActionSpecificUrl(),
-        border: "none",
-        overflow:"auto",
-        contentLoaded: function() {
-        try {
-            eval('infowindow_create' + this_ref.getFormId()+ '()');
-        } catch (e){
-            console.log(e)
-        };
-        },
-        autoDraw: true // Note: needed for creating the pane object with all its content
-    });
+        var this_ref = this;
+        this.pane = isc.HTMLPane.create({
+            ID: "pane"+this.paneId,
+            width: "100%",
+            height: "100%",
+            contentsURL:this.getActionSpecificUrl(),
+            border: "none",
+            overflow:"auto",
+            contentLoaded: function() {
+                try {
+                    eval('infowindow_create' + this_ref.getFormId()+ '()');
+                } catch (e){
+                    console.log(e)
+                };
+            },
+            autoDraw: true // Note: needed for creating the pane object with all its content
+        });
 
     }
 
@@ -77,23 +77,23 @@ NInfoWindow.prototype.pre_init = function() {
     var callbackFunctionPostOwner = this;
     this.callbackFunctionPost = function() {
 
-    sendingForm = document.forms[callbackFunctionPostOwner.getFormId()];
-    // Create the post parameters
-    var postParams = callbackFunctionPostOwner.params;
-    postParams['callback'] = callbackFunctionPostOwner.getKeyOfCallbackFunctionPost();
-    postParams['formId'] = callbackFunctionPostOwner.getFormId();
-    for (var n=0; n<sendingForm.elements.length; n++){
-        //NOTE: !! use '.name' to get it working with 'out-of-the-box' django validation !!
-        postParams[sendingForm.elements[n].name]=sendingForm.elements[n].value;
-    }
+        sendingForm = document.forms[callbackFunctionPostOwner.getFormId()];
+        // Create the post parameters
+        var postParams = callbackFunctionPostOwner.params;
+        postParams['callback'] = callbackFunctionPostOwner.getKeyOfCallbackFunctionPost();
+        postParams['formId'] = callbackFunctionPostOwner.getFormId();
+        for (var n=0; n<sendingForm.elements.length; n++){
+            //NOTE: !! use '.name' to get it working with 'out-of-the-box' django validation !!
+            postParams[sendingForm.elements[n].name]=sendingForm.elements[n].value;
+        }
 
-    console.log(postParams)
-    RPCManager.sendRequest({
-        actionURL: callbackFunctionPostOwner.baseUrl,
-        useSimpleHttp: true,
-        httpMethod: "POST",
-        params: postParams,
-        callback: function(response, data, request){
+        console.log(postParams)
+        RPCManager.sendRequest({
+            actionURL: callbackFunctionPostOwner.baseUrl,
+            useSimpleHttp: true,
+            httpMethod: "POST",
+            params: postParams,
+            callback: function(response, data, request){
 
                 if (response.httpResponseCode == 200) {
                     console.log("Data ophalen gelukt, tonen op scherm.")
@@ -153,10 +153,10 @@ NInfoWindow.prototype.resize = function(oldHeight)
 /****  Add or update parameters ****/
 NInfoWindow.prototype.addOrUpdateParams = function(newParams) {
     if (this.params == null) {
-    this.params = {};
+        this.params = {};
     }
     for (par in newParams) {
-    this.params[par] = newParams[par];
+        this.params[par] = newParams[par];
     }
     this.paneContentInSyncWithNavigation = false;
     this.reloadIfNeeded();
@@ -180,17 +180,17 @@ NInfoWindow.prototype.reloadIfNeeded = function() {
     if(!this.paneContentInSyncWithNavigation && this.isSelected())
     {
         console.log('reloading infowindow with id: ' + this.id);
-    this.destroyContent();
-    this.pane.setContentsURL(this.getActionSpecificUrl());
-    this.paneContentInSyncWithNavigation = true;
+        this.destroyContent();
+        this.pane.setContentsURL(this.getActionSpecificUrl());
+        this.paneContentInSyncWithNavigation = true;
     }
 }
 
 /**** Calls function in infowindow (if present) which destroys the content of the infowindow ****/
 NInfoWindow.prototype.destroyContent = function() {
     if (typeof(window['infowindow_destroy' + this.getFormId()])!= 'undefined') {
-    console.log('destroy function exist, destroy')
-    eval('infowindow_destroy' + this.getFormId()+ '()');
+        console.log('destroy function exist, destroy')
+        eval('infowindow_destroy' + this.getFormId()+ '()');
     }
 }
 
@@ -202,18 +202,18 @@ NInfoWindow.prototype.getActionSpecificUrl = function() {
 
     var url = this.baseUrl;
     if (this.params != null) {
-    url += '?';
-    for (par in this.params) {
-        url +=  par + '=' + this.params[par] +'&';
-    }
-    url=url.slice(0,-1); // remove the last '&'
+        url += '?';
+        for (par in this.params) {
+            url +=  par + '=' + this.params[par] +'&';
+        }
+        url=url.slice(0,-1); // remove the last '&'
     }
     if (this.isForm) {
-    url += '&callback=' + this.getKeyOfCallbackFunctionPost();
-    url += '&formId=' + this.getFormId();
-    url += '&destroy_function=infowindow_destroy' + this.getFormId();
-    url += '&create_function=infowindow_create' + this.getFormId();
-    url += "&pane_id=pane"+this.paneId;
+        url += '&callback=' + this.getKeyOfCallbackFunctionPost();
+        url += '&formId=' + this.getFormId();
+        url += '&destroy_function=infowindow_destroy' + this.getFormId();
+        url += '&create_function=infowindow_create' + this.getFormId();
+        url += "&pane_id=pane"+this.paneId;
     }
     return url;
 }
@@ -236,7 +236,7 @@ NInfoWindow.prototype.getFormId = function() {
       Javascript code written in the action element of the html forms. ****/
 NInfoWindow.prototype.setCallbackFunction = function(id,funct) {
     if (typeof(window['callbackFunctions']) == 'undefined') {
-    window['callbackFunctions'] = {};
+        window['callbackFunctions'] = {};
     }
     window['callbackFunctions'][id] = this.callbackFunctionPost;
 }

@@ -39,21 +39,29 @@ var dynamic_legend = (function () {
                 url += '&colormap=' + this.colormap;
             }
 
-            contents_url = url;
-
             // Actually set the contents URL.
-            current_legend_pane.setContentsURL(contents_url);
-            console.log("contents_url is now " + contents_url);
+            current_legend_pane.setContentsURL(url);
+
+            // Also update layer
+            if (appManager.selectedApp.overlayManager.activeOverlay) {
+                appManager.selectedApp.overlayManager.activeOverlay.redraw();
+            }
         },
 
         set_maxvalue: function(maxvalue) {
-            this.maxvalue = maxvalue;
-            this.set_contents_url();
+            if (maxvalue !== this.maxvalue) {
+                this.maxvalue = maxvalue;
+                this.set_contents_url();
+            }
         },
 
         set_colormap: function(colormap) {
-            this.colormap = colormap;
-            this.set_contents_url();
+            if (colormap !== this.colormap) {
+                this.colormap = colormap;
+                this.set_contents_url();
+            }
         }
     };
 }());
+
+
