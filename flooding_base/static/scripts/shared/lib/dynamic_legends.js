@@ -60,6 +60,11 @@ var dynamic_legend = (function () {
                 this.colormap = colormap;
                 this.set_contents_url();
             }
+        },
+
+        reset: function () {
+            this.colormap = undefined;
+            this.maxvalue = undefined;
         }
     };
 }());

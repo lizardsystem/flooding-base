@@ -379,7 +379,7 @@ frBlockRegions.tree.fetchData(null, function () {
                 iwEdit.addOrUpdateParams({scenarioid:leaf.sid});
                 iwLegend.addOrUpdateParams({scenarioid:leaf.sid});
 		iwArchive.addOrUpdateParams({scenarioid:leaf.sid});
-		
+
 		/**
 		   var open_parent = function (tree, record) {
         var parentid = record.parentid;
@@ -425,9 +425,9 @@ frBlockRegions.tree.fetchData(null, function () {
 		   */
 
 		if (leaf.issearch === true) {
-		    
+
 		    var breaches = frBlockBreaches.tree.getData().getAllNodes().findAll('id', leaf.breachid);
-		    
+
 		    if (breaches != null && breaches.length > 0) {
 			var breach = breaches[0];
 			frbreachLayer.clearAll();
@@ -435,7 +435,7 @@ frBlockRegions.tree.fetchData(null, function () {
 			frbreachLayer.show();
 			frbreachLayer.select(breach.id, false);
 			Ozoom(map, breach);
-			
+
 			frBlockBreaches.tree.deselectAllRecords();
 			var breachFolders = frBlockBreaches.tree.getData().getAllNodes().findAll('isbreach', false);
 			for (var i = 0; i < breachFolders.length; i++){
@@ -486,6 +486,10 @@ frBlockRegions.tree.fetchData(null, function () {
                 iwLegend.enable(true);
                 //to do, dit anders!
                 appManager.selectedApp.overlayManager.clearAllOverlays();
+
+                // Reset the dynamic legend, so that the default values of the
+                // new overlay will be used
+                dynamic_legend.reset();
 
                 get_popup_content = function(id,name, service_url, params, cloud_width, cloud_height ){
                     var width = cloud_width;
