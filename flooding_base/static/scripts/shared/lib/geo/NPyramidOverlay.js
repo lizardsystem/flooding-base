@@ -238,7 +238,9 @@ NPyramidOverlay.prototype._init = function() {
         map_options.displayOutsideMaxExtent = this.displayOutsideMaxExtent;
     }
 
-    this.layer = new OpenLayers.Layer.WMS("pyramidtest", "http://127.0.0.1:5000/wms" , {
+    this.layer = new OpenLayers.Layer.WMS(
+        "pyramid",
+        flooding_config.raster_server_url , {
         'layers': this.layer_id,
         'styles': this.getStyleParam()
     } , map_options);

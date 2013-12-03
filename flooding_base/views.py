@@ -915,6 +915,7 @@ def gui(request):
             'restrictmap': RESTRICTMAP,
             'extent': extent,
             'pyramid_parameters_url': reverse('pyramids_parameters'),
+            'raster_server_url': settings.RASTER_SERVER_URL,
         })
 
     # If there is a 'preload_scenario' in the session (from a link
