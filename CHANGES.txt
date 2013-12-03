@@ -2,7 +2,7 @@ Changelog of flooding-base
 ==========================
 
 
-1.50 (unreleased)
+1.50 (2013-12-03)
 -----------------
 
 - Add pyramids.
