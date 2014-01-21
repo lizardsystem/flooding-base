@@ -63,6 +63,7 @@ NMarkerOverlay.prototype.superclass = NOverlay;
 
 
 NMarkerOverlay.prototype._createMarker = function(i,loc){
+    
     var ref_this = this;
     try {
         //MARKER SELECTEREN OP BASIS VAN LOC GEGEVEN
@@ -85,11 +86,13 @@ NMarkerOverlay.prototype._createMarker = function(i,loc){
         }
         if (this.onMouseOver){
             this.marker[i].events.register('mouseover', this.marker[i], function(evt) {
+		console.log("1 TOOLTIP MARKER");
                 ref_this.onMouseOver(this,evt);
             });
         }
         if (this.onMouseOver){
             this.marker[i].events.register('mouseout', this.marker[i], function(evt) {
+		console.log("1 TOOLTIP MARKER");
                 ref_this.onMouseOut(this,evt);
             });
         }

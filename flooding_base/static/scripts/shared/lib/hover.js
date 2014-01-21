@@ -23,7 +23,7 @@ var hover = hover || (function () {
         map_tooltip_div.id = "map_tooltip";
         map_tooltip_div.setAttribute(
             "style",
-            "position: absolute; top: 0; left: 0; padding: 0.4 em 0.6em; border-radius: 0.5em; borded: solid 1px #111; background-color: #fff; z-index: 2000; display: none;");
+            "position: absolute; top: 0; left: 0; borded: solid 1px #111; background-color: #fff; z-index: 2000; display: none;");
 
 
         var map_div = document.getElementById(map_div_id);
@@ -39,10 +39,16 @@ var hover = hover || (function () {
         var pixel = openlayers_map.getViewPortPxFromLonLat(lonlat);
         map_tooltip_div.style.top = pixel.y + 10;
         map_tooltip_div.style.left = pixel.x + 10;
-        map_tooltip_div.style.padding = "5px";
+        map_tooltip_div.style.padding = "3px";
         map_tooltip_div.style.border = "solid black 1px";
-        map_tooltip_div.textContent = text;
-        map_tooltip_div.style.display = "block";
+	map_tooltip_div.style.zIndex = 200800;
+	map_tooltip_div.style.position = "absolute";
+        //map_tooltip_div.textContent = text;
+	map_tooltip_div.innerHTML = text;
+	map_tooltip_div.style.display = "block";
+	//map_tooltip_div.style.borderRadius = "10px";
+	map_tooltip_div.style.border = "solid 1px #111";
+	map_tooltip_div.style.backgroundColor = "#fff";
     };
 
     var make_callback = function (lon, lat) {

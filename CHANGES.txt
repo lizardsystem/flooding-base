@@ -5,7 +5,7 @@ Changelog of flooding-base
 1.51 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Fix pyramid's tooltip in IE.
 
 
 1.50 (2013-12-03)

@@ -296,6 +296,7 @@ NPyramidOverlay.prototype.hover_handler = function (lon, lat, callback) {
         },
         callback: function(response, data, request) {
             data = JSON.parse(data);
+	    
             if (typeof data.value !== "undefined") {
                 callback(data.value.toFixed(2) + " " + data.unit);
             }

@@ -236,7 +236,6 @@ NMainScreenManager.prototype.initMap = function() {
             this.map.isGoogleMaps = false;
             hover_control.activate();
             hover.init_map_tooltip(this.map, this.mapDivName);
-
             var layers;
 
             if (this.useGoogleLayers) {
