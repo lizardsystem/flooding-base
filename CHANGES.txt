@@ -5,7 +5,7 @@ Changelog of flooding-base
 1.52 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Fix shimmering effect in animation for IE.
 
 
 1.51 (2014-01-21)

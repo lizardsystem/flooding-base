@@ -492,20 +492,20 @@ NMapOverlay.prototype.getLayerSettingsByRequestData = function(callback){
 OpenLayers.Layer.Image.prototype.hide = function (realhide){
     realhide = realhide || false;
 
-    if (isc.Browser.isIE || realhide) {
-        this.setVisibility( false );
-    } else {
+    //if (isc.Browser.isIE || realhide) {
+    //    this.setVisibility( false );
+    //} else {
         this.setOpacity( 0 );
-    }
+    //}
 };
 
 
 OpenLayers.Layer.Image.prototype.show = function (opacity){
     opacity = opacity || 1;
     this.setOpacity( opacity );
-    if (isc.Browser.isIE || !this.getVisibility()) {
-        this.setVisibility( true );
-    }
+    //if (isc.Browser.isIE || !this.getVisibility()) {
+    //    this.setVisibility( true );
+    //}
 };
 
 
