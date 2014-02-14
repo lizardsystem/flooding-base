@@ -2,7 +2,7 @@ Changelog of flooding-base
 ==========================
 
 
-1.53 (unreleased)
+1.53 (2014-02-14)
 -----------------
 
 - Add translation.
