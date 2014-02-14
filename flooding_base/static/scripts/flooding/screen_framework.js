@@ -129,6 +129,31 @@ mainScreenManager = new NMainScreenManager(null,{
     extent: flooding_config.extent
 });
 
+isc.Canvas.create({
+    ID: "languageBin",
+    showEdges: false,
+    width:16, height:12
+})
+
+isc.Img.create({
+    ID:"languageBut",
+    width:16, height:12, top: 4,
+    src:"/static_media/images/language_" + flooding_config.next_language + ".gif",
+    showEdges:false,
+    parentElement: languageBin,
+    click: function() {
+	isc.RPCManager.sendRequest(
+	{
+	    actionURL: "/i18n/setlang/",
+	    httpMethod: "POST",
+	    params: {"language": flooding_config.next_language,
+		     "next": '/'},
+	    callback: function() {window.location = ".";},
+	    dataFormat: "json",
+	    useSimpleHttp: true
+	})
+    }
+})
 
 /*** Creating total screen layout ***/
 isc.VLayout.create({
@@ -144,7 +169,7 @@ isc.VLayout.create({
             ID: "topScreen",
             height: "57px",
             overflow: "hidden",
-            members: [scLogoCanvas, scHeader, scUser],
+            members: [scLogoCanvas, scHeader, scUser, languageBin],
             autoDraw: false
         }),
         isc.HLayout.create({

@@ -258,12 +258,12 @@ var updateNavigationWindows = function(){
 
 isc.IButton.create({
     ID: "btSubmit",
-    title: "Toepassen",
+    title: ST_APPLY,
     autoFit: true,
     click : function () {
 	var searchParams = retrieveSearchParams();
 	if (isEmptyObject(searchParams)){
-	    isc.warn("Maak een selectie.");
+	    isc.warn(ST_EMPTY_SELECTION_WARN);
 	} else {
 	    emptyNavigationBlocks();
 	    applySearch();
@@ -274,7 +274,7 @@ isc.IButton.create({
 
 isc.IButton.create({
     ID: "btClose",
-    title: "Afsluiten",
+    title: ST_CLOSE,
     autoFit: true,
     click : function () { 
 	searchWindow.hide();
@@ -283,7 +283,7 @@ isc.IButton.create({
 
 isc.IButton.create({
     ID: "btReset",
-    title: "Reset",
+    title: ST_RESET,
     autoFit: true,
     click : function () { 
 	clearSearchFields();
@@ -351,12 +351,12 @@ var createSearchForm = function() {
 	fields: [
 	    {
 		name: "searchBy",
-		title: "Zoeken&nbsp;in",
+		title: ST_SEARCH + "&nbsp;" + ST_IN,
 		valueMap: ['Project', 'Regio', 'Buitenwater'],
 		type: "select",
 		autoFit: true,
 		overflow: 'hidden',
-		emptyDisplayValue: "Alles",
+		emptyDisplayValue: ST_ALL_,
 		leaveScrollBarGap: false,
 		showAllOptions: true,
 		change: function (f, i, v) {
@@ -371,7 +371,7 @@ var createSearchForm = function() {
 			relField.redraw();
 		    }
 		    if (!isUnique) {
-			isc.warn("Zoek criteria '" + v + "' is reeds gekozen.");
+			isc.warn(ST_SEARCH_WARN_PART_1 + " '" + v + "' " + ST_SEARCH_WARN_PART_2);
 			i.clearValue();
 			relField.setProperties({
 			    "optionDataSource": null,
@@ -384,12 +384,12 @@ var createSearchForm = function() {
 		    if (v == 'Project') {
 			relField.setProperties({
 			    "optionDataSource": dSProjectSelection,
-			    "emptyDisplayValue": "Selecteer project(s)"
+			    "emptyDisplayValue": ST_SELECT + " " + ST_PROJECT + "(s)"
 			});
 		    } else if (v == "Regio") {
 			relField.setProperties({
 			    "optionDataSource": dSRegionSelection,
-			    "emptyDisplayValue": "Selecteer regio(nen)"
+			    "emptyDisplayValue": ST_SELECT + " " + ST_REGION_
 			});
 		    } else if (v == "Buitenwater") {
 			relField.setProperties({
@@ -402,7 +402,7 @@ var createSearchForm = function() {
 	    },
 	    {
 		name: "selection",
-		title: "Selectie",
+		title: ST_SELECTION,
 		autoFetchData:false,
 		cachePickListResults: false,
 		valueField:"id",
@@ -450,7 +450,7 @@ isc.VLayout.create({
 
 isc.Window.create({
     ID: "searchWindow",
-    title: "Zoeken",
+    title: ST_SEARCH,
     autoSize:true,
     autoCenter: true,
     isModal: true,

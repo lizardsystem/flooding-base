@@ -91,7 +91,9 @@ function NLoadScripts(root_url, options) {
 	 		 	"static_media/scripts/flooding/results/infoWindow.js",
 	 			"static_media/scripts/flooding/results/navigation.js",
 	 			"static_media/scripts/flooding/results/overlaySettings.js",
-	 			"static_media/scripts/flooding/results/toolbar.js"
+	 		    "static_media/scripts/flooding/results/toolbar.js",
+			    "static_media/scripts/flooding/results/search.js",
+			    "static_media/scripts/flooding/results/screen_keringen.js"
 	 		);
  		}
  		if (this.flow) {

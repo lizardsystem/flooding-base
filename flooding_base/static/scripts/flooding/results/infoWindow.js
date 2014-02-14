@@ -6,7 +6,7 @@ function frInfoWindowSettings() {
     console.log('entering method: "frInfoWindowSettings"');
     iwScenarioInformation = new NInfoWindow("Scenario Informatie",{
 
-        tabName: 'Info' ,
+        tabName: ST_INFO ,
 	defaultSize : {width: 420, height:400 },
 	canClose: false,
 	canMax: false,
@@ -40,7 +40,7 @@ function frInfoWindowSettings() {
 
     iwScenarioRemarks = new NInfoWindow("Scenario Opmerkingen",{
 
-        tabName: 'Opmerkingen' ,
+        tabName: ST_REMARK,
 	defaultSize : {width: 420, height:320 },
 	canClose: false,
 	canMax: false,
@@ -73,7 +73,7 @@ function frInfoWindowSettings() {
     });
 
     iwApprovalInformation = new NInfoWindow("Keuringen",{
-        tabName: 'Goedkeuring' ,
+        tabName: ST_APPROVAL,
 	defaultSize : {width: 420, height:400 },
 	canClose: false,
 	canMax: false,
@@ -105,7 +105,7 @@ function frInfoWindowSettings() {
     });
 
     iwEdit = new NInfoWindow("Scenario bewerken",{
-        tabName: 'Bewerken' ,
+        tabName: ST_EDIT,
 	defaultSize : {width: 420, height:400 },
 	canClose: false,
 	canMax: false,
@@ -137,7 +137,7 @@ function frInfoWindowSettings() {
     });
 
     iwLegend = new NLegendInfoWindow("Legenda",{
-        tabName: 'Legenda' ,
+        tabName: ST_LEGEND ,
 	defaultSize : {width: 420, height:400 },
 	canClose: false,
 	canMax: false,
@@ -166,7 +166,7 @@ function frInfoWindowSettings() {
     });
 
     iwArchive = new NInfoWindow("Archief",{
-        tabName: 'Archief' ,
+        tabName: ST_ARCHIVE,
     	defaultSize : {width: 420, height:400 },
     	canClose: false,
     	canMax: false,

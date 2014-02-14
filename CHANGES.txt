@@ -5,7 +5,7 @@ Changelog of flooding-base
 1.53 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Add translation.
 
 
 1.52 (2014-02-03)

@@ -22,25 +22,32 @@
 
     <!-- Javascript -->
     <script type="text/javascript">
-
+      var languageButton = function() {
+      isc.MenuButton.create({
+    ID: "menuButton",
+    title: "File",
+    width: 100,
+    left: 150,
+    menu: menu
+});}
     {% comment %}Set Django variables as flooding_config global.{% endcomment %}
 
     var flooding_config = {{ javascript_parameters|safe }};
     flooding_config.static_url = '{{ STATIC_URL }}';
-
+    flooding_config.next_language = '{{ next_language }}';   
     {% comment %}For direct links to scenarios. See the preload code in
     scripts/flooding/results/navigation.js.{% endcomment %}
     flooding_config.preload_scenario = {{ preload_scenario|safe }};
 
-    flooding_config.user_block_contents = '<table align="right"><tr><td><div id="user-tools" class="normal" style="background-color:#FFFFFF; opacity:0.75; height:17;font-color:#000000" width="content"  >\
+    flooding_config.user_block_contents = '<table id="userControls" align="right"><tr><td><div id="user-tools" class="normal" style="background-color:#FFFFFF; opacity:0.75; height:17;font-color:#000000" width="content"  >\
     {% if user.is_authenticated %}\
            <strong>{% firstof user.first_name user.username %}</strong> | \
      {% block userlinks %}\
-      <a href="{% url help_url %}" onclick="popupwindow=window.open(\'{%url help_url %}\', \'popupwindow\',\'height=600,width=800,top=10,left=10,resizable\');return false;">{% trans 'help' %}</a> | <a href="{% url userconfiguration_url %}" onclick="popupwindow=window.open(\'{% url userconfiguration_url %}\', \'popupwindow\',\'height=600,width=800,top=10,left=10,resizable\');return false;">{% trans 'settings' %}</a> | <a href="{% url logout_url %}?next={% url root_url %}">{% trans 'Log out' %}</a>\
+	   <a href="{% url help_url %}" onclick="popupwindow=window.open(\'{%url help_url %}\', \'popupwindow\',\'height=600,width=800,top=10,left=10,resizable\');return false;">{% trans 'help' %}</a> | <a href="{% url userconfiguration_url %}" onclick="popupwindow=window.open(\'{% url userconfiguration_url %}\', \'popupwindow\',\'height=600,width=800,top=10,left=10,resizable\');return false;">{% trans 'settings' %}</a> | <a href="{% url logout_url %}?next={% url root_url %}">{% trans 'Log out' %}</a>\
      {% endblock %}\
     {% else %}\
      <a href="{% url login_url %}?next={% url root_url %}">{% trans 'Log in' %}</a>\
-    {% endif %}\
+    {% endif %} | \
     </div></td></tr></table>';
 
     </script>

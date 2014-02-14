@@ -20,6 +20,7 @@ from django.template import RequestContext
 from django.utils import simplejson
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import cache_control
+from django.utils import translation
 import iso8601
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.dates import DateFormatter
@@ -925,7 +926,17 @@ def gui(request):
     preload_scenario = simplejson.dumps(
         request.session.get('preload_scenario', None))
     request.session['preload_scenario'] = None
-
+    
+    request_language = translation.get_language_from_request(request)
+    if request_language is None:
+        request_language = settings.LANGUAGE_CODE
+    if request_language == 'nl':
+        next_language = 'en'
+    elif request_language == 'en':
+        next_language = 'nl'
+    else:
+        next_language = request_language
+        
     return render_to_response(
         'gui/index.html', {
             'url_topbar': url_topbar,
@@ -937,6 +948,8 @@ def gui(request):
             'RESTRICTMAP': RESTRICTMAP,
             'url_favicon': url_favicon,
             'preload_scenario': preload_scenario,
+            'request_language': request_language,
+            'next_language': next_language,
             },
         context_instance=RequestContext(request))
 
@@ -984,8 +997,14 @@ def gui_config(request):
 
 def gui_translated_strings(request):
     """Returns translated_strings.html, with translated strings"""
-    return render_to_response('gui/translated_strings.html',
-                                context_instance=RequestContext(request))
+    request_language = translation.get_language_from_request(request)
+    if request_language == 'nl':
+        translated_strings = 'gui/translated_strings.html'
+    else:
+        translated_strings = 'gui/translated_strings_EN.html'
+        
+    return render_to_response(translated_strings,
+                              context_instance=RequestContext(request))
 
 
 def help(request):

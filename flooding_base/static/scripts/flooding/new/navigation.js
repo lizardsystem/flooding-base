@@ -199,7 +199,7 @@ function fnNavigation() {
 	fields: [{
 	    ID: 'selectInundationModel',
 	    name: "selectInundationModel",
-	    title: "inundationmodel",
+	    title: ST_INUNDATION_MODEL,
 	    type: "select",
 	    optionDataSource: isc.DataSource.create({
         	ID: "dsSelectInundationModel",
@@ -222,7 +222,7 @@ function fnNavigation() {
 	},{
 	    ID: 'selectExtwaterModel',
 	    name: "selectExtwaterModel",
-	    title: "Buitenwater model",
+	    title: ST_EXT_WATER_MODEL,
 	    type: "select",
 	    optionDataSource: isc.DataSource.create({
      		ID: "dsSelectExtwaterModel",
@@ -247,7 +247,7 @@ function fnNavigation() {
 
     isc.IButton.create({
 	ID: "secondStepBack",
-	title: "<< Terug",
+	title: "<< " + ST_BACK,
 	showRollOver: false,
 	showDown: true,
 	showFocused: false,
@@ -299,9 +299,9 @@ function fnNavigation() {
 	selectionType: "simple",
    	dataSource: dsListLoccutoffsSet,
 	fields:[//project
-       	    {name: "id",title: "id",type: "number",canEdit: false,primaryKey:true,width:25,hidden:true},
-       	    {name: "name",title: "naam",type: "text",canEdit: false},
-       	    {name: "number",title: "Aantal",type: "text",canEdit: false,width:60}
+       	    {name: "id",title: "ID",type: "number",canEdit: false,primaryKey:true,width:25,hidden:true},
+       	    {name: "name",title: ST_NAME, type: "text",canEdit: false},
+       	    {name: "number",title: ST_AMOUNT, type: "text",canEdit: false,width:60}
         ],
     	autoDraw:false,
     	selectionChanged: function(record, select) {
@@ -378,11 +378,11 @@ function fnNavigation() {
     	//showFilterEditor: true,
 	fields:[
        	    //{name: "id",title: "id",type: "number",canEdit: false,primaryKey:true,width:25,hidden:true},
-            {name:"type",title: "type", type:"image",canEdit: false, width:25},
-       	    {name: "name",title: "naam",type: "text",canEdit: false},
-       	    {name: "action",title: "actie",type: "text", valueMap:{1:"Dicht", 2:"Open"},
+            {name:"type",title: ST_TYPE, type:"image",canEdit: false, width:25},
+       	    {name: "name",title: ST_NAME,type: "text",canEdit: false},
+       	    {name: "action",title: ST_ACTION,type: "text", valueMap:{1:"Dicht", 2:"Open"},
        	     defaultValue:1, canEdit: true,width:40, editorProperties:{width:80}},
-       	    {name: "tclose",title: "actie na tijdstip",type: "text",canEdit: true,formatCellValue:"intervalFormatter(intervalReader(value));",width:60}//interval editor!
+       	    {name: "tclose",title: ST_ACTION_AFTER,type: "text",canEdit: true,formatCellValue:"intervalFormatter(intervalReader(value));",width:60}//interval editor!
         ],
     	autoDraw:false,
     	recordClick: function(viewer, record, recordNum) {  	}
@@ -390,7 +390,7 @@ function fnNavigation() {
 
     isc.IButton.create({
 	ID: "thirdStepBack",
-	title: "<< Terug",
+	title: "<< " + ST_BACK,
 	showRollOver: false,
 	showDown: true,
 	showFocused: false,
@@ -443,11 +443,11 @@ function fnNavigation() {
 	leaveScrollbarGap: false,
 	fields:[//project
        	    {name: "id",title: "id",type: "number",canEdit: false,primaryKey:true,width:1, hidden:true},
-       	    {name: "name",title: "naam",type: "text",canEdit: true},
-       	    {name: "number_embankment_units",title: "nr eenheden",type: "text", canEdit: false,width:30},
-       	    {name: "reference",title: "t.o.v.",type: "text", valueMap:{1:"tov huidige hoogte", 2:"tov NAP"},
+       	    {name: "name",title: ST_NAME,type: "text",canEdit: true},
+       	    {name: "number_embankment_units",title: ST_NR_UNITS,type: "text", canEdit: false,width:30},
+       	    {name: "reference",title: ST_REFERENCE,type: "text", valueMap:{1:"tov huidige hoogte", 2:"tov NAP"},
        	     defaultValue:"tov NAP", canEdit: true,width:60, editorProperties:{width:80}},
-       	    {name: "adjustment",title: "aanpassing",type: "float", canEdit: true,width:50}
+       	    {name: "adjustment",title: ST_ADJUSTMENT,type: "float", canEdit: true,width:50}
         ],
     	autoDraw:false
     });
@@ -456,7 +456,7 @@ function fnNavigation() {
 
     isc.IButton.create({
         ID: "createNewMeasureDrawEmbankmentButton",
-        title: "Nieuwe maatregel - teken nieuwe kering",
+        title: ST_NEW_MEASURE_DRAW_EMBANKMENT,
     	showRollOver: false,
     	showDown: true,
     	showFocused: false,
@@ -466,7 +466,7 @@ function fnNavigation() {
             if (this.isSelected()) {
 		lineControl.activate();
 		lineLayer.setVisibility(true);
-	        this.setTitle("Stop wijzigen");
+	        this.setTitle(ST_STOP_MODIFY);
 	        createNewMeasureAdjustEmbankmentButton.disable();
 	        deleteMeasureButton.disable();
 	        fourthStepBack.disable();
@@ -479,7 +479,7 @@ function fnNavigation() {
 	        fourthStepBack.enable();
 	        deleteMeasureButton.enable();
 	        createNewMeasureAdjustEmbankmentButton.enable();
-	        this.setTitle("Nieuwe maatregel - teken nieuwe kering");
+	        this.setTitle(ST_NEW_MEASURE_DRAW_EMBANKMENT);
 	        lineLayer.setVisibility(false);
 	        lineControl.deactivate();
 	        saveDrawnEmbankment();
@@ -527,7 +527,7 @@ function fnNavigation() {
 
     isc.IButton.create({
         ID: "loadStrategyButton",
-        title: "Laad maatregelen",
+        title: ST_LOAD + " " + ST_MEASURES,
     	showRollOver: false,
     	showDown: true,
     	showFocused: false,
@@ -551,7 +551,7 @@ function fnNavigation() {
 
     isc.IButton.create({
         ID: "createNewMeasureAdjustEmbankmentButton",
-        title: "Nieuwe maatregel - wijzig bestaande kering",
+        title: ST_NEW_MEASURE_EDIT_EMBANKMENT,
     	showRollOver: false,
     	showDown: true,
     	showFocused: false,
@@ -562,7 +562,7 @@ function fnNavigation() {
             if (this.isSelected()) {
 		polygonControl.activate();
 		polygonLayer.setVisibility(true);
-	        this.setTitle("Stop wijzigen");
+	        this.setTitle(ST_STOP_MODIFY);
 	        createNewMeasureDrawEmbankmentButton.disable();
 	        deleteMeasureButton.disable();
 	        fourthStepBack.disable();
@@ -574,7 +574,7 @@ function fnNavigation() {
 	        fourthStepBack.enable();
 	        deleteMeasureButton.enable();
 	        createNewMeasureDrawEmbankmentButton.enable();
-	        this.setTitle("Nieuwe maatregel - wijzig bestaande kering");
+	        this.setTitle(ST_NEW_MEASURE_EDIT_EMBANKMENT);
 	        polygonLayer.setVisibility(false);
 	        polygonControl.deactivate();
 	        selectExistingEmbankmentsByPolygon();
@@ -617,7 +617,7 @@ function fnNavigation() {
 
     isc.IButton.create({
 	ID: "deleteMeasureButton",
-	title: "Verwijder maatregel",
+	title: ST_DELETE + " " + ST_MEASURES,
 	showRollOver: false,
 	showDown: true,
 	showFocused: false,
@@ -644,7 +644,7 @@ function fnNavigation() {
 			existing_embankments_layer.redraw();
 		    }
 		    else {
-			alert("Fout bij het ophalen van gegevens.");
+			alert(ST_ALERT_1);
 		    }
 		}
 	    });
@@ -655,7 +655,7 @@ function fnNavigation() {
 
     isc.IButton.create({
 	ID: "fourthStepBack",
-	title: "<< Terug",
+	title: "<< " + ST_BACK,
 	showRollOver: false,
 	showDown: true,
 	showFocused: false,
@@ -683,7 +683,7 @@ function fnNavigation() {
 	});
 
 	isc.Window.create({
-	    ID: "windowsettings", title: "Instellingen en opslaan scenario",
+	    ID: "windowsettings", title: ST_WIN_SETTINGS_TITLE,
 	    items: [settingContent],
 	    showMinimizeButton: false,
 	    keepInParentRect: true,
@@ -712,7 +712,7 @@ function fnNavigation() {
 	});
 
 	isc.Window.create({
-	    ID: "loadStrategyWindow", title: "Laden maatregelen",
+	    ID: "loadStrategyWindow", title: ST_LOAD + " " + ST_MEASURE,
 	    items: [loadStrategyContent],
 	    showMinimizeButton: false,
 	    keepInParentRect: true,
@@ -730,7 +730,7 @@ function fnNavigation() {
 
     isc.IButton.create({
 	ID: "fourthStepOk",
-	title: "Instellingen en Opslaan",
+	title: ST_CONF_AND_SAVE_TITLE,
 	showRollOver: false,
 	showDown: true,
 	showFocused: false,
@@ -934,9 +934,9 @@ function fnNavigation() {
 	membersMargin: 5,
 	width: "100%", height: "100%", overflow:"hidden",
 	members: [
-	    isc.Label.create({height: 24, overflow:"hidden", align: "left", top:5, wrap: false, showEdges: false, contents: "<h3>Locatie set</h3>"}),
+	    isc.Label.create({height: 24, overflow:"hidden", align: "left", top:5, wrap: false, showEdges: false, contents: "<h3>" + ST_LOCATION_SET + "</h3>"}),
 	    listLoccutoffsSet,
-	    isc.Label.create({height: 24, overflow:"hidden", align: "left", top:5, wrap: false, showEdges: false, contents: "<h3>Geselecteerde afsluitlocaties</h3>"}),
+	    isc.Label.create({height: 24, overflow:"hidden", align: "left", top:5, wrap: false, showEdges: false, contents: "<h3>" +ST_SELECTED_CUTOFF_LOC + "</h3>"}),
 	    listLoccutoffs,
 	    isc.Canvas.create({ height:"*", members: [],   autoDraw:false}),
 	    isc.HLayout.create({ height:"30", members: [thirdStepBack, isc.Canvas.create({ width:"*", autoDraw:false}),thirdStepOk],   autoDraw:false})
@@ -950,7 +950,7 @@ function fnNavigation() {
 	membersMargin: 5,
 	width: "100%", height: "100%", overflow:"hidden",
 	members: [
-	    isc.Label.create({height: 34, overflow:"hidden", align: "left", top:5, wrap: false, showEdges: false, contents: "<h3>Maatregelen</h3>"}),
+	    isc.Label.create({height: 34, overflow:"hidden", align: "left", top:5, wrap: false, showEdges: false, contents: "<h3>" + ST_MEASURES + "</h3>"}),
 	    listMeasures,
 	    isc.VLayout.create({height:"90",
 	   			members: [ loadStrategyButton, createNewMeasureDrawEmbankmentButton, createNewMeasureAdjustEmbankmentButton, deleteMeasureButton],
@@ -970,10 +970,10 @@ function fnNavigation() {
         destroyPanes:"false",
         symmetricEdges:false,
         tabs:[
-            {title:'stap1', ID:"tab_fnNavigationStep1", pane: 'fnNavigationStep1'},
-            {title:'stap2', ID:"tab_fnNavigationStep2", pane: 'fnNavigationStep2'},
-            {title:'stap3', ID:"tab_fnNavigationStep3", pane: 'fnNavigationStep3'},
-            {title:'stap4', ID:"tab_fnNavigationStep4", pane: 'fnNavigationStep4'}
+            {title:ST_STEP + '1', ID:"tab_fnNavigationStep1", pane: 'fnNavigationStep1'},
+            {title:ST_STEP + '2', ID:"tab_fnNavigationStep2", pane: 'fnNavigationStep2'},
+            {title:ST_STEP + '3', ID:"tab_fnNavigationStep3", pane: 'fnNavigationStep3'},
+            {title:ST_STEP + '4', ID:"tab_fnNavigationStep4", pane: 'fnNavigationStep4'}
         ],
         tabSelected: function(tabNum, tabPane, ID, tab) {
             if (ID == "tab_fnNavigationStep1") {
