@@ -5,7 +5,8 @@ Changelog of flooding-base
 1.54 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Add translated stings.
+- Extend width of the animation slider.
 
 
 1.53 (2014-02-14)
