@@ -202,7 +202,7 @@ NAnimationControl.prototype._funcScAnimationControl = function(oMan) {
 
     isc.Canvas.create({
         ID:"scAnimationControl",
-        left:80, top:7,width:300, height:85,
+        left:80, top:7,width:320, height:85,
         backgroundColor:"white",
         opacity:85,
         border: "1px solid grey",
