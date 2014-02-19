@@ -292,14 +292,14 @@ NAnimationControl.prototype.initOverlay = function(overlay) {
     if (this.activeOverlay.animation.firstlabel) {
         acSlider.minValueLabel = this.activeOverlay.animation.firstlabel;
     } else {
-        acSlider.minValueLabel = acSlider.minValue.toFixed(1) + ' uur';
+        acSlider.minValueLabel = acSlider.minValue.toFixed(1) + ' ' + ST_HOUR;
     }
 
     acSlider.maxValue = (this.activeOverlay.animation.display_lastnr) * this.activeOverlay.animation.delta/3600;
     if (this.activeOverlay.animation.lastlabel) {
         acSlider.maxValueLabel = this.activeOverlay.animation.lastlabel;
     } else {
-        acSlider.maxValueLabel = acSlider.maxValue.toFixed(1) + ' uur';
+        acSlider.maxValueLabel = acSlider.maxValue.toFixed(1) + ' ' + ST_HOUR;
     }
 
     if (this.activeOverlay.animation.showDateLabel) {
