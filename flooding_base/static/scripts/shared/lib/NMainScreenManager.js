@@ -256,6 +256,12 @@ NMainScreenManager.prototype.initMap = function() {
             if (this.useOpenStreetMap)
             {
                 try {
+		    layers = [new OpenLayers.Layer.OSM(
+			"OpenStreetMap",
+			"http://a.tile.openstreetmap.org/${z}/${x}/${y}.png",
+			{buffer: 0} 
+		    )];
+		    this.map.addLayers(layers);
                     layers = [
                         new OpenLayers.Layer.OSM(
                             "OpenStreetMap NL",
@@ -263,8 +269,8 @@ NMainScreenManager.prototype.initMap = function() {
                             {buffer: 0, tileOptions: {crossOriginKeyword: null}}
                         )];
                     this.map.addLayers(layers);
-                    layers = [new OpenLayers.Layer.OSM("OpenStreetMap", "http://a.tile.openstreetmap.org/${z}/${x}/${y}.png", {buffer: 0} )];
-                    this.map.addLayers(layers);
+                    
+                    
                 }
                 catch (e) {
                     console.log("kan Openstreet Map lagen niet laden." + e);

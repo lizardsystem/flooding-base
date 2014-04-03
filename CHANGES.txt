@@ -7,7 +7,7 @@ Changelog of flooding-base
 
 - Add translated stings.
 - Extend width of the animation slider.
-
+- Set OpenStreetMap as default baselayer.
 
 1.53 (2014-02-14)
 -----------------
