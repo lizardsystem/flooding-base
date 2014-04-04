@@ -2,7 +2,7 @@ Changelog of flooding-base
 ==========================
 
 
-1.54 (unreleased)
+1.54 (2014-04-04)
 -----------------
 
 - Add translated stings.
