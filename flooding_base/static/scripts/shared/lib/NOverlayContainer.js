@@ -78,4 +78,4 @@ NOverlayContainer.prototype.getLegendSections = function(){
 	return new NLegendSection('legendId', options);
 }
 
-console.log('loaded NOverlayContainer succesfully')
+console.log('loaded NOverlayContainer succesfully');
