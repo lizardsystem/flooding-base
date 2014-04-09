@@ -5,7 +5,7 @@ Changelog of flooding-base
 1.55 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Fix overlayes visibility for Chrome and Firefox.
 
 
 1.54 (2014-04-04)

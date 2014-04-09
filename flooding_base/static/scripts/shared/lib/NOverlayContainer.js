@@ -40,11 +40,12 @@ NOverlayContainer.prototype.clear = function() {
 
 
 NOverlayContainer.prototype.addOverlayToContainer = function(layer) {
-	this.overlays.push(layer);
-	if (this.isAdded) {
-		this.overlays[this.overlays.length-1].addToMap(map);
-		this.overlays[this.overlays.length-1].show();
-	}
+    this.overlays.push(layer);
+    if (this.isAdded) {
+	this.overlays[this.overlays.length-1].addToMap(map);
+	var layersList = map.getLayersByName(layer.name);
+	layersList[0].show();
+    }
 }
 
 NOverlayContainer.prototype.addOverlays = function() {
