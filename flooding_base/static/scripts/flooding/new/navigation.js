@@ -712,7 +712,7 @@ function fnNavigation() {
 	});
 
 	isc.Window.create({
-	    ID: "loadStrategyWindow", title: ST_LOAD + " " + ST_MEASURE,
+	    ID: "loadStrategyWindow", title: ST_LOAD + " " + ST_MEASURES,
 	    items: [loadStrategyContent],
 	    showMinimizeButton: false,
 	    keepInParentRect: true,
