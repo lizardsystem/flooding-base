@@ -244,7 +244,7 @@ NMapOverlay.prototype.deactivateEvents = function() {
 
 NMapOverlay.prototype.show = function(timestep, opacity) {
     console.log("In NMapOverlay.show, opacity is "+opacity);
-    if (opacity === null) { opacity = 1; }
+    if (opacity == null) { opacity = 1; }
     if (this.layer) {
         try {
             if (this.overlayManager !== null) {

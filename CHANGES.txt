@@ -5,7 +5,11 @@ Changelog of flooding-base
 1.58 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Edit measures on double klick by new scenario
+
+- Select, deselect measures on klick by new scenario
+
+- Fix visibility of 'Aangepaste Keringen' layer
 
 
 1.57 (2014-04-14)
