@@ -5,6 +5,7 @@ see the documentation on TWiki
 
 import csv
 import datetime
+import json
 import logging
 
 from django.conf import settings
@@ -17,7 +18,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404, render_to_response
 from django.template import RequestContext
-from django.utils import simplejson
+
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import cache_control
 from django.utils import translation
@@ -298,7 +299,7 @@ def service_get_auth_filters(
         for row in result_filters:
             row['configurationid'] = configurations[0].id
             row['is_filter'] = True
-        return HttpResponse(simplejson.dumps(result_filters),
+        return HttpResponse(json.dumps(result_filters),
                             mimetype='application/json')
     elif len(configurations) > 1:
         #create root items
@@ -325,10 +326,10 @@ def service_get_auth_filters(
                 row['is_filter'] = True
             result_filters.extend(filters_single)
 
-        response = HttpResponse(simplejson.dumps(result_filters),
+        response = HttpResponse(json.dumps(result_filters),
                                 mimetype='application/json')
     else:
-        response = HttpResponse(simplejson.dumps([]),
+        response = HttpResponse(json.dumps([]),
                                 mimetype='application/json')
     response['Pragma'] = "no-cache"
     return response
@@ -709,7 +710,7 @@ def service_get_current_observation(request, configuration_id):
         'timestamp': dt_now_str,
         }
 
-    return HttpResponse(simplejson.dumps(response_dict),
+    return HttpResponse(json.dumps(response_dict),
                         mimetype='application/javascript')
 
 
@@ -730,7 +731,7 @@ def service_set_current_subapplication(request, site_name, js_app_name):
     except NameError:
         pass
     result = {'app_name': sa.get_subapplication_jsname()}
-    return HttpResponse(simplejson.dumps(result),
+    return HttpResponse(json.dumps(result),
                         mimetype='application/json')
 
 
@@ -907,7 +908,7 @@ def gui(request):
 
     RESTRICTMAP = bool(int(Setting.objects.get(key='RESTRICTMAP').value))
 
-    javascript_parameters = simplejson.dumps({
+    javascript_parameters = json.dumps({
             'root_url': reverse('root_url'),
             'sitename': site.name,
             'uberservice_url': reverse('base_service_uberservice'),
@@ -923,10 +924,10 @@ def gui(request):
     # that goes directly to a scenario, we place it in the template as
     # JSON. Then we clear it from the session, otherwise the site will
     # keep going to that scenario!
-    preload_scenario = simplejson.dumps(
+    preload_scenario = json.dumps(
         request.session.get('preload_scenario', None))
     request.session['preload_scenario'] = None
-    
+
     request_language = translation.get_language_from_request(request)
     if request_language is None:
         request_language = settings.LANGUAGE_CODE
@@ -936,7 +937,7 @@ def gui(request):
         next_language = 'nl'
     else:
         next_language = request_language
-        
+
     return render_to_response(
         'gui/index.html', {
             'url_topbar': url_topbar,
@@ -1002,7 +1003,7 @@ def gui_translated_strings(request):
         translated_strings = 'gui/translated_strings.html'
     else:
         translated_strings = 'gui/translated_strings_EN.html'
-        
+
     return render_to_response(translated_strings,
                               context_instance=RequestContext(request))
 
