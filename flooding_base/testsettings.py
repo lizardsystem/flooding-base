@@ -1,11 +1,9 @@
 DEBUG = True
 TEMPLATE_DEBUG = True
-DATABASE_ENGINE = 'sqlite3'
-DATABASE_NAME = 'test.db'
 SITE_ID = 1
 INSTALLED_APPS = [
     'flooding_base',
-    'staticfiles',
+    'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -15,6 +13,11 @@ INSTALLED_APPS = [
     'south',
     'django_nose',  # Must be below south
     ]
+
+DATABASES = {
+    'default': {'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': 'test.db'},
+    }
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
@@ -29,8 +32,10 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     # Needs to be added for django-staticfiles to allow you to use
     # {{ STATIC_URL }}myapp/my.css in your templates.
-    'staticfiles.context_processors.static_url',
+    'django.contrib.staticfiles.context_processors.static_url',
     )
+
+SECRET_KEY = 'x2s7u_s9b@wd0*ebtz1qiqzsavoh-f9ft1%bsti2*u-c3e180^'
 
 try:
     # Import local settings that aren't stored in svn.
