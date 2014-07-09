@@ -16,7 +16,7 @@ install_requires = [
     'iso8601',
     'django-extensions',
     'django-nose',
-    'Markdown',
+    'django-markdown-deux',
     'south',
     ],
 

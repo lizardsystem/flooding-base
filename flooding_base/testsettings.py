@@ -10,6 +10,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.sites',
     'django_extensions',
+    'markdown_deux',
     'south',
     'django_nose',  # Must be below south
     ]
