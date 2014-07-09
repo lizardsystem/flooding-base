@@ -7,7 +7,7 @@
 
 {% block content %}
 <h1>{% trans 'Welcome' %}</h1>
-{% url login_url as login_url %}
+{% url "login_url" as login_url %}
 <p>
 {% blocktrans %}Welcome to Lizard. Click on any apps below.{% endblocktrans %}
 </p>
@@ -26,8 +26,8 @@
 <h2>{% trans 'Staff options' %}</h2>
 <ul>
 <li><a href="/admin/">{% trans 'admin' %}</a></li>
-<li><a href="{% url testdatabase_list %}">{% trans 'Test database' %}</a></li>
-<li><a href="{% url locationparameterhelper_list %}">{% trans 'Location/parameter helper' %}</a></li>
+<li><a href="{% url "testdatabase_list" %}">{% trans 'Test database' %}</a></li>
+<li><a href="{% url "locationparameterhelper_list" %}">{% trans 'Location/parameter helper' %}</a></li>
 </ul>
 {% endif %}
 

@@ -18,19 +18,19 @@ settings.useImageService = true;
 //var isomorphicDir="{{ STATIC_URL }}weblib/isomorphic/"; // abs path to isomorphic, needed to locate SmartClient CSS
 var isomorphicDir="{{ STATIC_URL }}weblib/smartclient/9.0/isomorphic/"; // abs path to isomorphic, needed to locate SmartClient CSS
 {% autoescape off %}
-var locationLizardFewsData = '{% url root_url %}service/';
-var locationLizardData = '{% url root_url %}lizard/service/';
-var locationFloodingData = '{% url root_url %}flooding/service/';
-var locationPresentationData = "{% url root_url %}presentation/service/";
-var locationFlowData = "{% url root_url %}flow/service/";
-var locationGisviewerData = "{% url root_url %}gisviewer/service/";
-var locationMapviewerData =  '{% url root_url %}mapviewer/service/';
+var locationLizardFewsData = '{% url "root_url" %}service/';
+var locationLizardData = '{% url "root_url" %}lizard/service/';
+var locationFloodingData = '{% url "root_url" %}flooding/service/';
+var locationPresentationData = "{% url "root_url" %}presentation/service/";
+var locationFlowData = "{% url "root_url" %}flow/service/";
+var locationGisviewerData = "{% url "root_url" %}gisviewer/service/";
+var locationMapviewerData =  '{% url "root_url" %}mapviewer/service/';
 
-var lizardKbFloodPngDirectory = "{% url root_url %}flooding/results/";
-var lizardDataDirectory = "{% url root_url %}flooding/dataserver/";
+var lizardKbFloodPngDirectory = "{% url "root_url" %}flooding/results/";
+var lizardDataDirectory = "{% url "root_url" %}flooding/dataserver/";
 
-var locationMisData = "{% url root_url %}mis/service/";
-var locationNhiData = "{% url root_url %}nhi/service/";
+var locationMisData = "{% url "root_url" %}mis/service/";
+var locationNhiData = "{% url "root_url" %}nhi/service/";
 var custom_layers = new Array();
 
 

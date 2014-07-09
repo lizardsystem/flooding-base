@@ -22,7 +22,7 @@ Lizard {% trans 'user settings' %}
 				</thead>
 				<tbody>
 					    <tr class="cellDark">
-				    		<td><a href="{% url password_change_url %}?next={% url root_url %}" onclick="popupwindow=window.open(\'{% url password_change_url %}?next={% url root_url %}\', \'popupwindow\',\'height=600,width=800,top=10,left=10,resizable\');return false;">{% trans "Change password" %}</a></td>
+				    		<td><a href="{% url "password_change_url" %}?next={% url "root_url" %}" onclick="popupwindow=window.open(\'{% url "password_change_url" %}?next={% url "root_url" %}\', \'popupwindow\',\'height=600,width=800,top=10,left=10,resizable\');return false;">{% trans "Change password" %}</a></td>
 							<td></td>
 							<td></td>
 				    	</tr>
