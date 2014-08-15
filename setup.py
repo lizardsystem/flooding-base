@@ -12,12 +12,11 @@ long_description = '\n\n'.join([
     ])
 
 install_requires = [
-    'Django',
+    'Django >= 1.4, < 1.7',
     'iso8601',
     'django-extensions',
     'django-nose',
-    'django-staticfiles',
-    'Markdown',
+    'django-markdown-deux',
     'south',
     ],
 
@@ -42,7 +41,7 @@ setup(name='flooding-base',
       zip_safe=False,
       install_requires=install_requires,
       tests_require=tests_require,
-      extras_require = {'test': tests_require},
+      extras_require={'test': tests_require},
       entry_points={
           'console_scripts': [
           ]},
